@@ -1,0 +1,35 @@
+// input.ng-invalid{
+//     border: 1px solid red;
+//   }
+
+
+  .form-control-danger{
+
+    border: 1px solid red;
+  }
+
+  .form-control:disabled, .form-control:read-only {
+    background-color:white !important;
+    opacity: 1;
+}
+
+
+
+.error {
+    border-color: red;
+  }
+  .error-text {
+      font-size: x-small;
+      color: red;
+  }
+
+
+  .serial_num {
+    border: 2px solid rgb(255, 0, 0);
+    width: 275px;
+
+
+}
+
+
+  

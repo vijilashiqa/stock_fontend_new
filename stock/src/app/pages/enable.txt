@@ -1,0 +1,268 @@
+import { Component, OnInit } from "@angular/core";
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+// import { HeadendService, RoleservicesService } from '../../_services';
+import { ToastrService } from "ngx-toastr";
+import { Router } from "@angular/router";
+
+import { HsnService } from "../../_services/hsn.service";
+import { BusinessService } from "../../_services/business.service";
+import { VendorService } from "../../_services/vendor.service";
+import { NbToastrService } from "@nebular/theme";
+import { InvoiceService } from "../../_services/invoice.service";
+
+@Component({
+  selector: "ngx-add-invoice",
+  templateUrl: "./add-invoice.component.html",
+  styleUrls: ["./add-invoice.component.scss"],
+})
+export class AddInvoiceComponent {
+  submit: boolean = false;
+  addinvoice;
+  getbusinessd;
+  getbuss;
+  getvendorlist;
+  getvendora;
+  gethsn;
+  editfirstarray;
+  getvend;
+  vendors;
+  loc;
+  STB;
+  getbusinessaddres;
+  editdata = {};
+  id;
+  editflag = false;
+  editable: boolean = false;
+  getadd;
+  getvd;
+  getgst1;
+  materialArray;
+  reduceaddress;
+  slice2;
+  reducesvendor;
+  sllice1;
+  disabled;
+  vall;
+
+  constructor(
+    private _fb: FormBuilder,
+    private vendor: VendorService,
+    private Business: BusinessService,
+    private toast: NbToastrService,
+    private route: Router,
+    private invoiceser: InvoiceService // public role: RoleservicesService, // private boxtype: BoxtypeService
+  ) { }
+
+  async ngOnInit() {
+    await this.createForm();
+    await this.getBusiness();
+    await this.getbusinessaddress("");
+    await this.getVendor();
+    await this.getvendoraddrs();
+  }
+
+  async addstockIn() {
+    // this.disabled=true
+    this.submit = true;
+    const invalid = [];
+    const control = this.addinvoice.controls;
+    for (const name in control) {
+      if (control[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    if (this.addinvoice.invalid) {
+      console.log("Invalid value -----", invalid);
+      return;
+    }
+    let result = await this.invoiceser.addinvoice(this.addinvoice.value);
+    // console.log("result in stock", result);
+    if (result[0]["err_code"] == 0) {
+      this.toast.success("", result[0]["msg"]);
+      this.route.navigate(["/pages/vendor/list-invoice"]);
+    } else {
+      this.toast.warning("", result[0]["msg"]);
+    }
+  }
+  async getBusiness() {
+    this.getbusinessd = await this.Business.getbusiness({});
+    this.getbuss = this.getbusinessd[0];
+    // console.log("get business ", this.getbuss);
+  }
+  async getbusinessaddress($event) {
+    this.getbusinessaddres = await this.Business.getbusinessaddredit({
+      id: this.addinvoice.value["busname"],
+      like: $event,
+    });
+    this.getadd = this.getbusinessaddres[0];
+    // console.log("address @@@@ ", this.getadd);
+  }
+
+  async Changedata() {
+    let opp = this.addinvoice.value["busaddr"];
+   // console.log("sdsdsada", opp);
+    let dd = this.getadd.filter((id) => id.id == opp).map((id) => id.bagstno);
+    // console.log("gst data", dd);
+    this.reduceaddress = dd.reduce((a, v) => ({ ...a, v }));
+    this.slice2 = this.reduceaddress.slice(0, 2);
+    console.log("slice@@@@@@@@@@", this.slice2);
+    await this.disable();
+  }
+
+  async getVendor() {
+    this.getvendorlist = await this.vendor.listvendor({});
+    this.getvend = this.getvendorlist[0];
+    // console.log("get vendor ", this.getvend);
+  }
+  async getvendoraddrs() {
+    this.getvendora = await this.vendor.getvendoraddreditd({
+      id: this.addinvoice.value["vendorid"],
+    });
+    this.getvd = this.getvendora[0];
+   // console.log("get vendor ", this.getvd);
+    let getgst = this.getvd.gst_no;
+
+    console.log("gst no@@", getgst);
+  }
+
+  async changeaddress() {
+    let opp1 = this.addinvoice.value["vaddr"];
+    console.log("change address", opp1);
+    let dd = this.getvd.filter((id) => id.id == opp1).map((id) => id.gst_no);
+    // console.log("gst address", dd);
+    this.reducesvendor = dd.reduce((a, v) => ({ ...a, v }));
+    this.sllice1 = this.reducesvendor.slice(0, 2);
+    console.log("slice@@@@@@@@@@", this.sllice1);
+    await this.disable();
+  }
+
+  addMaterial() {
+    this.invoiceForm.push(this.createinvoice());
+  }
+
+  deleteMatField(index: number) {
+    this.invoiceForm.removeAt(index);
+  }
+
+  createinvoice(): FormGroup {
+    return this._fb.group({
+      itemname: [""],
+      itemqty: ["1"],
+      itemgst: ["0"],
+      itemamt: [""],
+      igst: [],
+      sgst: [],
+      cgst: [],
+      total: [{ value: "", disabled: true }],
+    });
+  }
+  async taxcal(itemtaxtype, amount, taxper) {
+    console.log("..........", taxper);
+    if (itemtaxtype == 0) {
+      // Inclusive
+      let amt = (Number(amount) / ((100 + taxper) / 100)).toFixed(2);
+      let taxamt = (Number(amount) - Number(amt)).toFixed(2);
+      return { amt: amt, taxamt: taxamt };
+    } else {
+      // Exclusive
+      let amt = Number(amount).toFixed(2);
+      let taxamt = ((Number(amount * taxper) / 100)).toFixed(2)
+      return { amt: amt, taxamt: taxamt };
+    }
+  }
+  async onkeyupQty(event: any, index: number) {
+    let taxper = this.sllice1 == this.slice2 ? (Number(this.addinvoice.value["invoiceid"][index]["sgst"] || this.addinvoice.value['sgst']) + Number(this.addinvoice.value["invoiceid"][index]["cgst"] || this.addinvoice.value['cgst'])) : Number(this.addinvoice.value["invoiceid"][index]["igst"] || this.addinvoice.value['igst']);
+    console.log("tax per amount",taxper);
+    let res = await this.taxcal(Number(this.addinvoice.value["invoiceid"][index]["itemgst"]), Number(this.addinvoice.value["invoiceid"][index]["itemamt"]), taxper);
+    // console.log("responce@@@@@@2", res["amt"], "tax amt :", res["taxamt"], "total", res["amt"] + res["taxamt"]);
+    let amount = Number(res["amt"]); let tax = Number(res["taxamt"]);
+    let total = Number(amount + tax) * Number(this.addinvoice.value["invoiceid"][index]["itemqty"])
+    // console.log("total ", total);
+    const controlArray = <FormArray>this.addinvoice.get('invoiceid');
+    controlArray.controls[index].get('total').setValue(total);
+
+  }
+
+  get invoiceFormCtrl() {
+    return this.invoiceForm.controls;
+  }
+  get ctrl() {
+    return this.addinvoice.controls;
+  }
+  get invoiceForm(): FormArray {
+    return this.ctrl.invoiceid as FormArray;
+  }
+  getInvoiceByIndex(i: number) {
+    return this.invoiceFormCtrl[i]["controls"];
+  }
+
+  changedr() {
+    console.log("clear");
+    this.invoiceForm.reset();
+    this.invoiceForm.removeAt(1);
+  }
+  async disable() {
+    console.log("slice in disable", this.sllice1);
+    console.log("slice in disable", this.slice2);
+    if (this.sllice1 == this.slice2) {
+      this.disabled = true;
+
+      // this.addinvoice.controls["igst"].disable();
+      // this.addinvoice.controls["cgst"].enable();
+      // this.addinvoice.controls["sgst"].enable();
+    } else {
+      this.disabled = false;
+      // this.addinvoice.controls["igst"].enable();
+      // this.addinvoice.controls["cgst"].disable();
+      // this.addinvoice.controls["sgst"].disable();
+    }
+    // await this.changedrop();
+  }
+
+
+  // async changedrop(index = 0) {
+
+  //   if (this.disabled == true) {
+  //     this.getInvoiceByIndex(index).igst.disable();
+  //     this.getInvoiceByIndex(index).cgst.enable();
+  //     this.getInvoiceByIndex(index).sgst.enable();
+  //   } else {
+  //     this.getInvoiceByIndex(index).igst.enable();
+  //     this.getInvoiceByIndex(index).cgst.disable();
+  //     this.getInvoiceByIndex(index).sgst.disable();
+  //   }
+  // }
+
+
+  changeaddres(){
+console.log("clear address");
+    this.addinvoice.controls["busaddr"].setValue("");
+  }
+
+
+  changevendor(){
+
+    this.addinvoice.controls["vaddr"].setValue("");
+  }
+  createForm() {
+    this.addinvoice = new FormGroup({
+      busname: new FormControl("", Validators.required),
+      busaddr: new FormControl("", Validators.required),
+      invno: new FormControl("", Validators.required),
+      invdate: new FormControl("", Validators.required),
+      vendorid: new FormControl("", Validators.required),
+      vaddr: new FormControl("", Validators.required),
+      sgst: new FormControl(""),
+      cgst: new FormControl(""),
+      igst: new FormControl(""),
+      gsttype: new FormControl("0", Validators.required),
+      invoiceid: new FormArray([this.createinvoice()]),
+    });
+  }
+}

@@ -1,0 +1,269 @@
+<div class="modal-header" style="background-color: #FFFFFF;">
+   <span>{{ modalHeader }}
+   </span>
+   <button class="close" aria-label="Close" (click)="activeModal.close()">
+      <span aria-hidden="true">&times;</span>
+   </button>
+</div>
+<div class="modal-body" style="overflow: overlay;width:100%;white-space: break-spaces;" *ngFor="let bussiness of data">
+   <div id="main_cont" style="background-color: #FFFFFF;">
+      <div style="font-weight: 700;text-align: center;">INVOICE</div>
+      <div id="pdfTable" #pdfTable style="background-color: #FFFFFF;">
+         <div class="page">
+            <!-- <table style="width: 60%;">
+                <tbody>
+                   <div style="font-weight: 700;text-align: center;">INVOICE</div>
+                   <p style="margin-bottom: 2px;font-weight: 200;">
+                      <br>
+                    
+                   </p>
+                </tbody>
+             </table> -->
+            <table style="border: 1px solid black;border-collapse: collapse; width:100%;">
+               <div class="row">
+                  <div class="col-sm-6">
+                     <td>
+                        <table>
+                           <tbody>
+                              <tr>
+                                 <td>Bussiness Name</td>
+                                 <td>:{{bussiness.busname}}</td> <br>
+                              </tr>
+
+                              <tr>
+                                 <td>Address</td>
+                                 <td>:{{bussiness.busaddr}}</td>
+                              </tr>
+                              <tr>
+                                 <td>Mobile No</td>
+                                 <td>:{{bussiness?bussiness.bphoneno:''}}</td>
+                              </tr>
+                              <tr>
+                                 <td>GST No</td>
+                                 <td>:{{bussiness?bussiness.busgstno==null?'--':bussiness.busgstno:''}}
+                                 </td>
+                              </tr>
+
+                           </tbody>
+                        </table>
+                     </td>
+                  </div>
+                  <div class="col-sm-6">
+                     <td style="text-align:left; ">
+                        <table>
+                           <tbody>
+                              <tr>
+                                 <td>Vendor Name</td>
+                                 <td>:{{bussiness?bussiness.vname:''}}</td>
+                              </tr>
+                              <tr>
+                                 <td>Vendor Address </td>
+                                 <td>:{{bussiness?bussiness.vaddr:''}}</td>
+                              </tr>
+                              <tr>
+                                 <td>Vendor Mobile</td>
+                                 <td>:{{bussiness ? bussiness.vmobile:'N/A'}}</td>
+                              </tr>
+                              <tr>
+                                 <td>GST No</td>
+                                 <td>:{{bussiness?bussiness.vgstno:''}}</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </td>
+                  </div>
+               </div>
+
+
+
+            </table>
+            <br>
+            <table style="border: 1px solid black; width: 100%">
+               <thead>
+                  <tr>
+                     <td colspan="8" style="font-weight: 900;">
+                        Billing Information
+                     </td>
+                  </tr>
+                  <tr>
+                     <th style="text-align: center;border: 1px solid black;">Item Name</th>
+                     <th style="text-align: center;border: 1px solid black;">Quantity</th>
+                     <th style="text-align: center;border: 1px solid black;">Amount</th>
+                     <th style="text-align: center;border: 1px solid black;">Total Amount</th>
+                  </tr>
+               </thead>
+               <ng-container *ngIf="this.data[0].gsttype == 0">
+               <tbody *ngFor="let item of data2" >
+                  <tr>
+                     <td style="text-align: center;border: 1px solid black;word-break:break-all;">
+                        {{item?item.itemname:''}} </td>
+                     <td style="text-align: center;border: 1px solid black;">{{item?item.itemqty:''}}
+                     </td> 
+                    
+                        <td style="text-align: center;border: 1px solid black;">{{item && item.itemgst == 0 ? (item.itemamt
+                           - ((item.igst?item.igst:(item.cgst + item.sgst)) | tax:item.itemamt:item.itemgst)) :
+                         (  item.itemamt)}}
+                        </td>
+                           <td style="text-align: center;border: 1px solid black;">{{item && item.itemgst == 0 ? item.itemqty * (item.itemamt
+                              - ((item.igst?item.igst:(item.cgst + item.sgst)) | tax:item.itemamt:item.itemgst)) :( item.itemqty * item.itemamt)}}
+                           </td>
+                  </tr>
+               </tbody>
+            </ng-container>
+            <ng-container *ngIf="this.data[0].gsttype == 1">  
+               <tbody *ngFor="let item of data2" >
+                  <tr>
+                     <td style="text-align: center;border: 1px solid black;word-break:break-all;">
+                        {{item?item.itemname:''}} </td>
+                     <td style="text-align: center;border: 1px solid black;">{{item?item.itemqty:''}}
+                     </td> 
+                    
+                        <td style="text-align: center;border: 1px solid black;">{{item && item.itemgst == 0 ? (item.itemamt
+                           - ((data[0].igst?data[0].igst:(data[0].cgst + data[0].sgst)) | tax:item.itemamt:item.itemgst)) :
+                         (  item.itemamt)}}
+                        </td>
+
+                        <td style="text-align: center;border: 1px solid black;">{{item && item.itemgst == 0 ?item.itemqty *  (item.itemamt- ((data[0].igst ?data[0].igst :(data[0].cgst + data[0].sgst)) | tax:item.itemamt:item.itemgst)) :(item.itemqty *  item.itemamt)}}
+                        </td>
+                            
+                     
+                  </tr>
+               </tbody>
+            </ng-container>
+            </table>
+
+
+
+            <br>
+            <div class="row">
+               <div class="col-sm-6">
+               </div>
+               <div class="col-sm-6">
+                  <b>Sub Total  :&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{{taxsum | number: '1.0-0' }} </b>
+               </div>
+            </div>
+            <br>
+            <div>
+               <table *ngIf="this.data[0].gsttype == 0"
+                  style="border: 1px solid black;border-collapse: collapse;width: 100%;">
+                  <thead style=" border: 1px solid black;">
+                     <tr>
+                        <td colspan="8" style="font-weight: 900;">
+                           TAX Information
+                        </td>
+                     </tr>
+                     <tr>
+
+                        <th style="text-align: center;border: 1px solid black;">Item Name</th>
+                        <th style="text-align: center;border: 1px solid black;">IGST</th>
+                        <th style="text-align: center;border: 1px solid black;">CGST</th>
+                        <th style="text-align: center;border: 1px solid black;">SGST</th>
+                        <th style="text-align: center;border: 1px solid black;">Tax Amount</th>
+                     </tr>
+                  </thead>
+<!-- <ng-container *ngFor="let item1 of array2"> -->
+
+
+                  <tbody *ngFor="let item of data2">
+                     <tr>
+                        <td style="text-align: center;border: 1px solid black;word-break:break-all;">
+                           {{item?item.itemname:''}} </td>
+                        <td style="text-align: center;border: 1px solid black;">{{item?item.igst+""+'%':''}}</td>
+                        <td style="text-align: center;border: 1px solid black;">{{item?item.cgst+""+'%':''}}</td>
+                        <td style="text-align: center;border: 1px solid black;">{{item?item.sgst+""+'%':''}}</td>
+                        <td style="text-align: center;border: 1px solid black;">{{item &&item.taxamt | number: '1.0-0'}}</td>
+                       
+                     </tr>
+                  </tbody>
+               <!-- </ng-container> -->
+               </table>
+
+            </div>
+            <br>
+
+
+            <div>
+               <table *ngIf="this.data[0].gsttype == 1" style="width: 40% ; margin-left: 49%;">
+                  <div *ngFor="let item of data">
+                     <tr>
+                        <th style="text-align: center;border: 1px solid black; " colspan="3">
+                           TAX Information
+                        </th>
+                     </tr>
+
+                     <tr>
+                        <th style="text-align: center;border: 1px solid black; width: 20%">GST Type</th>
+                        <th style="text-align: center;border: 1px solid black;width: 20%">Percentage</th>
+                        <th style="text-align: center;border: 1px solid black; width: 20%">RS</th>
+                     </tr>
+
+
+                     <tr>
+                        <td style="text-align: center;border: 1px solid black;">IGST</td>
+                        <td style="text-align: center;border: 1px solid black;">{{item.igst}}%</td>
+                        <td style="text-align: center;border: 1px solid black;">{{item.igst !==0 ? (taxsum2 | number: '1.0-0') :'--'}}</td>
+                     </tr>
+
+                     <tr>
+                        <td style="text-align: center;border: 1px solid black;">SGST </td>
+                        <td style="text-align: center;border: 1px solid black;">{{item.sgst}} %</td>
+                        <td style="text-align: center;border: 1px solid black;">{{item.sgst !==0 ? (this.round  | number: '1.0-0') :'--'}}
+                        </td>
+                     </tr>
+                     <tr>
+                        <td style="text-align: center;border: 1px solid black;">CGST </td>
+                        <td style="text-align: center;border: 1px solid black;">{{item.cgst}} %</td>
+                        <td style="text-align: center;border: 1px solid black;">{{item.cgst !==0 ? (this.round  | number: '1.0-0') :'--'}} </td>
+                     </tr>
+                  </div>
+               </table>
+
+            </div>
+
+            <br>
+            <div class="row">
+               <div class="col-sm-6">
+               </div>
+               <div class="col-sm-6 subclass">
+                  <b>Tax Sub Total :&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{{taxsum2 | number: '1.0-0' }} </b>
+               </div>
+            </div>
+
+
+            <br>
+
+
+
+            <div class="row">
+               <div class="col-sm-6">
+               </div>
+               <div class="col-sm-6">
+                  <b>Total        :&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{totalbill | number: '1.0-0' }} </b>
+               </div>
+            </div>
+
+            <br>
+
+            <div style="text-align: center;">***
+               This is a Computer Generated Invoice and requires no Seal and Sign***
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="modal-footer">
+   <button type="submit" class="btn btn-md btn-success" (click)="print();">Print</button>
+   <button type="submit" class="btn btn-md btn-info" (click)="downloadAsPDF();">Download</button>
+   <button type="button" class="btn btn-md btn-danger" (click)="activeModal.close();">Cancel</button>
+</div>

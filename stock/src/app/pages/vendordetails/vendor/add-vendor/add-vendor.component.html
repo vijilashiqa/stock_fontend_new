@@ -1,0 +1,263 @@
+<div class="col-md-12">
+  <nb-card>
+    <nb-card-header>Create Vendor Details</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="addvendor" class="form-horizontal" (ngSubmit)="addvendors()">
+        <div class="modal-body">
+          <nb-tabset>
+            <nb-tab tabTitle="Stock Details">
+              <div class="modal-body">
+
+                <div class="form-group row">
+                  <div  class="col-sm-6">
+                    <label> Select Business <span style="color: red">*</span></label>
+                    <auto-completen  [addclass]="{error:submit && this.addvendor.controls.bid.errors}"
+                     addclass="form-control" optValues="bname"
+                        formControlName="bid" (keyUp)="getbusiness($event)"
+                        placeholder="Select Business" Id="id" [item]="getbusines1">
+                    </auto-completen>
+                    <div *ngIf="
+                    this.addvendor.controls.bid.errors &&
+                    this.addvendor.controls.bid.errors.required &&
+                    submit
+                  " class="error-text">
+                  Business Name is required!
+                </div>
+                </div>
+
+                  </div>
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label>Vendor Company<span style="color:red">*</span></label>
+                    <input type="text" class="form-control" name="vcompany" formControlName="vcompany"
+                      placeholder="Enter Vendor Company Name"
+                      [ngClass]="{ 'is-invalid': submit && addvendor.controls.vcompany.errors }" />
+                    <small
+                      *ngIf="addvendor.controls.vcompany.errors &&(addvendor.controls.vcompany.errors.required )&& submit"
+                      class="invalid-feedback">Vendor Company is required! </small>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label> Vendor Name <span style="color:red">*</span></label>
+                    <input type="text" class="form-control" name="vname" formControlName="vname"
+                    placeholder="Enter Vendor Name"
+                    [ngClass]="{ 'is-invalid': submit && addvendor.controls.vname.errors }" />
+                  <small
+                    *ngIf="addvendor.controls.vname.errors &&(addvendor.controls.vname.errors.required )&& submit"
+                    class="invalid-feedback">Vendor Name is required! </small>
+                  </div>
+
+
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label> Vendor Mobile No <span style="color:red">*</span></label>
+                    <input type="number" class="form-control" name="vmobile" formControlName="vmobile"
+                    placeholder="Enter Vendor Mobile No"
+                    [ngClass]="{ 'is-invalid': submit && addvendor.controls.vmobile.errors }" />
+                  <small
+                    *ngIf="addvendor.controls.vmobile.errors &&(addvendor.controls.vmobile.errors.required )&& submit"
+                    class="invalid-feedback">Mobile is required! </small>
+                  </div>
+                  <div class="col-sm-6">
+                    <label>Vendor Email<span style="color:red">*</span></label>
+                    <input type="text" class="form-control" name="vmail" formControlName="vmail"
+                    placeholder="Enter Vendor Email"
+                    [ngClass]="{ 'is-invalid': submit && addvendor.controls.vmail.errors }" />
+                  <small
+                    *ngIf="addvendor.controls.vmail.errors &&(addvendor.controls.vmail.errors.required )&& submit"
+                    class="invalid-feedback">Email id is required! </small>
+                  </div>
+                </div>
+              </div>
+            </nb-tab>
+          
+
+            <nb-tab tabTitle="Bank Details">
+              <div class="modal-body">
+                <div class="form-group row" formArrayName="bankdetails">
+                  <div class="col-sm-12">
+                    <div *ngFor="
+                        let user of bankdetails.controls;
+                        index as idx;
+                        let last = last
+                      ">
+                      <div class="row" [formGroupName]="idx">
+                        <div class="form-group" class="col-sm-2">
+                          <label>Bank Details <span style="color: red">*</span></label>
+                      <select [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['bank'].invalid && submit}" class="form-control" 
+                        name="bank" formControlName="bank" >
+                        <option value="" selected>Select Bank</option>
+                        <option value="1">IOB</option>
+                        <option value="2">HDFC</option>
+                        <option value='3'>SBI</option>
+                      </select>
+                      <small *ngIf="user.hasError('required','bank')&&submit" class="error-text">Bank Details is Required! </small>
+
+                        </div>
+                        <div class="form-group" class="col-sm-2">
+                
+                    <label>Bank Name <span style="color: red">*</span></label>
+                    <input [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['vbankname'].invalid && submit}"
+                     type="text" name="vbankname" formControlName="vbankname" placeholder="Enter Invoice No"
+                      class="form-control" />
+                      <small *ngIf="user.hasError('required','vbankname')&&submit" class="error-text"> Bank Name is Required! </small>
+
+                        </div>
+                        <div class="form-group" class="col-sm-2">
+                          <label>Bank NO <span style="color: red">*</span></label>
+                          <input  [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['vbacctno'].invalid && submit}"
+                           type="text" name="vbacctno" formControlName="vbacctno" placeholder="Enter Vendor Bank No"
+                            class="form-control" />
+                            <small *ngIf="user.hasError('required','vbacctno')&&submit" class="error-text">Bank NO is Required! </small>
+
+                        </div>
+                   
+                        <div class="form-group" class="col-sm-2">
+                          <label>Bank IFSC <span style="color: red">*</span></label>
+                          <input  [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['vbifsc'].invalid && submit}"
+                          type="text" name="vbifsc" formControlName="vbifsc" placeholder="Enter Vendor Bank IFSC No"
+                            class="form-control" />
+                            <small *ngIf="user.hasError('required','vbifsc')&&submit" class="error-text"> Bank IFSC  is Required! </small>
+
+                        </div>
+
+
+                        <div class="form-group" class="col-sm-1" *ngIf="last || idx != 0">
+                          <div class="btn-group">
+                            <button type="button" style="margin-top: 31%" class="btn btn-md btn-success dropdown-toggle"
+                              data-bs-toggle="dropdown">
+                              Action
+                            </button>
+                            <div class="dropdown-menu">
+                              <a (click)="deleteBankdetails(idx)" class="dropdown-item" *ngIf="idx != 0"><i
+                                  title="Edit Complaint" class="ion-android-delete"></i>&nbsp;Delete</a>
+                              <a (click)="addBankdetails();" class="dropdown-item" *ngIf="last"><i
+                                  title="Edit Complaint" class="ion-ios-plus-outline"></i>&nbsp;ADD
+                              </a>
+                            </div>
+                          </div>
+                        </div>  
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nb-tab>
+
+
+
+            <nb-tab tabTitle="Address Details ">
+              <div class="modal-body">
+                <div class="form-group row" formArrayName="stockinid">
+                 
+                    <div *ngFor="
+                        let user of stockinid.controls;
+                        index as idx;
+                        let last = last
+                      ">
+                      <div class="col-sm-12">
+                      <div class="row" [formGroupName]="idx">
+                        <div class="form-group" class="col-sm-3">
+                          <label>GST NO<span style="color: red">*</span></label>
+                          <input  [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['gst_no'].invalid && submit}"
+                           type="text" name="gst_no" formControlName="gst_no" placeholder="Enter GST NO"
+                          class="form-control"  />
+                          <small *ngIf="user.hasError('required','gst_no')&&submit" class="error-text"> Gst No is Required! </small>
+                        </div>
+
+                        <div class="form-group" class="col-sm-3">
+                            <label>Short Address <span style="color: red">*</span></label>
+                            <textarea   [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['addrname'].invalid && submit}"
+                            type="text" name="addresname" formControlName="addrname" placeholder="Enter Address Details"
+                            class="form-control"  >
+                            </textarea>
+                            <small *ngIf="user.hasError('required','addrname')&&submit" class="error-text"> Address Details is Required! </small>
+
+                        </div>
+                        <div class="form-group" class="col-sm-3">
+                          <label>State<span style="color: red">*</span></label>
+                          <auto-completen 
+                          [addclass]="{error:submit &&  this.user['controls']['state'].invalid && submit}"
+                            optValues="state_name" formControlName="state"   (keyUp)="getstate($event)" 
+                            (changed)="getdistrict();dropdown($event);changestate(idx);  " placeholder="Select State" optId="state_pk" [item]="getstates">
+                          </auto-completen>
+                          <small *ngIf="user.hasError('required','state')&&submit" class="error-text"> State is Required! </small>
+
+                        </div>
+
+                        <div class="form-group" class="col-sm-3">
+                          <label>District<span style="color: red">*</span></label>
+                          <auto-completen 
+                          [addclass]="{error:submit &&  this.user['controls']['dist'].invalid && submit}"
+                         optValues="district_name" formControlName="dist" (keyUp)="getdistrict($event)"  
+                           placeholder="Select District" optId="district_pk" [item]="dist"  >
+                        </auto-completen>
+                        <small *ngIf="user.hasError('required','dist')&&submit" class="error-text"> District is Required! </small>
+
+ 
+</div>
+</div>
+</div>
+  <div class="col-sm-12">
+     <div class="row" [formGroupName]="idx">
+   
+      <div class="form-group" class="col-sm-3">
+        <label>Pincode<span style="color: red">*</span></label>
+        <input
+        [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['pincode'].invalid && submit}"
+        type="text" name="pincode" formControlName="pincode" placeholder="Enter Pincode"
+        class="form-control"  />
+        <small *ngIf="user.hasError('required','pincode')&&submit" class="error-text">Pincode is Required! </small>
+
+        </div>
+
+        
+    <div class="form-group" class="col-sm-3">
+      <label>Full Address  <span style="color: red">*</span></label>
+      <textarea [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['address'].invalid && submit}"
+       type="text" class="form-control" name="address" formControlName="address" placeholder="Enter Address Details">
+        </textarea>
+        <small *ngIf="user.hasError('required','address')&&submit" class="error-text">Full Address  is Required! </small>
+
+      </div>
+
+                        <div class="form-group" class="col-sm-1" *ngIf="last || idx != 0">
+                          <div class="btn-group">
+                            <button type="button" style="margin-top: 31%" class="btn btn-md btn-success dropdown-toggle"
+                              data-bs-toggle="dropdown"  >
+                              Action
+                            </button>
+
+                            <div class="dropdown-menu">
+                              <a (click)="deleteMatField(idx)" class="dropdown-item" *ngIf="idx != 0">
+                                <i title="Edit Complaint" class="ion-android-delete"></i>&nbsp;Delete</a>
+                              <a (click)="addMaterial();" class="dropdown-item" *ngIf="last">
+                                <i title="Edit Complaint" class="ion-ios-plus-outline"></i>&nbsp;ADD</a>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                      </div>
+                
+                  </div>
+                </div>
+              </div>
+            </nb-tab>
+          </nb-tabset>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" status="success" nbButton>Add</button>
+          <button type="button" class="btn btn-md btn-danger"
+            [routerLink]="['/pages/vendor/ListVendor']">Back</button>
+        </div>
+
+      </form>
+    </nb-card-body>
+  </nb-card>
+</div>

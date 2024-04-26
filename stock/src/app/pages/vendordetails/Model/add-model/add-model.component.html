@@ -1,0 +1,99 @@
+
+<nb-card>
+    <nb-card-body>
+        <div class="modal-header">
+            <h4 class="modal-title">{{ title }}</h4>
+            <!-- <button class="close" aria-label="Close"> -->
+            <button class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form [formGroup]="addmodel" class="form-horizontal" (ngSubmit)="addhsn()">
+            <div class="modal-body">
+                <div class="form-group row">
+        
+
+
+
+                  <div class="col-sm-6">
+                    <label> Business Name<span style="color: red">*</span></label>
+                    <auto-completen [addclass]="{
+                          error: submit && this.addmodel.controls.bid.errors 
+                        }" addclass="form-control" optValues="bname"  formControlName="bid" (keyUp)="getBusiness()" (changed)="getmake(); getdevice()"
+                      placeholder="Select Business Name" Id="id" [item]="getbuss">
+                    </auto-completen>
+                    <div *ngIf="
+                          this.addmodel.controls.bid.errors &&
+                          this.addmodel.controls.bid.errors.required &&
+                          submit
+                        " class="error-text">
+                      Business Name is required!
+                    </div>
+                  </div>
+
+
+                        <div class="col-sm-6">
+                            <label> Make  Name<span style="color: red">*</span></label>
+                            <auto-completen [addclass]="{
+                                  error: submit && this.addmodel.controls.makeid.errors
+                                }" addclass="form-control" optValues="makename"  formControlName="makeid" (keyUp)="getmake()"
+                              placeholder="Select Make Name" optId="makeid" [item]="getmakel">
+                            </auto-completen>
+                            <div *ngIf="
+                                  this.addmodel.controls.makeid.errors &&
+                                  this.addmodel.controls.makeid.errors.required &&
+                                  submit
+                                " class="error-text">
+                              Make Name is required!
+                            </div>
+                          </div>
+              
+
+
+
+
+                    
+                 
+
+
+</div>
+
+
+<div class="form-group row">
+
+  <div class="col-sm-6">
+    <label> Device Name<span style="color: red">*</span></label>
+    <auto-completen [addclass]="{
+          error: submit && this.addmodel.controls.deviceid.errors
+        }" addclass="form-control" optValues="devicename"  formControlName="deviceid" (keyUp)="getdevice()"
+      placeholder="Select Business Name" optId="deviceid" [item]="getdevicel">
+    </auto-completen>
+    <div *ngIf="
+          this.addmodel.controls.deviceid.errors &&
+          this.addmodel.controls.deviceid.errors.required &&
+          submit
+        " class="error-text">
+      Business Name is required!
+    </div>
+  </div>
+  
+      <div class="col-sm-6">
+        <label> Model Name <span style="color:red">*</span></label>
+       <input type="text" class="form-control" name="modelname" formControlName="modelname" placeholder="Enter Name"
+        [ngClass]="{ 'is-invalid': submit && addmodel.controls.modelname.errors }"/>
+        <small *ngIf="addmodel.controls.modelname.errors &&(addmodel.controls.modelname.errors.required )&& submit"
+        class="invalid-feedback">Model Name is required! </small>
+    </div>
+    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit"  status="success" nbButton>
+                    {{ item ? "Update" : "Add" }}
+                </button>
+                <button type="button"  status="danger" nbButton  (click)="close()">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </nb-card-body>
+</nb-card>

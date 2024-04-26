@@ -1,0 +1,94 @@
+<div class="col-md-12">
+    <nb-card>
+       <nb-card-header>Create Own Use </nb-card-header>
+       <nb-card-body>
+          <form [formGroup]="addownuseForm" class="form-horizontal"  (ngSubmit)="addchannelsrv();">
+             <div class="modal-body">
+                <div class="form-group row">
+                   <div class="col-sm-3">
+                      <label> Business Name<span style="color: red">*</span></label>
+                      <auto-completen [addclass]="{
+                               error: submit && this.addownuseForm.controls.bid.errors 
+                             }" addclass="form-control" optValues="bname" formControlName="bid" (keyUp)="getBusiness()"
+                         placeholder="Select Business Name" Id="id" [item]="getbuss">
+                      </auto-completen>
+                      <div *ngIf="
+                               this.addownuseForm.controls.bid.errors &&
+                               this.addownuseForm.controls.bid.errors.required &&
+                               submit
+                             " class="error-text">
+                         Business Name is required!
+                      </div>
+                   </div> 
+
+
+                
+
+                  <div class="col-sm-3">
+                     <label> Select Item <span style="color: red">*</span></label>
+                     <auto-completen [addclass]="{error: submit && this.addownuseForm.controls.itemname.errors }"
+                     addclass="form-control" optValues="itemname" formControlName="itemname" (changed)="getserialno();changeserialno()"
+                        (keyUp)="getBusiness()" placeholder="Select item Name" optId="modelid" [item]="getiteml1">
+                     </auto-completen>
+                     <div
+                     *ngIf="this.addownuseForm.controls.itemname.errors && (this.addownuseForm.controls.itemname.errors.required) && submit"
+                     class="error-text">
+                     Mode is required!
+                  </div>
+                  </div>
+
+                  <div class="col-sm-3" >
+                     <label>Select Mode <span style="color: red">*</span></label>
+                     <select class="form-control" formControlName="modetype"  (change)="clearValidation()"
+                        [ngClass]="{ 'is-invalid': submit && addownuseForm.controls.modetype.errors }">
+                        <option value="null" selected>Select Mode</option>
+                        <option value="1">Bulk</option>
+                        <option value="0">Individual </option>
+                     </select>
+                     <div
+                        *ngIf="this.addownuseForm.controls.modetype.errors && (this.addownuseForm.controls.modetype.errors.required) && submit"
+                        class="error-text">
+                        Mode is required!
+                     </div>
+                  </div>
+
+
+                  <div class="col-sm-3" *ngIf="addownuseForm.value['modetype']=='0'" >
+                     <label> Select Serial No <span style="color: red">*</span></label>
+                     <auto-completen    [addclass]="{error: submit && this.addownuseForm.controls.model_sid.errors }"
+                        addclass="form-control" optValues="serial_num" formControlName="model_sid"
+                        (keyUp)="getserialno()" placeholder="Select Serial No" optId="model_sid" [item]="getoperatorlist">
+                     </auto-completen>
+                     <div
+                     *ngIf="this.addownuseForm.controls.model_sid.errors && (this.addownuseForm.controls.model_sid.errors.required) && submit"
+                     class="error-text">
+                     Mode is required!
+                  </div>                  </div>
+
+
+                  
+
+                  <div class="col-sm-3" *ngIf="addownuseForm.value['modetype']=='1'">
+                     <label for="formFile" class="form-label">Bulk Upload</label>
+                     <input 
+                      #myFile type="file" (change)="changeListener($event.target.files[0])"
+                        class="form-control" accept=".xlsx" />
+                     <a href="/assets/data/serialno.xlsx" target="_blank" download><b>Download Sample
+                           Here</b></a>
+                  </div>
+
+
+
+
+                      </div>
+                   </div>
+     
+             <div class="modal-footer">
+                <button type="submit" status="success" nbButton>{{id ? 'Update' : 'Add'}}</button>
+                <button type="button" class="btn btn-md btn-danger"
+                   [routerLink]="['/pages/vendor/list-ownuse']">Back</button>
+             </div>
+          </form>
+       </nb-card-body>
+    </nb-card>
+ </div>

@@ -1,0 +1,296 @@
+<div class="col-md-12">
+  <nb-card>
+    <nb-card-header>Create Invoice Details</nb-card-header>
+    <nb-card-body>
+      <form [formGroup]="addinvoice" class="form-horizontal" (ngSubmit)="addstockIn()">
+        <div class="modal-body">
+          <nb-tabset>
+            <nb-tab tabTitle="Vendor Details">
+              <div class="modal-body">
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label> Business Name<span style="color: red">*</span></label>
+                    <auto-completen [addclass]="{
+                          error: submit && this.addinvoice.controls.busid.errors
+                        }" addclass="form-control" optValues="bname" (changed)="
+                          getbusinessaddress($event);changedr();changeaddres();changeaddres();
+                          getBusiness();" formControlName="busid" (keyUp)="getBusiness()"
+                      placeholder="Select Business Name" Id="id" [item]="getbuss">
+                    </auto-completen>
+                    <div *ngIf="
+                          this.addinvoice.controls.busid.errors &&
+                          this.addinvoice.controls.busid.errors.required &&
+                          submit
+                        " class="error-text">
+                      Business Name is required!
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label> Business Address<span style="color: red">*</span></label>
+                    <auto-completen [addclass]="{ error: submit && this.addinvoice.controls.busaddr.errors}"
+                      addclass="form-control" optValues="baaddrname" (changed)="Changedata() "
+                      formControlName="busaddr" (keyUp)="getbusinessaddress($event);" placeholder="Select Business Name"
+                      Id="id" [item]="getadd">
+                    </auto-completen>
+                    <div *ngIf="
+                            this.addinvoice.controls.busaddr.errors &&
+                            this.addinvoice.controls.busaddr.errors.required &&
+                            submit
+                          " class="error-text">
+                      Business Address is required!
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label> Vendor Name <span style="color:red">*</span></label>
+                    <auto-completen [addclass]="{error:submit && this.addinvoice.controls.vendorid.errors}"
+                      addclass="form-control" optValues="vcompany" (changed)="getvendoraddrs();changevendor();getVendor();changedr();"
+                      formControlName="vendorid" (keyUp)="getBusiness()" placeholder="Select Vendor Name" Id="id"
+                      [item]="getvend">
+                    </auto-completen>
+                    <div *ngIf="
+                          this.addinvoice.controls.vendorid.errors &&
+                          this.addinvoice.controls.vendorid.errors.required &&
+                          submit
+                        " class="error-text">
+                      Vendor Name is required!
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label> Vendor Address<span style="color:red">*</span></label>
+                    <auto-completen [addclass]="{error:submit && this.addinvoice.controls.vaddr.errors}" (changed)="changeaddress();"
+                      addclass="form-control" optValues="addrname" formControlName="vaddr" (keyUp)="getvendoraddrs()"
+                      placeholder="Select Loction Name" Id="id" [item]="getvd">
+                    </auto-completen>
+                    <div *ngIf="
+                          this.addinvoice.controls.vaddr.errors &&
+                          this.addinvoice.controls.vaddr.errors.required &&
+                          submit
+                        " class="error-text">
+                      Vendor Address is required!
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-group row">
+                  <div class="col-sm-6">
+                    <label>Invoice No<span style="color:red">*</span></label>
+                    <input type="text" class="form-control" name="invno" formControlName="invno"
+                      placeholder="Enter Invoice No"
+                      [ngClass]="{ 'is-invalid': submit && addinvoice.controls.invno.errors }" />
+                    <small
+                      *ngIf="addinvoice.controls.invno.errors &&(addinvoice.controls.invno.errors.required )&& submit"
+                      class="invalid-feedback">Invoice No is required! </small>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label>Invoice Date<span style="color:red">*</span></label>
+                    <input type="date" class="form-control" name="invdate" formControlName="invdate"     placeholder="Slect the date"
+                      [ngClass]="{ 'is-invalid': submit && addinvoice.controls.invdate.errors }" />
+                    <small
+                      *ngIf="addinvoice.controls.invdate.errors &&(addinvoice.controls.invdate.errors.required )&& submit"
+                      class="invalid-feedback">Invoice date is required! </small>
+                  </div>
+                </div>
+              </div>
+            </nb-tab>
+
+            <nb-tab tabTitle="Invoice Details">
+              <div class="modal-body">
+                <div class="form-group row">
+                  <div class="col-sm-3" >
+                    <label> GST Type<span style="color:red">*</span></label>
+                    <select  [ngClass]="{ 'is-invalid': submit && addinvoice.controls.gsttype.errors }"
+                     (change)="changedr();changegstype($event);" style="background-color: #e9ecef00  !important" class="form-control" name="gsttype" formControlName="gsttype">
+                      <option value="" selected>Select tax </option>
+                      <option value="1">Common TAX</option>
+                      <option value="0">Split TAX</option>
+                    </select>
+                    <small
+                    *ngIf="addinvoice.controls.gsttype.errors &&(addinvoice.controls.gsttype.errors.required )&& submit"
+                    class="invalid-feedback"> GST Type is required! </small>
+                  </div>
+
+              
+
+                  <div class="form-group" class="col-sm-2" *ngIf="this.addinvoice.value['gsttype'] ==1 && !disabled">
+                    <label>IGST<span style="color:red">*</span></label>
+                    <input      [ngClass]="{ 'is-invalid': submit && addinvoice.controls.igst.errors }" 
+                    type="text" name="igst" formControlName="igst" class="form-control" min="0"
+                      placeholder="Enter IGST">
+                      <small
+                      *ngIf="addinvoice.controls.igst.errors &&(addinvoice.controls.igst.errors.required )&& submit"
+                      class="invalid-feedback">IGST  is required! </small>
+                  </div>
+
+                  <div class="form-group" class="col-sm-2" *ngIf="this.addinvoice.value['gsttype'] ==1 && disabled">
+                    <label>SGST<span style="color:red">*</span></label>
+                    <input   [ngClass]="{ 'is-invalid': submit && addinvoice.controls.sgst.errors }" 
+                     type="number" name="sgst" formControlName="sgst" class="form-control" name="sgst" min="0"
+                      placeholder="Enter SGST">
+                      <small
+                      *ngIf="addinvoice.controls.sgst.errors &&(addinvoice.controls.sgst.errors.required )&& submit"
+                      class="invalid-feedback">SGST date is required! </small>
+                  </div>
+
+
+                  <div class="form-group" class="col-sm-2" *ngIf="this.addinvoice.value['gsttype'] ==1 && disabled">
+                    <label>CGST<span style="color:red">*</span></label>
+                    <input   [ngClass]="{ 'is-invalid': submit && addinvoice.controls.cgst.errors }" 
+                    type="number" name="cgst" formControlName="cgst" class="form-control" min="0" name="cgst"
+                      placeholder="Enter CGST">
+                      <small
+                      *ngIf="addinvoice.controls.cgst.errors &&(addinvoice.controls.cgst.errors.required )&& submit"
+                      class="invalid-feedback">Invoice date is required! </small>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="modal-body">
+                <div class="form-group row" formArrayName="invoiceid">
+                  <div class="col-sm-12" *ngIf="this.addinvoice.value['gsttype'] !=''"  >
+                    <div *ngFor="
+                          let user of invoiceFormCtrl;
+                          index as idx;
+                          let last = last
+                        ">
+                      <div class="row" [formGroupName]="idx"  >
+
+                        <div class="form-group" class="col-sm-2">
+                          <label>Make Name<span style="color:red">*</span></label>
+                          <auto-completen   [addclass]="{error:submit &&  this.user['controls']['makeid'].invalid && submit}"
+                            addclass="form-control" optValues="makename"  [formControl]="getInvoiceByIndex(idx)['makeid']"  (keyUp)="getmake();" (changed)=" dropdown($event);getmodel()"
+                        placeholder="Select Business Name" optId="makeid" [item]="getmakel">
+                      </auto-completen>
+                      <small *ngIf="user.hasError('required','makeid')&&submit" class="error-text">Make Name is Required! </small>
+
+                        </div>
+                        
+                        <div class="form-group" class="col-sm-2">
+                          <label>Device Name<span style="color:red">*</span></label>
+                          <auto-completen   [addclass]="{error:submit &&  this.user['controls']['deviceid'].invalid && submit}"
+                            addclass="form-control" optValues="devicename"  formControlName="deviceid" (keyUp)="getdevice()" (changed)="dropdownd($event);getmodel();changemodel(idx)"
+                        placeholder="Select Business Name" optId="deviceid" [item]="getdevicel">
+                      </auto-completen>
+                      <small *ngIf="user.hasError('required','deviceid')&&submit" class="error-text">Device Name  is Required! </small>
+
+                        </div>
+
+                        <div class="form-group" class="col-sm-2">
+                          <label>Model Name<span style="color:red">*</span></label>
+                          <auto-completen    [addclass]="{error:submit &&  this.user['controls']['modelid'].invalid && submit}"
+                          optValues="modelname"  formControlName="modelid" (keyUp)="getmodel()"   addclass="form-control" 
+                          placeholder="Select Business Name" optId="modelid" [item]="getmodel2">
+                        </auto-completen>
+                        <small *ngIf="user.hasError('required','modelid')&&submit" class="error-text">Model Name  is Required! </small>
+
+                        </div>
+
+
+                        <div  class="form-group" class="col-sm-2" *ngIf="this.addinvoice.value['gsttype'] ==0 && !disabled" >
+                          <label >IGST<span style="color:red">*</span></label>
+                          <input  [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['igst'].invalid && submit}"
+                          type="text" name="igst"  formControlName="igst"  (keyup)="onkeyupQty($event, idx)"   class="form-control" min="0"
+                            placeholder="Enter IGST">
+                            <small *ngIf="user.hasError('required','igst')&&submit" class="error-text"> IGST  is Required! </small>
+
+                        </div>
+
+                        <div class="form-group" class="col-sm-2" *ngIf="this.addinvoice.value['gsttype'] ==0 && disabled  ">
+                          <label>SGST<span style="color:red">*</span></label>
+                          <input [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['sgst'].invalid && submit}"
+                           type="number" name="sgst" formControlName="sgst" class="form-control" name="sgst"
+                            min="0" placeholder="Enter SGST">
+                            <small *ngIf="user.hasError('required','sgst')&&submit" class="error-text"> SGST  is Required! </small>
+
+                        </div>
+
+
+                        <div class="form-group" class="col-sm-2" *ngIf="this.addinvoice.value['gsttype'] ==0 && disabled">
+                          <label>CGST<span style="color:red">*</span></label>
+                          <input [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['cgst'].invalid && submit}" 
+                          type="number" name="cgst" formControlName="cgst" class="form-control" min="0"
+                            name="cgst" placeholder="Enter CGST">
+                            <small *ngIf="user.hasError('required','cgst')&&submit" class="error-text"> CGST  is Required! </small>
+                        </div>
+
+
+
+                        <div class="form-group" class="col-sm-2" >
+                          <label> TAX Type<span style="color:red">*</span></label>
+                          <select  [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['itemgst'].invalid && submit}" 
+                           style="background-color: #e9ecef00  !important" class="form-control" name="itemgst" (change)="onkeyupQty($event, idx);addvalidation(idx)" formControlName="itemgst">
+                            <option value="" selected>Select Tax</option>
+                            <option value=0 >Inclusive</option>
+                            <option value=1>Exclusive</option>
+                          </select>
+                          <small *ngIf="user.hasError('required','itemgst')&&submit" class="error-text"> Select Tax  is Required! </small>
+                        </div>
+                      </div>
+
+
+
+                      <div class="row" [formGroupName]="idx">
+                        <div class="form-group" class="col-sm-2">
+                          <label>Quantity<span style="color:red">*</span></label>
+                          <input [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['itemqty'].invalid && submit}"
+                            type="number" name="itemqty" formControlName="itemqty" placeholder="Enter Quantity"
+                            class="form-control" (keyup)="onkeyupQty($event, idx)" />
+                            <small *ngIf="user.hasError('required','itemqty')&&submit" class="error-text"> Quantity  is Required! </small>
+
+                        </div>
+                        <div class="form-group" class="col-sm-2">
+                          <label>Unit Price<span style="color:red">*</span></label>
+                          <input [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['itemamt'].invalid && submit}"
+                          type="number" name="itemamt" formControlName="itemamt" placeholder="Enter Price"
+                            class="form-control" (keyup)="onkeyupQty($event, idx)" />
+                            <small *ngIf="user.hasError('required','itemamt')&&submit" class="error-text"> Unit Price  is Required! </small>
+
+                        </div>
+                        <div class="form-group" class="col-sm-2">
+                          <label>Total</label>
+                          <input type="number" name="total" formControlName="total" placeholder="Total"
+                            class="form-control" (keyup)="onkeyupQty($event, idx)" />
+
+                        </div>
+
+                        <div class="form-group" class="col-sm-1" *ngIf="last || idx != 0">
+                          <div class="btn-group">
+                            <button type="button" style="margin-top: 31%" class="btn btn-md btn-success dropdown-toggle"
+                              data-bs-toggle="dropdown">
+                              Action
+                            </button>
+                            <div class="dropdown-menu">
+                              <a (click)="deleteMatField(idx)" class="dropdown-item" *ngIf="idx != 0"><i
+                                  title="Edit Complaint" class="ion-android-delete"></i>&nbsp;Delete</a>
+                              <a (click)="addMaterial();" class="dropdown-item" *ngIf="last"><i title="Edit Complaint"
+                                  class="ion-ios-plus-outline"></i>&nbsp;ADD
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nb-tab>
+          </nb-tabset>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" status="success" nbButton>Add</button>
+          <button type="button" class="btn btn-md btn-danger"
+            [routerLink]="['/pages/vendor/list-invoice']">Back</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>
+</div>

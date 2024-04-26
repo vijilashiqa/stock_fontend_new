@@ -1,0 +1,17 @@
+
+.full-name-inputs {
+    display: flex;
+    margin: 0 -0.5rem;
+  
+    // > * {
+    //   margin: 0 0.5rem;
+    // }
+  }
+  
+
+  
+
+  .form-control:disabled, .form-control:read-only {
+    background-color:white !important;
+    opacity: 1;
+}

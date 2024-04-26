@@ -1,0 +1,47 @@
+<nb-card>
+    <nb-card-body>
+        <div class="modal-header">
+            <h4 class="modal-title">{{ title }}</h4>
+            <!-- <button class="close" aria-label="Close"> -->
+            <button class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form [formGroup]="AddhsnForm" class="form-horizontal" (ngSubmit)="addhsn()">
+            <div class="modal-body">
+                <div class="form-group row">
+                 
+                        <div class="col-sm-12">
+                            <label>Enter HSN NO <span style="color:red">*</span></label>
+                           <input type="text" class="form-control" name="mhsn" formControlName="mhsn" placeholder="Enter HSN NO"
+                            [ngClass]="{ 'is-invalid': submit && AddhsnForm.controls.mhsn.errors }"/>
+                            <small *ngIf="AddhsnForm.controls.mhsn.errors &&(AddhsnForm.controls.mhsn.errors.required )&& submit"
+                            class="invalid-feedback">HSN NO is required! </small>
+    
+                        </div>
+</div>
+
+
+           
+
+            </div>
+            <!-- <div class="form-group row">
+                <div class="col-md-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="status" checked
+                            formControlName="status" />
+                        <label class="custom-control-label" for="status">Active</label>
+                    </div>
+                </div>
+            </div> -->
+            <div class="modal-footer">
+                <button type="submit"  status="success" nbButton>
+                    {{ item ? "Update" : "Add" }}
+                </button>
+                <button type="button"  status="danger" nbButton  (click)="close()">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </nb-card-body>
+</nb-card>

@@ -1,0 +1,126 @@
+<!-- <p>addchannelsrv works!</p> -->
+<div class="col-md-12">
+    <nb-card>
+       <nb-card-header>Create Model Serial No</nb-card-header>
+       <!-- <toaster-container></toaster-container> -->
+       <nb-card-body>
+          <form [formGroup]="editserial" class="form-horizontal" (ngSubmit)="addchannelsrv();">
+             <div class="modal-body">
+                <div class="form-group row">
+ 
+                   <div class="col-sm-4">
+                      <label> Business Name<span style="color: red">*</span></label>
+                      <auto-completen [addclass]="{
+                               error: submit && this.editserial.controls.bid.errors 
+                             }" addclass="form-control" optValues="bname" formControlName="bid" (keyUp)="getBusiness()"
+                         placeholder="Select Business Name" Id="id" [item]="getbuss">
+                      </auto-completen>
+                      <div *ngIf="
+                               this.editserial.controls.bid.errors &&
+                               this.editserial.controls.bid.errors.required &&
+                               submit
+                             " class="error-text">
+                         Business Name is required!
+                      </div>
+                   </div>
+ 
+ 
+                   <div class="col-sm-4">
+                      <label> Invoice No<span style="color: red">*</span></label>
+                      <auto-completen [addclass]="{
+                               error: submit && this.editserial.controls.invno.errors 
+                             }" addclass="form-control" optValues="invno" formControlName="invno" (changed)="getitem();changeinvoicef()"
+                         (keyUp)="getinvoice()" placeholder="Select Invoice Name" Id="id" [item]="getinvoiced">
+                      </auto-completen>
+                      <div *ngIf="
+                               this.editserial.controls.invno.errors &&
+                               this.editserial.controls.invno.errors.required &&
+                               submit
+                             " class="error-text">
+                         Invoice id Name is required!
+                      </div>
+                   </div>
+ 
+                   <div class="col-sm-4">
+                      <label> Select Item <span style="color: red">*</span></label>
+                      <auto-completen [addclass]="{
+                               error: submit && this.editserial.controls.itemname.errors 
+                             }" addclass="form-control" optValues="itemname" formControlName="itemname" (changed)="getval($event)"
+                         (keyUp)="getBusiness()" placeholder="Select item Name" optId="iiid" [item]="getiteml1">
+                      </auto-completen>
+                      <div *ngIf="
+                               this.editserial.controls.itemname.errors &&
+                               this.editserial.controls.itemname.errors.required &&
+                               submit
+                             " class="error-text">
+                         Business Name is required!
+                      </div>
+                   </div>
+                </div>
+                <br>
+                <div class="form-group row">
+                   <div class="col-sm-12">
+                      <div class="row">
+                         <div class="col-sm-4" >
+                            <label>Select Mode <span style="color: red">*</span></label>
+                            <select class="form-control" formControlName="modetype"
+                               [ngClass]="{ 'is-invalid': submit && editserial.controls.modetype.errors }">
+                               <option value="null" selected>Select Mode</option>
+                               <option *ngIf="!id"  value="0">Bulk</option>
+                               <option value="1">Individual </option>
+                            </select>
+                            <div
+                               *ngIf="this.editserial.controls.modetype.errors && (this.editserial.controls.modetype.errors.required) && submit"
+                               class="error-text">
+                               Mode is required!
+                            </div>
+                         </div>
+ 
+ 
+                         <div class="col-sm-7" *ngIf="editserial.value['modetype']=='1'">
+                            <div  formArrayName="serial_num">
+                                 <div *ngFor="  let user of serial_num.controls; index as idx; let last = last ">
+                                   <div class="row" [formGroupName]="idx">
+                                     <div class="form-group" class="col-sm-5">
+                                       <label>Serial No <span style="color:red">*</span></label>
+                                       <input [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['serialno'].invalid && submit}"
+                                       type="text" name="serialno" formControlName="serialno"placeholder="Enter serial No"
+                                         class="form-control" />
+                                         <small *ngIf="user.hasError('required','serialno')&&submit"
+                                         class="error-text"> Serial No  is
+                                         Required! </small>
+                                     </div>
+                                           <!-- <div  class="form-group"  class="col-sm-1"  style="margin-top: 5%">
+                                              <div class="btn-group">
+                                                 <button   style="border-radius: 50%;font-weight: 900"   (click)="deleteMatField(idx)"  class="btn btn-md btn-success "  *ngIf="idx != 0"> -</button> &nbsp; &nbsp;  
+                                                 <button  style="border-radius: 50%;font-weight: 900;" (click)="addMaterial();"  class="btn btn-md btn-success "    *ngIf=" idx != count -1  && last ==true">&nbsp;+
+                                                 </button>
+                                              </div>
+                                           </div> -->
+                                 </div>
+                               </div>
+                             </div>
+                         </div>
+ 
+ 
+ 
+                         <div class="col-sm-6" *ngIf="editserial.value['modetype']=='0'">
+                            <label for="formFile" class="form-label">Bulk Upload</label>
+                            <input #myFile type="file" (change)="changeListener($event.target.files[0])"
+                               class="form-control" accept=".xlsx" />
+                            <a href="/assets/data/serialno.xlsx" target="_blank" download><b>Download Sample
+                                  Here</b></a>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="modal-footer">
+                <button type="submit" status="success" nbButton>{{id ? 'Update' : 'Add'}}</button>
+                <button type="button" class="btn btn-md btn-danger"
+                   [routerLink]="['/pages/vendor/list-serial']">Back</button>
+             </div>
+          </form>
+       </nb-card-body>
+    </nb-card>
+ </div>

@@ -1,0 +1,16 @@
+input.ng-invalid.ng-touched{
+    border: 1px solid red;
+  }
+
+  .form-control:disabled, .form-control:read-only {
+    background-color:white !important;
+    opacity: 1;
+}
+
+.error {
+    border-color: red;
+  }
+  .error-text {
+      font-size: x-small;
+      color: red;
+  }

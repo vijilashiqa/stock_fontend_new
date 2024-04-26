@@ -1,0 +1,76 @@
+<!-- <p>businesslist works!</p> -->
+<nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
+    <nb-card-header>List Invoice Details</nb-card-header>
+    <nb-card-body>
+      <button *ngIf="role.getroleid() > 777"  status="success" nbButton  style="margin-bottom: 1%;"
+      [routerLink]="['/pages/vendor/add-invoice']">Add Invoice</button>
+    <table class="table">
+      <tr>
+        <th >Action</th>
+        <th>Business Address</th>
+        <th>Vendor Address</th>
+        <th>Invoice No</th>
+        <th>Invoice Date</th>
+        <th>GST Type<th>
+       
+      </tr>
+      <tr *ngFor="let item of pagedItems">
+        <td style="padding: 1px" class="last" data-title="'Action'">
+          <div class="dropdown ghost-dropdown" ngbDropdown>
+            <button type="button" style="margin-left: -10%" class="btn btn-sm btn-success dropdown-toggle"
+              data-bs-toggle="dropdown">
+              Action
+            </button>
+          <ul style="width: 106px;margin:3px;z-index: 1;" class="dropdown-menu" ngbDropdownMenu>
+            <li class="dropdown-item" title="View" (click)="get_invoice(item.id)" >
+              <i style="font-size: 20px;" class="far fa-eye "></i>&nbsp;View
+            </li>
+
+<!-- 
+            <li class="dropdown-item" title="Edit" [routerLink]="['/pages/customer/edit-cust']"
+            [queryParams]="{ id: item.custid }">
+            <i style="font-size: 20px" class="nb-edit"></i>&nbsp;Edit
+          </li> -->
+
+
+<li *ngIf="role.getroleid() > 777" style="cursor:pointer;"  class="dropdown-item" title="Edit" [routerLink]="['/pages/vendor/edit-invoice']" [queryParams]="{id:item.id}">
+
+  <i style="font-size: 20px" class="nb-edit"></i>&nbsp;Edit
+
+</li>
+
+            <!-- <li *ngIf="!role.getmenurole(1024)" class="dropdown-item" title="Code" (click)="view_code(item.gstinvid)">
+              <i style="font-size: 20px;" class="fa fa-qrcode "></i>&nbsp;Code
+            </li>
+            <li class="dropdown-item" title="Update Einvoice Date" (click)="change_einvoice(item.gstinvid)"><i
+                class="fa fa-exchange-alt"></i>&nbsp;UpdateDate</li> -->
+          </ul>
+        </div>
+      </td>
+
+
+        <!-- <td style="cursor:pointer;" [routerLink]="['/pages/vendor/edit-invoice']" [queryParams]="{id:item.id}"><i class="nb-edit"></i></td> -->
+        <td>{{item.busaddr}}</td>
+        <td>{{item.vaddr}}</td>
+        <td>{{item.invno}}</td>
+        <td>{{item.invdate  | date:'d MMM y '}}</td>
+        <td>{{item.gsttype == 0 ? 'Inclusive' : 'Exclusive' }}</td>
+   
+      </tr>
+    </table>
+    <div class="pagination">
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+        <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+          (click)="getlist(page);">{{page}}</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+          (click)="page=pager.totalPages;getlist();">Last</a>
+      </ul>
+    </div>
+  </nb-card-body>
+
+
+  
+</nb-card>

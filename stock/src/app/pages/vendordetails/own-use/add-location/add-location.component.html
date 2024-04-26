@@ -1,0 +1,88 @@
+<nb-card>
+    <nb-card-body>
+      <div class="modal-header">
+        <h4 class="modal-title">{{modalHeader}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="addLocationForm" class="form-horizontal" (ngSubmit)="Country();">
+        <div class="modal-body">
+          <div class="form-group row">
+              <div class="col-sm-6">
+                  <label>State<span style="color: red">*</span></label>
+                  <auto-completen
+                  [addclass]="{error:submit && this.addLocationForm.controls.stateid.errors}"
+                     addclass="form-control" optValues="state_name" 
+                      formControlName="stateid" (keyUp)="getstate($event)"
+                      (changed)="getdistrict();dropdown($event);  changestates() " placeholder="Select State"
+                      optId="state_pk" [item]="getstates">
+                  </auto-completen>
+                  <div *ngIf="
+                  this.addLocationForm.controls.stateid.errors &&
+                  this.addLocationForm.controls.stateid.errors.required &&
+                  submit
+                " class="error-text">
+                State Name is required!
+              </div>
+              </div>
+
+
+              <div class="col-sm-6">
+                  <label>District<span style="color: red">*</span></label>
+                  <auto-completen     [addclass]="{error:submit && this.addLocationForm.controls.districtid.errors}"
+                  addclass="form-control" optValues="district_name"
+                      formControlName="districtid" (keyUp)="getdistrict($event)"
+                      placeholder="Select District" optId="district_pk" [item]="dist">
+                  </auto-completen>
+
+                  <div *ngIf="
+                  this.addLocationForm.controls.districtid.errors &&
+                  this.addLocationForm.controls.districtid.errors.required &&
+                  submit
+                " class="error-text">
+                District Name is required!
+              </div>
+              </div>
+
+          </div>
+
+
+          <div class="form-group row">
+            <div class="col-sm-6">
+                <label>Location Name<span style="color: red">*</span></label>
+                <input type="text" class="form-control" name="locname" formControlName="locname" placeholder="Enter Name"
+                [ngClass]="{ 'is-invalid': submit && addLocationForm.controls.locname.errors }"/>
+                <div *ngIf="
+                this.addLocationForm.controls.locname.errors &&
+                this.addLocationForm.controls.locname.errors.required &&
+                submit
+              " class="error-text">
+              Location Name is required!
+            </div>
+            </div>
+
+            
+            <div class="col-sm-6">
+                <label>Location Address<span style="color: red">*</span></label>
+                <input type="text" class="form-control" name="locaddress" formControlName="locaddress" placeholder="Enter Name"
+                [ngClass]="{ 'is-invalid': submit && addLocationForm.controls.locaddress.errors }"/>
+                <div *ngIf="
+                this.addLocationForm.controls.locaddress.errors &&
+                this.addLocationForm.controls.locaddress.errors.required &&
+                submit
+              " class="error-text">
+              Location Address is required!
+            </div>
+            </div>
+
+        </div>
+          </div>
+        <!-- </div> -->
+        <div class="modal-footer">
+          <button type="submit" status="success" nbButton style="cursor:pointer">Add</button>
+          <button type="button" status="danger" nbButton style="cursor:pointer" (click)="close()">Cancel</button>
+        </div>
+      </form>
+    </nb-card-body>
+  </nb-card>

@@ -1,0 +1,66 @@
+
+<nb-card>
+    <nb-card-body>
+        <div class="modal-header">
+            <h4 class="modal-title">{{ title }}</h4>
+            <!-- <button class="close" aria-label="Close"> -->
+            <button class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form [formGroup]="adddevice" class="form-horizontal" (ngSubmit)="adddevicesf()">
+            <div class="modal-body">
+                <div class="form-group row">
+        
+                        <div class="col-sm-6">
+                            <label> Business Name<span style="color: red">*</span></label>
+                            <auto-completen [addclass]="{
+                                  error: submit && this.adddevice.controls.bid.errors
+                                }" addclass="form-control" optValues="bname"  formControlName="bid" (keyUp)="getBusiness()"
+                              placeholder="Select Business Name" Id="id" [item]="getbuss">
+                            </auto-completen>
+                            <div *ngIf="
+                                  this.adddevice.controls.bid.errors &&
+                                  this.adddevice.controls.bid.errors.required &&
+                                  submit
+                                " class="error-text">
+                              Business Name is required!
+                            </div>
+                          </div>
+              
+
+                        <div class="col-sm-6">
+                            <label> Device Name <span style="color:red">*</span></label>
+                           <input type="text" class="form-control" name="devicename" formControlName="devicename" placeholder="Enter Name"
+                            [ngClass]="{ 'is-invalid': submit && adddevice.controls.devicename.errors }"/>
+                            <small *ngIf="adddevice.controls.devicename.errors &&(adddevice.controls.devicename.errors.required )&& submit"
+                            class="invalid-feedback">Device Name is required! </small>
+    
+                        </div>
+
+
+</div>
+
+           
+
+            </div>
+            <!-- <div class="form-group row">
+                <div class="col-md-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="status" checked
+                            formControlName="status" />
+                        <label class="custom-control-label" for="status">Active</label>
+                    </div>
+                </div>
+            </div> -->
+            <div class="modal-footer">
+                <button type="submit"  status="success" nbButton>
+                    {{ item ? "Update" : "Add" }}
+                </button>
+                <button type="button"  status="danger" nbButton  (click)="close()">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </nb-card-body>
+</nb-card>

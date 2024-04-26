@@ -1,0 +1,342 @@
+<div class="col-md-12">
+    <nb-card>
+        <nb-card-header>Edit Business Details</nb-card-header>
+        <nb-card-body>
+            <form [formGroup]="EditBusiness" class="form-horizontal" (ngSubmit)="editbuss()">
+                <div class="modal-body">
+                    <nb-tabset>
+                        <nb-tab tabTitle="Business Details">
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label>Business Name<span style="color:red">*</span></label>
+                                        <input type="text" class="form-control" name="bname" formControlName="bname"
+                                            placeholder="Enter Business Name"
+                                            [ngClass]="{ 'is-invalid': submit && EditBusiness.controls.bname.errors }" />
+                                        <small
+                                            *ngIf="EditBusiness.controls.bname.errors &&(EditBusiness.controls.bname.errors.required )&& submit"
+                                            class="invalid-feedback">Business Name is required! </small>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label>Business Email<span style="color:red">*</span></label>
+                                        <input type="text" class="form-control" name="bemail" formControlName="bemail"
+                                            placeholder="Enter Email ID"
+                                            [ngClass]="{ 'is-invalid': submit && EditBusiness.controls.bemail.errors }" />
+                                        <small
+                                            *ngIf="EditBusiness.controls.bemail.errors &&(EditBusiness.controls.bemail.errors.required )&& submit"
+                                            class="invalid-feedback">Email id is required! </small>
+                                    </div>
+
+
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label> Mobile No <span style="color:red">*</span></label>
+                                        <input type="number" class="form-control" name="bphoneno"
+                                            formControlName="bphoneno" placeholder="Enter Mobile No"
+                                            [ngClass]="{ 'is-invalid': submit && EditBusiness.controls.bphoneno.errors }" />
+                                        <small
+                                            *ngIf="EditBusiness.controls.bphoneno.errors &&(EditBusiness.controls.bphoneno.errors.required )&& submit"
+                                            class="invalid-feedback">Mobile is required! </small>
+                                    </div>
+
+
+
+                                    <div class="col-sm-6">
+                                        <label>PAN No <span style="color:red">*</span></label>
+                                        <input type="text" class="form-control" name="pan" formControlName="pan"
+                                            placeholder="Enter PAN NO"
+                                            [ngClass]="{ 'is-invalid': submit && EditBusiness.controls.pan.errors }" />
+                                        <small
+                                            *ngIf="EditBusiness.controls.pan.errors &&(EditBusiness.controls.pan.errors.required )&& submit"
+                                            class="invalid-feedback">PAN No is required! </small>
+                                    </div>
+
+
+                                </div>
+
+
+
+
+
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label>State<span style="color: red">*</span></label>
+                                        <auto-completen
+                                        [addclass]="{error:submit && this.EditBusiness.controls.stateid.errors}"
+                                           addclass="form-control" optValues="state_name" 
+                                            formControlName="stateid" (keyUp)="getstate($event)"
+                                            (changed)="getdistrict();dropdown($event);changestates()  " placeholder="Select State"
+                                            optId="state_pk" [item]="getstates">
+                                        </auto-completen>
+                                        <div *ngIf="
+                                        this.EditBusiness.controls.stateid.errors &&
+                                        this.EditBusiness.controls.stateid.errors.required &&
+                                        submit
+                                      " class="error-text">
+                                      State Name is required!
+                                    </div>
+                                    </div>
+
+
+                                    <div class="col-sm-6">
+                                        <label>District<span style="color: red">*</span></label>
+                                        <auto-completen     [addclass]="{error:submit && this.EditBusiness.controls.distid.errors}"
+                                        addclass="form-control" optValues="district_name"
+                                            formControlName="distid" (keyUp)="getdistrict($event)"
+                                            placeholder="Select District" optId="district_pk" [item]="dist">
+                                        </auto-completen>
+
+                                        <div *ngIf="
+                                        this.EditBusiness.controls.distid.errors &&
+                                        this.EditBusiness.controls.distid.errors.required &&
+                                        submit
+                                      " class="error-text">
+                                      District Name is required!
+                                    </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6">
+                                        <label>Tin NO<span style="color:red">*</span></label>
+                                        <input type="text" class="form-control" name="tinno" formControlName="tinno"
+                                            placeholder="Enter TIN NO"
+                                            [ngClass]="{ 'is-invalid': submit && EditBusiness.controls.tinno.errors }" />
+                                        <small
+                                            *ngIf="EditBusiness.controls.tinno.errors &&(EditBusiness.controls.tinno.errors.required )&& submit"
+                                            class="invalid-feedback">Tin No is required! </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </nb-tab>
+
+
+                        <nb-tab tabTitle="Bank Details ">
+                            <div class="modal-body">
+                                <div class="form-group row" formArrayName="bankdetails">
+                                    <div class="col-sm-12">
+                                        <div *ngFor="
+                          let user of bankdetails.controls;
+                          index as idx;
+                          let last = last
+                        ">
+                                            <div class="row" [formGroupName]="idx">
+                                                <div class="form-group" class="col-sm-2">
+                                                    <label>Bank Details <span style="color: red">*</span></label>
+                                                    <select  [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['bank'].invalid && submit}"
+                                                     class="form-control" name="bank" formControlName="bank">
+                                                        <option value="" selected>Select Bank</option>
+                                                        <option value="1">IOB</option>
+                                                        <option value="2">HDFC</option>
+                                                        <option value='3'>SBI</option>
+                                                    </select>
+                                                    <small *ngIf="user.hasError('required','bank')&&submit" class="error-text"> Bank Details is Required! </small>
+                                                </div>
+                                                <div class="form-group" class="col-sm-2">
+
+                                                    <label>Account Name <span style="color: red">*</span></label>
+                                                    <input   [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['bbname'].invalid && submit}"
+                                                     type="text" name="bbname" formControlName="bbname"
+                                                        placeholder="Enter Bank Name" class="form-control" />
+                                                        <small *ngIf="user.hasError('required','bbname')&&submit" class="error-text"> Account Name is Required! </small>
+                                                </div>
+                                                <div class="form-group" class="col-sm-2">
+                                                    <label>Account NO <span style="color: red">*</span></label>
+                                                    <input  [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['bbacctno'].invalid && submit}"
+                                                     type="text" name="bbacctno" formControlName="bbacctno"
+                                                        placeholder="Enter Vendor Bank No" class="form-control" />
+                                                        <small *ngIf="user.hasError('required','bbacctno')&&submit" class="error-text"> Account NO is Required! </small>
+                                                </div>
+
+                                                <div class="form-group" class="col-sm-2">
+                                                    <label>Bank IFSC <span style="color: red">*</span></label>
+                                                    <input  [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['bbifsc'].invalid && submit}"
+                                                    type="text" name="bbifsc" formControlName="bbifsc"
+                                                        placeholder="Enter Vendor Bank IFSC No" class="form-control" />
+                                                        <small *ngIf="user.hasError('required','bbifsc')&&submit" class="error-text"> Bank IFSC is Required! </small>
+                                                </div>
+                                                <div class="form-group" class="col-sm-2"  *ngIf="idx < cunt" >
+                                                    <div *ngIf="id">
+                                                      <label>Status<span style="color: red">*</span></label>
+                                                      <select class="form-control"
+                                                      name="bstatus" formControlName="bstatus" type="number">
+                                                      <option value=1>Active</option>
+                                                      <option value=0>Deactive</option>
+                                                    </select>
+                                                    </div>
+                                                    </div>
+
+<!-- 
+<div *ngIf=""> -->
+    <div class="form-group" class="col-sm-1" *ngIf=" last ">
+        <div class="btn-group">
+            <button type="button" style="margin-top: 31%"
+                class="btn btn-md btn-success dropdown-toggle"
+                data-bs-toggle="dropdown">
+                Action
+            </button>
+            <div class="dropdown-menu"> 
+      <!-- <div > -->
+        <a (click)="deleteBankdetails(idx)" class="dropdown-item"
+        *ngIf="idx != 0 && idx != cunt -1 && last ==true"><i title="Edit Complaint"
+            class="ion-android-delete"></i>&nbsp;Delete</a>
+      <!-- </div> -->
+            
+                <a (click)="addBankdetails();" class="dropdown-item"
+                    *ngIf="last"><i title="Edit Complaint"
+                        class="ion-ios-plus-outline"></i>&nbsp;ADD
+                </a>
+            </div>
+        </div>
+    </div>
+<!-- </div> -->
+                                             
+
+
+                                            </div>
+
+
+
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nb-tab>
+
+
+
+                        <nb-tab tabTitle="Address Details ">
+                            <div class="modal-body">
+                                <div class="form-group row" formArrayName="stockinid">
+
+                                    <div *ngFor="
+                          let user of stockinid.controls;
+                          index as idx;
+                          let last = last
+                        ">
+                                        <div class="col-sm-12">
+                                            <div class="row" [formGroupName]="idx">
+                                                <div class="form-group" class="col-sm-3">
+                                                    <label>GST NO<span style="color: red">*</span></label>
+                                                    <input    [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['bagstno'].invalid && submit}"
+                                                    type="text" name="bagstno" formControlName="bagstno"
+                                                        placeholder="Enter GST NO" class="form-control" />
+                                                        <small *ngIf="user.hasError('required','bagstno')&&submit" class="error-text"> GST NO is Required! </small>
+                                                </div>
+
+
+                                               
+                                                <div class="form-group" class="col-sm-3">
+                                                    <label>State<span style="color: red">*</span></label>
+                                                    <auto-completen    [addclass]="{error:submit &&  this.user['controls']['bastateid'].invalid && submit}"
+                                                    addclass="form-control" optValues="state_name"
+                                                        formControlName="bastateid" (keyUp)="getstate($event)"
+                                                        (changed)="getdistrict();dropdown($event);changestate(idx)  "
+                                                        placeholder="Select State" optId="state_pk" [item]="getstates">
+                                                    </auto-completen>
+                                                    <small *ngIf="user.hasError('required','bastateid')&&submit" class="error-text"> State is Required! </small>
+                                                </div>
+                                                <div class="form-group" class="col-sm-3">
+                                                    <label>District<span style="color: red">*</span></label>
+                                                    <auto-completen   [addclass]="{error:submit &&  this.user['controls']['badistid'].invalid && submit}"
+                                                     addclass="form-control" optValues="district_name"
+                                                        formControlName="badistid" (keyUp)="getdistrict($event)"
+                                                        placeholder="Select District" optId="district_pk" [item]="dist">
+                                                    </auto-completen>
+                                                    <small *ngIf="user.hasError('required','badistid')&&submit" class="error-text"> District is Required! </small>
+
+                                                </div>
+
+                                         
+
+
+                                            </div>
+
+                                         
+                                            
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row" [formGroupName]="idx"> 
+
+                                                <div class="form-group" class="col-sm-3">
+                                                    <label> Short Address <span style="color: red">*</span></label>
+                                                    <textarea    [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['baaddress'].invalid && submit}" 
+                                                    type="text" name="baaddress" formControlName="baaddress"
+                                                        placeholder="Enter Address Details" class="form-control">
+                              </textarea>
+                              <small *ngIf="user.hasError('required','baaddress')&&submit" class="error-text"> Short Address  is Required! </small>
+                                                </div>
+
+                                                <div class="form-group" class="col-sm-3">
+                                                    <label>Full Address <span style="color: red">*</span></label>
+                                                    <textarea  [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['baaddrname'].invalid && submit}"
+                                                    type="text" class="form-control" name="baaddrname"
+                                                        formControlName="baaddrname" placeholder="Enter Address Details">
+          </textarea> <small *ngIf="user.hasError('required','baaddrname')&&submit" class="error-text"> Full Address  is Required! </small>
+                                                </div>
+
+
+                                                <div class="form-group" class="col-sm-3"  *ngIf="idx < count" >
+                                                    <div *ngIf="id">
+                                                      <label>Status<span style="color: red">*</span></label>
+                                                      <select  
+                                                      class="form-control"
+                                                      name="bastatus" formControlName="bastatus" type="number">
+                                                      <option value=1>Active</option>
+                                                      <option value=0>Deactive</option>
+                                                    </select>
+                                                    </div>
+                                                 
+                                                    </div>
+
+                                                <div  class="form-group" class="col-sm-1" *ngIf="last ">
+                                                    <div class="btn-group">
+                                                        <button type="button" style="margin-top: 31%"
+                                                            class="btn btn-md btn-success dropdown-toggle"
+                                                            data-bs-toggle="dropdown">
+                                                            Action
+                                                        </button>
+        
+                                                        <div class="dropdown-menu">
+                                                            <div >
+                                                                <a (click)="deleteaddress(idx)" class="dropdown-item"
+                                                                *ngIf="idx != 0 && idx != count -1 && last ==true">
+                                                                <i title="Edit Complaint"
+                                                                    class="ion-android-delete"></i>&nbsp;Delete</a>
+                                                        </div>
+                                                        
+                                                            <a (click)="addaddress();" class="dropdown-item"
+                                                                *ngIf="last">
+                                                                <i title="Edit Complaint"
+                                                                    class="ion-ios-plus-outline"></i>&nbsp;ADD</a>
+                                                        </div>
+        
+                                                    </div>
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nb-tab>
+                    </nb-tabset>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" status="success" nbButton>Add</button>
+                    <button type="button" class="btn btn-md btn-danger"
+                        [routerLink]="['/pages/business/list-business']">Back</button>
+                </div>
+
+            </form>
+        </nb-card-body>
+    </nb-card>
+</div>

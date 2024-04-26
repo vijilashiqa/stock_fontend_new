@@ -1,0 +1,43 @@
+<nb-card>
+    <nb-card-body>
+        <div class="modal-header">
+            <h4 class="modal-title">{{ title }}</h4>
+            <button class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form [formGroup]="Addhubform" class="form-horizontal" (ngSubmit)="addhubf()">
+            <div class="modal-body">
+                <div class="form-group row">
+                            <label>Name <span style="color:red">*</span></label>
+                           <input type="text" class="form-control" name="hubname" formControlName="hubname" placeholder="Enter Name"
+                            [ngClass]="{ 'is-invalid': submit && Addhubform.controls.hubname.errors }"/>
+                            <small *ngIf="Addhubform.controls.hubname.errors &&(Addhubform.controls.hubname.errors.required )&& submit"
+                            class="invalid-feedback">HUB Name is required! </small>
+</div>
+
+
+<div class="form-group row">
+    <!-- <div class="col-md-6"> -->
+            <label>Description</label>
+            <textarea type="text" class="form-control" name="desc" formControlName="desc" placeholder="Enter Description"
+            [ngClass]="{ 'is-invalid': submit && Addhubform.controls.desc.errors }">
+        </textarea>
+            <small *ngIf="Addhubform.controls.desc.errors &&(Addhubform.controls.desc.errors.required )&& submit"
+            class="invalid-feedback">Description Name is required! </small>
+        <!-- </div> -->
+    </div>
+
+            </div>
+           
+            <div class="modal-footer">
+                <button type="submit"  status="success" nbButton>
+                    {{ item ? "Update" : "Add" }}
+                </button>
+                <button type="button"  status="danger" nbButton  (click)="close()">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </nb-card-body>
+</nb-card>
