@@ -61,7 +61,8 @@ export class EditVendorComponent {
     private stateser: StateService,
     private districtser: DistrictService,
     public role: RoleservicesService,
-    private aRoute: ActivatedRoute
+    private aRoute: ActivatedRoute,
+    private Bussiness :BusinessService
   ) {
     this.getstate();
     this.getdistrict();
@@ -76,6 +77,7 @@ export class EditVendorComponent {
     await this.editbank();
     await this.getaddress();
     await this.getbusiness('')
+    await this.getbanf();
   }
 
   async editstockIn() {
@@ -158,7 +160,17 @@ export class EditVendorComponent {
     }
   }
 
+  banklist;banklist1
 
+
+  async getbanf(){
+
+    this.banklist = await this.Bussiness.getbank({})
+
+    this.banklist1= this.banklist[0]
+console.log("bank list ", this.banklist);
+
+  }
 
   
   changestate( index: number) {

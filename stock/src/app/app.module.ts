@@ -31,14 +31,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsRoutingModule } from './pages/forms/forms-routing.module';
 import { FormsModule } from './pages/forms/forms.module';
 import { RouterModule } from '@angular/router';
-
+import { environment as env } from '../environments/environment';
 import { RoleservicesService } from './pages/_services/roleservices.service';
 import { JwtrequestService } from './pages/_services/jwtrequest.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToasterModule } from 'angular2-toaster';
 import { ToastrModule } from 'ngx-toastr';
+// const config:io.SocketIoConfig = { url:env.baseUrl, options:{} }  
 
 
+// import * as io from 'ngx-socket-io';
 
 @NgModule({
   declarations: [AppComponent],

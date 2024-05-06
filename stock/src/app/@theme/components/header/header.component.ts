@@ -55,6 +55,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() { 
     this.menuService.onItemClick().subscribe((event) => {
+
+      console.log("",event.item.title )
       if (event.item.title === 'Change Password') {
         const modalRef = this.modal.open(ChangepasswordComponent, {  size: 'md' ,container: 'nb-layout', backdrop: false });
         modalRef.componentInstance.title = 'Change Password';

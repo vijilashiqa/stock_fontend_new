@@ -8,6 +8,14 @@ export class MenuroleService {
 
   constructor(private http: HttpClient,) { }
 
+
+  
+	async addrole(params) {
+		return await this.http.post("/menurole/addusers", params).toPromise();
+	  }
+
+
+
 	async editrole(params) {
 		return await this.http.post("/menurole/editmenurole", params).toPromise();
 	  }
@@ -20,5 +28,10 @@ export class MenuroleService {
 
 	  async getrole(params) {
 		return await this.http.post("/menurole/getmenurole", params).toPromise();
+	  } 
+
+
+	  async getfullname(params) {
+		return await this.http.post("/menurole/getfullname", params).toPromise();
 	  } 
 }

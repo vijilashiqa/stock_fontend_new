@@ -130,14 +130,13 @@
                                             <div class="row" [formGroupName]="idx">
                                                 <div class="form-group" class="col-sm-2">
                                                     <label>Bank Details <span style="color: red">*</span></label>
-                                                    <select  [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['bank'].invalid && submit}"
-                                                     class="form-control" name="bank" formControlName="bank">
-                                                        <option value="" selected>Select Bank</option>
-                                                        <option value="1">IOB</option>
-                                                        <option value="2">HDFC</option>
-                                                        <option value='3'>SBI</option>
-                                                    </select>
-                                                    <small *ngIf="user.hasError('required','bank')&&submit" class="error-text"> Bank Details is Required! </small>
+                                                    <auto-completen   
+                                                    [addclass]="{error:submit &&  this.user['controls']['bank'].invalid && submit}"
+                                                      addclass="form-control"
+                                                   optValues="bname" formControlName="bank" (keyUp)="getbanf()" placeholder="Select Bank" Id="id" [item]="banklist1">
+                                                    </auto-completen>
+                                                <small *ngIf="user.hasError('required','bank')&&submit" class="error-text"> Bank Details is Required! </small> 
+
                                                 </div>
                                                 <div class="form-group" class="col-sm-2">
 
@@ -197,14 +196,7 @@
         </div>
     </div>
 <!-- </div> -->
-                                             
-
-
-                                            </div>
-
-
-
-                                            
+                                            </div>   
                                         </div>
                                     </div>
                                 </div>

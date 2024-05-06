@@ -10,15 +10,7 @@
       <div style="font-weight: 700;text-align: center;">INVOICE</div>
       <div id="pdfTable" #pdfTable style="background-color: #FFFFFF;">
          <div class="page">
-            <!-- <table style="width: 60%;">
-                <tbody>
-                   <div style="font-weight: 700;text-align: center;">INVOICE</div>
-                   <p style="margin-bottom: 2px;font-weight: 200;">
-                      <br>
-                    
-                   </p>
-                </tbody>
-             </table> -->
+          
             <table style="border: 1px solid black;border-collapse: collapse; width:100%;">
                <div class="row">
                   <div class="col-sm-6">
@@ -77,9 +69,11 @@
 
 
             </table>
+
+            
             <br>
-            <table style="border: 1px solid black; width: 100%">
-               <thead>
+            <table style="border: 1px solid black;;border-collapse: collapse; width: 100%">
+               <thead style=" border: 1px solid black">
                   <tr>
                      <td colspan="8" style="font-weight: 900;">
                         Billing Information
@@ -113,7 +107,7 @@
             <ng-container *ngIf="this.data[0].gsttype == 1">  
                <tbody *ngFor="let item of data2" >
                   <tr>
-                     <td style="text-align: center;border: 1px solid black;word-break:break-all;">
+                     <td style="text-align: center;border: 1px solid black;">
                         {{item?item.itemname:''}} </td>
                      <td style="text-align: center;border: 1px solid black;">{{item?item.itemqty:''}}
                      </td> 
@@ -139,11 +133,7 @@
                <div class="col-sm-6">
                </div>
                <div class="col-sm-6">
-                  <b>Sub Total  :&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                     &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                     &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{{taxsum | number: '1.0-0' }} </b>
+                  <b style="float: right;margin-right: 18%; font-size: 14px;">Sub Total  :{{taxsum | number: '1.0-0' }} </b>
                </div>
             </div>
             <br>
@@ -187,7 +177,7 @@
 
 
             <div>
-               <table *ngIf="this.data[0].gsttype == 1" style="width: 40% ; margin-left: 49%;">
+               <table *ngIf="this.data[0].gsttype == 1" style="width: 40% ;border-collapse: collapse; margin-left: 49%;">
                   <div *ngFor="let item of data">
                      <tr>
                         <th style="text-align: center;border: 1px solid black; " colspan="3">
@@ -229,32 +219,26 @@
                <div class="col-sm-6">
                </div>
                <div class="col-sm-6 subclass">
-                  <b>Tax Sub Total :&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                     &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;{{taxsum2 | number: '1.0-0' }} </b>
+                  <b style="float: right; margin-right: 18%;font-size: 14px;">Tax Sub Total :{{taxsum2 | number: '1.0-0' }} </b>
                </div>
             </div>
 
 
             <br>
 
+            <br>
 
 
             <div class="row">
                <div class="col-sm-6">
                </div>
                <div class="col-sm-6">
-                  <b>Total        :&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                     &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                     &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
-                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{totalbill | number: '1.0-0' }} </b>
+                  <b style="float: right;margin-right: 18%;font-size: 18px;">Total        :{{totalbill | number: '1.0-0' }} </b>
                </div>
             </div>
 
             <br>
-
+<br>
             <div style="text-align: center;">***
                This is a Computer Generated Invoice and requires no Seal and Sign***
             </div>

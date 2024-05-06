@@ -9,6 +9,7 @@ import { StateService } from '../../../_services/state.service';
 import { PagerService } from '../../../_services/pager.service';
 
 import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { RoleservicesService } from '../../../_services/roleservices.service';
 @Component({
   selector: 'ngx-list-district',
   templateUrl: './list-district.component.html',
@@ -21,12 +22,20 @@ export class ListDistrictComponent {
   
   constructor(
     private modal: NgbModal,
+    public role :RoleservicesService,
     private distric :DistrictService,
     public pageservice: PagerService,
-    private state : StateService) { }
+    private state : StateService
+  ) { }
   ngOnInit() {
 
     this.initiallist();
+
+    console.log("menu role list ", this.role.getroleval() == 1004);
+    
+
+    console.log("menu", this.role.getroleval());
+    
   }
 
 

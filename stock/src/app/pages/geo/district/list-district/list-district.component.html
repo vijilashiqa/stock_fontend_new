@@ -5,19 +5,19 @@
       <!-- <toaster-container></toaster-container> -->
       <div class="row" style="margin-bottom: 1%;">
         <div>
-          <button status="success" nbButton (click)="Adddistrict()">Add District</button> 
+          <button *ngIf="role.getroleid() > 777 ||   !role.getmenurole(1004)" status="success" nbButton (click)="Adddistrict()">Add District</button> 
         </div>
       </div>
      
       <!-- &nbsp; -->
       <table class="table">
         <tr>
-          <th>Action</th>
+          <th *ngIf="role.getroleid() > 777  || !role.getmenurole(1006)">Action</th>
           <th>State Name</th>
           <th>District Name</th>
         </tr>
         <tr *ngFor="let item of pagedItems">
-          <td ><a (click)="editdistrict(item.district_pk);" title="Update"><i class="nb-edit"></i></a></td>
+          <td *ngIf="role.getroleid() > 777  || !role.getmenurole(1006)" ><a (click)="editdistrict(item.district_pk);" title="Update"><i class="nb-edit"></i></a></td>
           <td>{{item.state_name}}</td>
           <td>{{item.district_name}}</td>
         </tr>

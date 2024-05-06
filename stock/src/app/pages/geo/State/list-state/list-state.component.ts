@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddStateComponent } from '../add-state/add-state.component';
 import { StateService } from '../../../_services/state.service';
 import { PagerService } from '../../../_services/pager.service';
+import { RoleservicesService } from '../../../_services/roleservices.service';
 
 @Component({
   selector: 'ngx-list-state',
@@ -18,6 +19,7 @@ export class ListStateComponent implements OnInit {
     public pageservice: PagerService, 
     private State: StateService,
    private modal: NgbModal,
+   public role :RoleservicesService
  ) {
  }
 

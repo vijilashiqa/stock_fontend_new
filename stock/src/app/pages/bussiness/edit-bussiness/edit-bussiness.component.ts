@@ -72,6 +72,7 @@ export class EditBussinessComponent {
     await this.edit();
     await this.editbank();
     await this.getaddress();
+    await this.getbanf()
   }
 
   async editbuss() {
@@ -94,11 +95,11 @@ export class EditBussinessComponent {
     console.log("push data", this.EditBusiness.value);
 
     if (result && result[0].err_code == 0) {
-      this.toast.success( "", result[0]["msg"]);
+      this.toast.success("", result[0]["msg"]);
       this.route.navigate(["/pages/business/list-business"]);
       console.log("add vendor ", result);
     } else {
-      this.toast.warning( "",result[0]["msg"]);
+      this.toast.warning("", result[0]["msg"]);
     }
   }
 
@@ -113,7 +114,7 @@ export class EditBussinessComponent {
     this.editadd = await this.Bussiness.getbusinessaddredit({ id: this.id });
     this.assignadd = this.editadd && this.editadd[0];
     this.count = this.editadd[1].cnt;
-console.log("count&&&&&&&&&&&",this.count);
+    console.log("count&&&&&&&&&&&", this.count);
 
     console.log("edit address", this.assignadd);
     for (let item of this.assignadd) {
@@ -135,14 +136,14 @@ console.log("count&&&&&&&&&&&",this.count);
   }
 
 
-  changestate( index: number) {
+  changestate(index: number) {
     // console.log("chang",index);
-    
+
     this.stockinid.at(index).get('badistid').setValue('');
   }
 
 
-  changestates(){
+  changestates() {
 
     this.EditBusiness.controls.distid.setValue("");
   }
@@ -193,11 +194,11 @@ console.log("count&&&&&&&&&&&",this.count);
       this.dist
     );
     return this._fb.group({
-      bagstno: [bagstno || "" , Validators.required],
-      bastateid: [bastateid || "" , Validators.required],
-      badistid: [badistid || "" , Validators.required],
+      bagstno: [bagstno || "", Validators.required],
+      bastateid: [bastateid || "", Validators.required],
+      badistid: [badistid || "", Validators.required],
       baaddress: [baaddress || "", Validators.required],
-      baaddrname: [baaddrname || "" , Validators.required],
+      baaddrname: [baaddrname || "", Validators.required],
       bastatus: [bastatus ? bastatus : "" || ""],
       id: id ? id : "",
       bid: bid ? bid : "",
@@ -214,7 +215,7 @@ console.log("count&&&&&&&&&&&",this.count);
     console.log("edit bank", this.editbankd);
     this.assignbank = this.editbankd[0];
     this.cunt = this.editbankd[1].cnt;
-    console.log("**************", this.cunt , "==================",this.cunt -1);
+    console.log("**************", this.cunt, "==================", this.cunt - 1);
     for (let data of this.assignbank) {
       console.log("item bank  id*****", data.id);
       this.addBankdetails(
@@ -233,6 +234,18 @@ console.log("count&&&&&&&&&&&",this.count);
 
   get stockinid(): FormArray {
     return this.EditBusiness.get("stockinid") as FormArray;
+  }
+
+  banklist; banklist1
+
+
+  async getbanf() {
+
+    this.banklist = await this.Bussiness.getbank({})
+
+    this.banklist1 = this.banklist[0]
+    console.log("bank list ", this.banklist);
+
   }
 
   get bankdetails(): FormArray {
@@ -267,10 +280,10 @@ console.log("count&&&&&&&&&&&",this.count);
     bstatus = 0
   ): FormGroup {
     return this._fb.group({
-      bank: [bank || " " , Validators.required],
-      bbname: [bbname || "" , Validators.required],
-      bbacctno: [bbacctno || "" , Validators.required],
-      bbifsc: [bbifsc || "" , Validators.required],
+      bank: [bank || " ", Validators.required],
+      bbname: [bbname || "", Validators.required],
+      bbacctno: [bbacctno || "", Validators.required],
+      bbifsc: [bbifsc || "", Validators.required],
       id: id ? id : "",
       bid: bid ? bid : "",
       bstatus: [bstatus ? bstatus : ""],

@@ -57,7 +57,8 @@ export class AddBussinessComponent {
   async ngOnInit() {
     await this.createForm();
     await this.getstate();
-    await this.getdistrict();
+    await this.getbanf()
+    // await this.getdistrict();
   }
 
   async addstockIn() {
@@ -120,6 +121,19 @@ export class AddBussinessComponent {
   async getstate($event = "") {
     this.getstates = await this.stateser.getstate({ like: $event });
     console.log("state", this.getstates);
+  }
+
+
+  banklist;banklist1
+
+
+  async getbanf(){
+
+    this.banklist = await this.Bussiness.getbank({})
+
+    this.banklist1= this.banklist[0]
+console.log("bank list ", this.banklist);
+
   }
 
   dropdown($event) {

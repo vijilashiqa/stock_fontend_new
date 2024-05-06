@@ -6,6 +6,7 @@ import { toJS } from "mobx";
 import { ToastrService } from 'ngx-toastr';
 import { MenuroleService } from '../../../_services/menurole.service';
 import { NbToastrService } from '@nebular/theme';
+import { BusinessService } from '../../../_services/business.service';
 
 @Component({
   selector: 'ngx-edit-menurole',
@@ -14,7 +15,7 @@ import { NbToastrService } from '@nebular/theme';
 })
 export class EditMenuroleComponent {
   @ViewChild('tree') public tree;
-  AddProfileForm; edit;editrolel;
+  AddProfileForm; edit;editrolel;editdata
   submit: boolean;
  
   nodes = [
@@ -75,12 +76,13 @@ export class EditMenuroleComponent {
         },
       
 
-        {
-          name: 'Admin Role',
-          children: [
-          { id: 2004, name: 'List Role' },
-          ]
-        },
+        // {
+        //   name: 'Admin Role',
+        //   children: [
+        //   { id: 2004, name: 'List Role' },
+        //   {id :2005 , name :'edit Role'}
+        //   ]
+        // },
 
         
       ]
@@ -201,6 +203,15 @@ export class EditMenuroleComponent {
         { id: 7002, name: 'List Assest' },
         { id: 7003, name: 'Edit Assest' },
         
+
+{
+  name: 'Location',
+  children: [
+    { id: 7004, name: 'Add Location' },
+  ],
+
+}
+       
       ]
     },
     
@@ -217,27 +228,40 @@ export class EditMenuroleComponent {
   constructor(
     private toast: NbToastrService,
     private router: Router,
+    private bussiness :BusinessService,
     private menurole :MenuroleService,
   ) {
     this.edit = JSON.parse(localStorage.getItem('profile_e'));
     
   }
-  ngOnInit() {
+async  ngOnInit() {
   //  this.id = this.aRoute.snapshot.queryParams.id;
    //console.log("id********",this.id)
-    this.createForm();
-    if (this.edit)
-    console.log('edit**********',this.edit)
-      this.editRole();
+   await this.createForm();
+    // if (this.edit)
+    // console.log('edit**********',this.edit)
+  await    this.editRole();
+    await  this.createForm()
   }
 
+  getbusinessd; getbuss
 
-
+  async getBusiness() {
+    this.getbusinessd = await this.bussiness.getbusiness({});
+    this.getbuss = this.getbusinessd[0];
+    // console.log("get business ", this.getbuss);
+  }
+  
     
 async  editRole() {
   
  this.editrolel = await this.menurole.getrole({id : this.edit['id'] })
- console.log("data to..........",this.editrolel)
+
+this.editdata=this.editrolel[0];
+
+
+console.log("data to.......@@@@@@@@@@@@@@...",this.editdata)
+
  if(this.editrolel[0]['umenu'] != null)
   this.selectnodes(this.editrolel[0]['umenu']) ;
 
@@ -292,8 +316,14 @@ async  AddProfile() {
 
   createForm() {
     this.AddProfileForm = new FormGroup({
-      // rolename: new FormControl(this.edit ? this.edit['rolename'] : '', Validators.required),
-      descr: new FormControl(this.edit ? this.edit['desc'] : '')
+      bid: new FormControl(this.editdata?.["bid"] || "",Validators.required),
+      urole:new FormControl(this.editdata?.["urole"] || "",Validators.required),
+      loginid: new FormControl(this.editdata?.["loginid"] || "", Validators.required),
+      pwd: new FormControl(''),
+      fname: new FormControl(this.editdata?.["fname"] || "", Validators.required),
+      mobile : new FormControl(this.editdata?.["mobile"] || "", Validators.required),
+      email : new FormControl(this.editdata?.["email"] || "", Validators.required),
+      address : new FormControl(this.editdata?.["address"] || "", Validators.required),
     });
   }
 

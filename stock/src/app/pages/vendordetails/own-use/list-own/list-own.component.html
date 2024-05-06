@@ -2,11 +2,11 @@
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
     <nb-card-header>List Own Use Assets Details</nb-card-header>
     <nb-card-body>
-      <button  status="success" nbButton  style="margin-bottom: 1%;"
+      <button *ngIf="role.getroleid() > 777  || !role.getmenurole(7001)"  status="success" nbButton  style="margin-bottom: 1%;"
       [routerLink]="['/pages/vendor/add-ownuse']">Add own</button>
     <table class="table">
-      <tr *ngIf="role.getroleid() > 777">
-        <th>Action</th>
+      <tr >
+        <th *ngIf="role.getroleid() > 777  || !role.getmenurole(7003) ">Action</th>
         <th>Business Name</th>
         <th>Serial No</th> 
         <th>Item Name</th>
@@ -15,7 +15,7 @@
       <tr *ngFor="let item of pagedItems">
 
 
-        <td style="padding: 1px" class="last" data-title="'Action'">
+        <td *ngIf="role.getroleid() > 777  || !role.getmenurole(7003)" style="padding: 1px" class="last" data-title="'Action'">
           <div class="dropdown ghost-dropdown" ngbDropdown>
             <button type="button" style="margin-left: -10%" class="btn btn-sm btn-success dropdown-toggle"
               data-bs-toggle="dropdown">
@@ -24,7 +24,7 @@
           <ul style="width: 106px;margin:3px;z-index: 1;" class="dropdown-menu" ngbDropdownMenu>
           
 
-<li  *ngIf="role.getroleid() > 777"style="cursor:pointer;"  class="dropdown-item" title="Edit">
+<li  style="cursor:pointer;"  class="dropdown-item" title="Edit">
   <i [routerLink]="['/pages/vendor/edit-ownuse']" [queryParams]="{id:item.ownid , model_sid :item.model_sid}" class="nb-edit" style=" cursor: pointer;" *ngIf="item.sstatus == 1">  &nbsp;Edit</i>
 </li>
 

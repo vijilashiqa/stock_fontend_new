@@ -104,13 +104,13 @@
               <nb-tab tabTitle="Invoice Details">
                 <div class="modal-body">
                   <div class="form-group row">
-                    <div class="col-sm-2" >
+                    <div  class="col-sm-2" >
                       <label> GST Type<span style="color:red">*</span></label>
-                      <select [ngClass]="{ 'is-invalid': submit && editinvoice.controls.gsttype.errors }"
-                      (change)="changedr();changegstype($event)" style="background-color: #e9ecef00  !important" class="form-control" name="gsttype" formControlName="gsttype">
-                      <option value="" selected>Select TAX</option> 
-                      <option value="1" >Common TAX</option>
-                        <option value="0">Split TAX</option>
+                      <select  [ngClass]="{ 'is-invalid': submit && editinvoice.controls.gsttype.errors }"
+                      (change)="changedr();changegstype($event)"  style="background-color: #e9ecef00  !important" class="form-control" name="gsttype"   formControlName="gsttype"  >
+                      <!-- <option  value="" selected>Select TAX</option>  -->
+                      <option  *ngIf="enablevalue == 1" value="1">Common TAX</option>
+                        <option  *ngIf="enablevalue == 0 "value="0">Split TAX</option>
                       </select>
                       <small
                       *ngIf="editinvoice.controls.gsttype.errors &&(editinvoice.controls.gsttype.errors.required )&& submit"
@@ -123,7 +123,7 @@
                       <label>IGST<span style="color:red">*</span></label>
                       <input [ngClass]="{ 'is-invalid': submit && editinvoice.controls.igst.errors }"
                        type="text" name="igst"   formControlName="igst" class="form-control" min="0"
-                        placeholder="Enter IGST">
+                        placeholder="Enter IGST"   [readonly]="true"    >
                         <small
                         *ngIf="editinvoice.controls.igst.errors &&(editinvoice.controls.igst.errors.required )&& submit"
                         class="invalid-feedback">IGST is required! </small>
@@ -133,7 +133,7 @@
                       <label>SGST<span style="color:red">*</span></label>
                       <input [ngClass]="{ 'is-invalid': submit && editinvoice.controls.sgst.errors }" 
                       type="number" name="sgst" formControlName="sgst" class="form-control" name="sgst" min="0"
-                        placeholder="Enter SGST">
+                        placeholder="Enter SGST" [readonly]="true" >
                         <small
                         *ngIf="editinvoice.controls.sgst.errors &&(editinvoice.controls.sgst.errors.required )&& submit"
                         class="invalid-feedback">SGST is required! </small>
@@ -144,7 +144,7 @@
                       <label>CGST<span style="color:red">*</span></label>
                       <input [ngClass]="{ 'is-invalid': submit && editinvoice.controls.cgst.errors }"
                        type="number" name="cgst" formControlName="cgst" class="form-control" min="0" name="cgst"
-                        placeholder="Enter CGST">
+                        placeholder="Enter CGST" [readonly]="true" >
                         <small
                         *ngIf="editinvoice.controls.cgst.errors &&(editinvoice.controls.cgst.errors.required )&& submit"
                         class="invalid-feedback">ICGST is required! </small>
@@ -168,7 +168,7 @@
     <label>Make Name<span style="color:red">*</span></label>
     <auto-completen 
      [addclass]="{error:submit &&  this.user['controls']['makeid'].invalid && submit}" 
-     addclass="form-control" optValues="makename"  [formControl]="getInvoiceByIndex(idx)['makeid']"  (keyUp)="getmake();addvalidation(idx);onSomeEvent()" (changed)=" dropdown($event);getmodel()"
+     addclass="form-control" optValues="makename"  [formControl]="getInvoiceByIndex(idx)['makeid']"  (keyUp)="getmake();addvalidation(idx);" (changed)=" dropdown($event);getmodel()"
   placeholder="Select Business Name" optId="makeid" [item]="getmakel">
 </auto-completen>
 <small *ngIf="user.hasError('required','makeid')&&submit" class="error-text">Make Name is Required! </small>

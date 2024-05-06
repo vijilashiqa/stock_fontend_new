@@ -5,6 +5,7 @@ import { PagesComponent } from "./pages.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { ECommerceComponent } from "./e-commerce/e-commerce.component";
 import { NotFoundComponent } from "./miscellaneous/not-found/not-found.component";
+import { AuthGuard } from "./_services/auth.guard";
 
 const routes: Routes = [
   {
@@ -14,29 +15,43 @@ const routes: Routes = [
       {
         path: "dashboard",
         component: ECommerceComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: "iot-dashboard",
         component: DashboardComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: "layout",
         loadChildren: () =>
           import("./layout/layout.module").then((m) => m.LayoutModule),
+       
+        
       },
       {
         path: "forms",
         loadChildren: () =>
           import("./forms/forms.module").then((m) => m.FormsModule),
+      
+        
       },
       {
-        path: "vendor",
+        path: 'vendor',
         loadChildren: () =>
           import("./vendordetails/vendordetails.module").then(
             (m) => m.VendordetailsModule
           ),
+
+        // loadChildren :'./vendordetails/vendordetails.module#VendordetailsModule'
+          
       },
 
+
+      // {
+      //   path: 'business',
+      //   loadChildren: './business/business.module#BusinessModule',
+      // },
 
 
       {
@@ -45,6 +60,7 @@ const routes: Routes = [
           import("./admin/admin-routing.module").then(
             (m) => m.AdminRoutingModule
           ),
+          canActivate:[AuthGuard]
       },
 
 
@@ -54,6 +70,7 @@ const routes: Routes = [
           import("./bussiness/bussiness.module").then(
             (m) => m.BussinessModule
           ),
+          
       },
 
 
@@ -149,5 +166,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class PagesRoutingModule {}

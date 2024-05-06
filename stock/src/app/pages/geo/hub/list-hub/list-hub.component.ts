@@ -9,6 +9,7 @@ import { PagerService } from '../../../_services/pager.service';
 import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { AddHubComponent } from '../add-hub/add-hub.component';
 import { HubService } from '../../../_services/hub.service';
+import { RoleservicesService } from '../../../_services/roleservices.service';
 
 @Component({
   selector: 'ngx-list-hub',
@@ -23,6 +24,7 @@ export class ListHubComponent {
   constructor(
     private modal: NgbModal,
     private hubser :HubService,
+    public role :RoleservicesService,
     public pageservice: PagerService,
  
     ) { }

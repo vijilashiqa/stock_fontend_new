@@ -5,18 +5,18 @@
       <!-- <toaster-container></toaster-container> -->
       <div class="row"  style="margin-bottom: 1%;">
         <div >
-          <button status="success" nbButton (click)="addhub()">Add Hub</button>
+          <button *ngIf="role.getroleid() > 777  || !role.getmenurole(1007)" status="success" nbButton (click)="addhub()">Add Hub</button>
         </div>
       </div>
      
       <table class="table">
         <tr>
-          <th>Action</th>
+          <th *ngIf="role.getroleid() > 777  || !role.getmenurole(1009)">Action</th>
           <th>HUB Name</th>
           <th>Description Name</th>
         </tr>
         <tr *ngFor="let item of pagedItems">
-          <td ><a (click)="edithub(item.hbid);" title="Update"><i class="nb-edit"></i></a></td>
+          <td *ngIf="role.getroleid() > 777  || !role.getmenurole(1009)"><a (click)="edithub(item.hbid);" title="Update"><i class="nb-edit"></i></a></td>
           <td>{{item.hubname}}</td>
           <td>{{item.descs}}</td>
         </tr>

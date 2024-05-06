@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component} from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -6,11 +6,8 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-// import { HeadendService, RoleservicesService } from '../../_services';
-import { ToastrService } from "ngx-toastr";
-import { ActivatedRoute, Router } from "@angular/router";
 
-import { HsnService } from "../../../_services/hsn.service";
+import { ActivatedRoute, Router } from "@angular/router";
 import { BusinessService } from "../../../_services/business.service";
 import { VendorService } from "../../../_services/vendor.service";
 import { NbToastrService } from "@nebular/theme";
@@ -18,7 +15,6 @@ import { InvoiceService } from "../../../_services/invoice.service";
 import { DeviceService } from "../../../_services/device.service";
 import { MakeService } from "../../../_services/make.service";
 import { ModelService } from "../../../_services/model.service";
-
 @Component({
   selector: "ngx-edit-invoice",
   templateUrl: "./edit-invoice.component.html",
@@ -46,7 +42,7 @@ export class EditInvoiceComponent {
   getvd; indexi
   getgst1; countitem;
   materialArray; dropdata
-  reduceaddress;
+  reduceaddress;enablevalue;
   slice2; gsttypevalue
   reducesvendor;
   sllice1; itemqty
@@ -55,7 +51,7 @@ export class EditInvoiceComponent {
   getinvoicel;
   vall; itemsgstt; itemcgst; itemigstt
   getinvoicelitem; item; itemamt;
-  amount; tax; total
+  amount; tax; total;nlength
 
   constructor(
     private _fb: FormBuilder,
@@ -87,7 +83,8 @@ export class EditInvoiceComponent {
     await this.getmodel();
     await this.getmake();
     // this.addvalidation(0)
-     this.onSomeEvent()
+    //  this.onSomeEvent()
+  //  await this.tryfun() 
   }
   async editinvoicef() {
     this.submit = true;
@@ -130,13 +127,12 @@ export class EditInvoiceComponent {
   }
 
   async Changedata() {
-    // console.log("daaas########", this.getinvoice2.busgstno);
     let opp = this.editinvoice.value["busaddr"] || this.getinvoice2.busgstno;
     let dd = this.getadd?.filter((id) => id.id == opp).map((id) => id.bagstno);
-    // console.log("ddddddddddddddddddddddddd%%%%%%%%%%555",this.getadd);
+    console.log("ddddddddddddddddddddddddd%%%%%%%%%%555",opp);
     this.reduceaddress = dd?.reduce((a, v) => ({ ...a, v }));
     this.slice2 = this.reduceaddress?.slice(0, 2);
-    // console.log("slice@@@@@@@@@@ 1", this.slice2);
+     console.log("slice@@@@@@@@@@ 1", this.slice2);
     await this.disable();
   }
 
@@ -157,12 +153,12 @@ export class EditInvoiceComponent {
 
   async changeaddress() {
     let opp1 = this.editinvoice.value["vaddr"] || this.getinvoice2.vgstno;
-    // console.log("change address", opp1);
+     console.log("change address @@@@@@@@@@@", opp1);
     let dd = this.getvd?.filter((id) => id.id == opp1).map((id) => id.gst_no);
     // console.log("reduce",dd)
     this.reducesvendor = dd?.reduce((a, v) => ({ ...a, v }));
     this.sllice1 = this.reducesvendor?.slice(0, 2);
-    // console.log("slice@@@@@@@@@@ 22@", this.sllice1);
+     console.log("slice@@@@@@@@@@ 22@", this.sllice1);
     await this.disable();
   }
 
@@ -178,11 +174,9 @@ export class EditInvoiceComponent {
 
 
     for (let item of this.item1) {
-      console.log("item status split*****", this.item1.length);
-
-      // console.log("igst", item.igst ,"sgst", item.sgst ,"cgs",item.cgst,"amount", item.itemamt,"gst type",item.itemgst , 'id', item.iiid );
+      console.log("item status length*****", this.item1.length);
       console.log("slice in the item", this.sllice1, this.slice2);
-
+      this.nlength =this.item1.length
       let taxper = Number(item.sgst || this.editinvoice.value['sgst']) + Number(item.cgst || this.editinvoice.value['cgst']) || Number(item.igst || this.editinvoice.value['igst']);
       console.log("tax per amount", taxper);
       let res = await this.taxcal(Number(item.itemgst), Number(item.itemamt), taxper);
@@ -192,7 +186,6 @@ export class EditInvoiceComponent {
       this.total = Math.round(Number(this.amount + this.tax) * Math.round(Number(item.itemqty)));
       console.log("total ^^^^^^^^^^^^^", this.total);
       this.addMaterial(
-        //  item.itemname,
         item.modelid,
         item.makeid,
         item.deviceid,
@@ -208,7 +201,7 @@ export class EditInvoiceComponent {
       console.log("item gst", item);
 
     }
-
+  await  this.tryfun()
 
   }
   changedr() {
@@ -220,13 +213,15 @@ export class EditInvoiceComponent {
     this.editinvoice.controls["cgst"].setValue("");
   }
   async disable() {
-    console.log("slice in disable", this.sllice1);
-    console.log("slice in disable", this.slice2);
+    console.log("slice1 in disable", this.sllice1);
+    console.log("slice2 in disable", this.slice2);
     if (this.sllice1 == this.slice2) {
       this.disabled = true;
-    } else {
+    } if (this.sllice1 != this.slice2) {
       this.disabled = false;
     }
+
+    await this.tryfun()
   }
 
   dropdown($event) {
@@ -257,8 +252,7 @@ export class EditInvoiceComponent {
     this.getmodell = await this.invoiceser.getmodel_edit({ makeid: this.dropdata, deviceid: this.dropdata1 });
     this.getmodel2 = this.getmodell[0]
     // console.log("get model", this.getmodel2);
-
-  }
+ }
 
 
 
@@ -266,7 +260,11 @@ export class EditInvoiceComponent {
     this.getinvoicel = await this.invoiceser.getinvoice_edit({ id: this.id });
     this.getinvoice2 = this.getinvoicel[0][0];
     await this.createForm();
-    // console.log("get edit  common", this.getinvoice2);
+   console.log("get edit  common", this.getinvoice2);
+
+ this.enablevalue= this.getinvoice2.gsttype ;
+
+ console.log("enabl the dropdown value", this.enablevalue)
   }
 
   async onkeyupQty(event: any, index: number) {
@@ -283,27 +281,18 @@ export class EditInvoiceComponent {
   }
 
   async taxcal(itemtaxtype, amount, taxper) {
-    // console.log(".....tax type.....", itemtaxtype);
-    //    console.log("........amount.......",amount);
-    //    console.log("..............taax share",taxper);
     if (itemtaxtype == 0) {
-      //  console.log("Inclusive");
-
       var amt = (Number(amount) / ((100 + taxper) / 100)).toFixed(2);
       var taxamt = (Number(amount) - Number(amt)).toFixed(2);
       return { amt: amt, taxamt: taxamt };
     } else {
-      // console.log("Exclusive");
-
-
-      var amt = Number(amount).toFixed(2);
+       var amt = Number(amount).toFixed(2);
       var taxamt = (Number(amount * taxper) / 100).toFixed(2);
       return { amt: amt, taxamt: taxamt };
     }
   }
 
   addMaterial(
-    // itemname = "",
     modelid = 0,
     makeid = 0,
     deviceid = 0,
@@ -315,12 +304,10 @@ export class EditInvoiceComponent {
     itemstatus = 0,
     itemgst = "",
     iiid = 0,
-
     total = 0
   ) {
     this.invoiceForm.push(
       this.createinvoice(
-        // itemname,
         modelid,
         makeid,
         deviceid,
@@ -342,7 +329,6 @@ export class EditInvoiceComponent {
   }
 
   createinvoice(
-    // itemname = "",
     modelid = 0,
     makeid = 0,
     deviceid = 0,
@@ -362,9 +348,12 @@ export class EditInvoiceComponent {
       modelid: [modelid || "", Validators.required],
       makeid: [makeid || "", Validators.required],
       deviceid: [deviceid || "", Validators.required],
-      igst: [igst],
-      sgst: [sgst],
-      cgst: [cgst],
+      igst: [  { value: igst? igst : '' , disabled: igst ? true : false }   || "", Validators.required ],
+      sgst: [  { value: sgst? sgst : '' , disabled:  sgst ? true : false } || "", Validators.required ],
+      cgst: [ { value: cgst? cgst: '' , disabled:  cgst ? true : false } || "", Validators.required],
+      // igst: [  igst    || "", Validators.required],
+      // sgst: [  sgst  || "", Validators.required],
+      // cgst: [ cgst || "", Validators.required],
       itemqty: [itemqty || "", Validators.required],
       itemgst: [itemgst, Validators.required],
       itemamt: [itemamt || "", Validators.required],
@@ -404,15 +393,85 @@ export class EditInvoiceComponent {
   }
 
 
+tryfun(){
+  console.log("length thw function gfhfd" , this.nlength);
+  console.log("disable @@@@@@@@", this.disabled, "gst type", this.getinvoice2?.["gsttype"], );
+
+  for (this.vall= 0; this.vall < this.nlength ; this.vall++) {
+  console.log(" !!!!!!!!%%%%%%%%%%", this.vall)
+  // if(this.getinvoice2?.["gsttype"] == 1 ){
+  //   this.editinvoice.get('sgst').setValidators(Validators.required);
+  //   this.editinvoice.get('sgst').updateValueAndValidity();
+  //   this.editinvoice.get('cgst').setValidators(Validators.required);
+  //   this.editinvoice.get('cgst').updateValueAndValidity();
+  //   this.editinvoice.get('igst').setValidators(Validators.required);
+  //   this.editinvoice.get('igst').updateValueAndValidity();
+  // }
+
+const controlArray = <FormArray>this.editinvoice.get('invoiceid');
+if (this.getinvoice2?.["gsttype"] == 0  && this.disabled == false) {
+  this.editinvoice.get('sgst').clearValidators();
+  this.editinvoice.get('sgst').updateValueAndValidity();
+  this.editinvoice.get('cgst').clearValidators();
+  this.editinvoice.get('cgst').updateValueAndValidity();
+  this.editinvoice.get('igst').clearValidators();
+  this.editinvoice.get('igst').updateValueAndValidity();
+  controlArray.controls[this.vall].get('sgst').clearValidators();
+  controlArray.controls[this.vall].get('sgst').updateValueAndValidity();
+  controlArray.controls[this.vall].get('cgst').clearValidators();
+  controlArray.controls[this.vall].get('cgst').updateValueAndValidity();
+
+
+}
+
+
+if (this.getinvoice2?.["gsttype"] == 0 && this.disabled == true) {
+  this.editinvoice.get('sgst').clearValidators();
+  this.editinvoice.get('sgst').updateValueAndValidity();
+  this.editinvoice.get('cgst').clearValidators();
+  this.editinvoice.get('cgst').updateValueAndValidity();
+  this.editinvoice.get('igst').clearValidators();
+  this.editinvoice.get('igst').updateValueAndValidity();
+  controlArray.controls[this.vall].get('igst').clearValidators();
+  controlArray.controls[this.vall].get('igst').updateValueAndValidity();
+  // controlArray.controls[this.vall].get('cgst').setValidators(Validators.required);
+  // controlArray.controls[this.vall].get('cgst').updateValueAndValidity();
+  // controlArray.controls[this.vall].get('sgst').setValidators(Validators.required);
+  // controlArray.controls[this.vall].get('sgst').updateValueAndValidity();
+}
+
+if (this.getinvoice2?.["gsttype"] ==1 && this.disabled == true) {
+  this.editinvoice.get('igst').clearValidators();
+  this.editinvoice.get('igst').updateValueAndValidity();
+  controlArray.controls[this.vall].get('igst').clearValidators();
+  controlArray.controls[this.vall].get('igst').updateValueAndValidity();
+  controlArray.controls[this.vall].get('sgst').clearValidators();
+  controlArray.controls[this.vall].get('sgst').updateValueAndValidity();
+  controlArray.controls[this.vall].get('cgst').clearValidators();
+  controlArray.controls[this.vall].get('cgst').updateValueAndValidity();
+}
+if (this.getinvoice2?.["gsttype"]  == 1  && this.disabled == false) {
+  this.editinvoice.get('sgst').clearValidators();
+  this.editinvoice.get('sgst').updateValueAndValidity();
+  this.editinvoice.get('cgst').clearValidators();
+  this.editinvoice.get('cgst').updateValueAndValidity();
+  controlArray.controls[this.vall].get('igst').clearValidators();
+  controlArray.controls[this.vall].get('igst').updateValueAndValidity();
+  controlArray.controls[this.vall].get('sgst').clearValidators();
+  controlArray.controls[this.vall].get('sgst').updateValueAndValidity();
+  controlArray.controls[this.vall].get('cgst').clearValidators();
+  controlArray.controls[this.vall].get('cgst').updateValueAndValidity();
+}
+  }
+}
+
+
+
+
+
   addvalidation(idx: number) {
-
-    // this.getInvoiceByIndex(idx).get('sgst').clearValidators();
-
-console.log("index@@@@@@@@@@", this.getInvoiceByIndex(idx).cgst);
-
     const controlArray = <FormArray>this.editinvoice.get('invoiceid');
     console.log("disable @@@@@@@@", this.disabled, "gst type", this.getinvoice2?.["gsttype"], "index", idx);
-    // console.log(" controlArray.controls[idx].get('sgst')", controlArray.at(index);)
     if (this.gsttypevalue == 0 || this.getinvoice2?.["gsttype"] && this.disabled == false) {
       this.editinvoice.get('sgst').clearValidators();
       this.editinvoice.get('sgst').updateValueAndValidity();
@@ -420,14 +479,17 @@ console.log("index@@@@@@@@@@", this.getInvoiceByIndex(idx).cgst);
       this.editinvoice.get('cgst').updateValueAndValidity();
       this.editinvoice.get('igst').clearValidators();
       this.editinvoice.get('igst').updateValueAndValidity();
+      controlArray.controls[idx].get('igst').setValidators(Validators.required);
+      controlArray.controls[idx].get('igst').updateValueAndValidity();
       controlArray.controls[idx].get('sgst').clearValidators();
       controlArray.controls[idx].get('sgst').updateValueAndValidity();
       controlArray.controls[idx].get('cgst').clearValidators();
       controlArray.controls[idx].get('cgst').updateValueAndValidity();
-      controlArray.controls[idx].get('igst').setValidators(Validators.required);
-      controlArray.controls[idx].get('igst').updateValueAndValidity();
+
     }
-    if (this.gsttypevalue == 0 || this.getinvoice2?.["gsttype"] && this.disabled == true) {
+    if (this.getinvoice2?.["gsttype"] == 0 && this.disabled == true) {
+
+      console.log("am here")
       this.editinvoice.get('sgst').clearValidators();
       this.editinvoice.get('sgst').updateValueAndValidity();
       this.editinvoice.get('cgst').clearValidators();
@@ -471,17 +533,8 @@ console.log("index@@@@@@@@@@", this.getInvoiceByIndex(idx).cgst);
   }
 
 
-  onSomeEvent( ) {
-console.log("devicename", this.editinvoice.controls.invoiceid);
 
-
-this.editinvoice.controls.invoiceid
-
-    // const index = 1; // Replace with the actual index you want to access
-    // const controlAtIndex = this.invoiceForm.at(index);
-    // console.log(`Control at index ${index}:`, controlAtIndex);
-  }
-
+  
   changeaddres() {
     this.editinvoice.controls["busaddr"].setValue("");
   }
@@ -519,28 +572,19 @@ this.editinvoice.controls.invoiceid
         this.getinvoice2?.["gsttype"],
         Validators.required
       ),
-      igst: new FormControl(this.getinvoice2?.["igst"] ),
-      sgst: new FormControl(this.getinvoice2?.["sgst"] ),
-      cgst: new FormControl(this.getinvoice2?.["cgst"] ),
+      igst: new FormControl(this.getinvoice2?.["igst"]  || "",
+      Validators.required ),
+      sgst: new FormControl(this.getinvoice2?.["sgst"] || "",
+      Validators.required ),
+      cgst: new FormControl(this.getinvoice2?.["cgst"]  || "",
+      Validators.required),
       invoiceid: new FormArray([]),
     });
   }
 
 
-// change(){
-//   this.editinvoice.invoiceid.controls.forEach(
-//     control => {
-//         control.valueChanges.subscribe(
-//              () => {
-//             console.log(this.invoiceForm.controls.indexOf(control)) // logs index of changed item in form array
-//              }
-//         )
-//     }
-// )
 
-
-
-// }
+  
 
 
  

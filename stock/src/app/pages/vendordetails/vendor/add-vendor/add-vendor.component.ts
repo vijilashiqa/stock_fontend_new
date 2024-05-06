@@ -53,7 +53,8 @@ export class AddVendorComponent implements OnInit {
     private business: BusinessService,
     private stateser: StateService,
     private districtser: DistrictService,
-    public role: RoleservicesService
+    public role: RoleservicesService,
+    private Bussiness :BusinessService
   ) { }
 
   async ngOnInit() {
@@ -61,6 +62,7 @@ export class AddVendorComponent implements OnInit {
     await this.getstate();
     // await this.getdistrict();
     await this.getbusiness('')
+    await this.getbanf()
   }
 
   async addvendors() {
@@ -139,7 +141,17 @@ export class AddVendorComponent implements OnInit {
     this.stockinid.at(index).get('dist').setValue('');
   }
 
+  banklist;banklist1
 
+
+  async getbanf(){
+
+    this.banklist = await this.Bussiness.getbank({})
+
+    this.banklist1= this.banklist[0]
+console.log("bank list ", this.banklist);
+
+  }
 
   
 

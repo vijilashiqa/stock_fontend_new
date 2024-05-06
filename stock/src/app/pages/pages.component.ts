@@ -6,7 +6,8 @@ import { NbMenuItem } from '@nebular/theme';
   styleUrls: ['pages.component.scss'],
   template: `
     <ngx-one-column-layout >
-      <nb-menu autoCollapse [items]="menu"></nb-menu>
+    
+  <nb-menu autoCollapse="true" [items]="menu"></nb-menu>
       <router-outlet></router-outlet>
     </ngx-one-column-layout>
   `,
@@ -16,13 +17,13 @@ export class PagesComponent {
   constructor() {
     this.role = JSON.parse(JSON.parse(localStorage.getItem('userinfo'))['umenu']);
     console.log('role item', this.role)
-    // console.log('headend id',JSON.parse(localStorage.getItem('userinfo'))['hdid'])
     JSON.parse(JSON.parse(localStorage.getItem('userinfo'))['umenu'])
     this.menu = [
       {
         title: 'Dashboard',
         icon: 'grid-outline',
-        link: '/pages/iot-dashboard',
+        link: '/pages/dashboard',
+        home: true,
       },
     
     {
@@ -84,51 +85,31 @@ export class PagesComponent {
     },
 
     {
-      title: 'ADS Admin',
-      hidden: !(this.role.find(x => x == 2001) || this.role.find(x => x == 2002)|| this.role.find(x=>x == 2003)
-      ||this.role.find(x => x == 2004)),
+      title: 'User Details',
+      hidden: !(this.role.find(x => x == 2001) || this.role.find(x => x == 2002)|| this.role.find(x=>x == 2003)),
       icon: 'shield-outline',
       children: [
      
-        
-
         {
-          title: 'User Details',
-          hidden: ! (this.role.find(x=> x == 2001)|| this.role.find(x=>x==2002)),
-          children: [
-            {
-              title: 'Add user',
-              hidden: ! this.role.find(x=> x == 2001),
-              link: '/pages/admin/add-user',
-             
-            },
-           
-            {
-              title: 'List user',
-              hidden: !  this.role.find(x=>x==2002),
-              link: '/pages/admin/list-user',
-             
-            },
-          ],
+          title: 'Add User Details',
+          hidden: ! this.role.find(x=> x == 2001),
+          link: '/pages/admin/add-user',
+         
         },
 
-
-      
-        
         {
-          title: 'Admin Role',
-          hidden: ! this.role.find(x=> x == 2004),
-          children: [
-       
-                  {
-                    title: 'List Admin Role',
-                    // hidden: ! this.role.find(x=> x == 2004),
-                    link: '/pages/admin/list-admin',
-                  },
-           
-          ],
+          title: 'List User Details',
+          hidden: ! this.role.find(x=> x == 2002),
+          link: '/pages/admin/list-user',
         },
-       
+
+        // {
+        //   title: 'User Details',
+        //   hidden: ! (this.role.find(x=> x == 2001)|| this.role.find(x=>x==2002) || this.role.find(x=>x==2003)),
+        //   children: [
+            
+        //   ],
+        // },
 
       ],
     },
@@ -436,7 +417,7 @@ export class PagesComponent {
           {
             title: 'List Assets ',
             link: '/pages/vendor/list-ownuse',
-            hidden: !this.role.find(x => x == 7003),
+            hidden: !this.role.find(x => x == 7002),
           },
          
         ],

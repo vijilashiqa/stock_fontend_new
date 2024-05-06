@@ -46,7 +46,7 @@ export class RoleservicesService {
 	
 
 	getmenurole(menu_role) {
-		this.role = (localStorage.getItem('userinfo') ? JSON.parse(JSON.parse(localStorage.getItem('userinfo'))['menurole']) : []);
+		this.role = (localStorage.getItem('userinfo') ? JSON.parse(JSON.parse(localStorage.getItem('userinfo'))['umenu']) : []);
 		return this.role.find(x => x == menu_role) ? false : true;
 	}
 
