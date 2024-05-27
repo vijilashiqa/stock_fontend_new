@@ -66,14 +66,14 @@
     <auto-completen [addclass]="{
           error: submit && this.addmodel.controls.deviceid.errors
         }" addclass="form-control" optValues="devicename"  formControlName="deviceid" (keyUp)="getdevice()"
-      placeholder="Select Business Name" optId="deviceid" [item]="getdevicel">
+      placeholder="Select Device Name" optId="deviceid" [item]="getdevicel">
     </auto-completen>
     <div *ngIf="
           this.addmodel.controls.deviceid.errors &&
           this.addmodel.controls.deviceid.errors.required &&
           submit
         " class="error-text">
-      Business Name is required!
+      Device Name is required!
     </div>
   </div>
   

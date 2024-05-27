@@ -66,19 +66,19 @@ export class AddVendorComponent implements OnInit {
   }
 
   async addvendors() {
-    // console.log("add@@@@@")
-    // const invalid = [];
-    // const control = this.addvendor.controls;
-    // for (const name in control) {
-    //   if (control[name].invalid) {
-    //     invalid.push(name);
-    //   }
-    // }
-    // console.log('invalid', invalid);
-    // this.submit = true;
-    // if (this.addvendor.invalid) {
-    //   return;
-    // }
+    console.log("add@@@@@")
+    const invalid = [];
+    const control = this.addvendor.controls;
+    for (const name in control) {
+      if (control[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    console.log('invalid', invalid);
+    this.submit = true;
+    if (this.addvendor.invalid) {
+      return;
+    }
     let result = await this.vendorservices.addvendor(this.addvendor.value);
     if (result && result[0].err_code == 0) {
       this.toast.success("Success", result[0]["msg"],);

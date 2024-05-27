@@ -112,14 +112,14 @@ export class AddOwnComponent {
   }
   async addchannelsrv() {
     this.submit = true;
-    const invalid = [];
-    const control =  this.addownuseForm.controls;
-    for (const name in control) {
-      if (control[name].invalid) {
-        invalid.push(name);
-        this.toast.warning(name, "please fill mantrity data");
-      }
-    }
+    // const invalid = [];
+    // const control =  this.addownuseForm.controls;
+    // for (const name in control) {
+    //   if (control[name].invalid) {
+    //     invalid.push(name);
+    //     this.toast.warning(name, "please fill mantrity data");
+    //   }
+    // }
     if (this.addownuseForm.invalid) {
       return;
     }
