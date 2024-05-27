@@ -37,13 +37,18 @@ import { JwtrequestService } from './pages/_services/jwtrequest.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToasterModule } from 'angular2-toaster';
 import { ToastrModule } from 'ngx-toastr';
-// const config:io.SocketIoConfig = { url:env.baseUrl, options:{} }  
+import { LoginComponent } from './pages/login/login.component';
+import { NbLogoutComponent } from '@nebular/auth';
 
-
-// import * as io from 'ngx-socket-io';
-
+import * as io from 'ngx-socket-io';
+const config:io.SocketIoConfig = { url:env.baseUrl, options:{} }  
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    
+    AppComponent,
+    LoginComponent,
+    // NbLogoutComponent,
+  ],
   imports: [
     // CommonModule,
     RouterModule,
@@ -63,7 +68,7 @@ import { ToastrModule } from 'ngx-toastr';
     // NbToastrModule.forRoot(),
     ToastrModule.forRoot(),
     NbDatepickerModule,
-    
+
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
@@ -74,7 +79,7 @@ import { ToastrModule } from 'ngx-toastr';
 //    NgMultiSelectDropDownModule.forRoot(),
     FormsModule,
      NgbModule,
-     
+     io.SocketIoModule.forRoot(config)
      
      
     

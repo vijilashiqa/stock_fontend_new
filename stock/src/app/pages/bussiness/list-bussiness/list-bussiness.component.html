@@ -2,11 +2,11 @@
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
     <nb-card-header>List Bussiness Details</nb-card-header>
     <nb-card-body>
-      <button *ngIf="role.getroleid() > 777  || !role.getmenurole(3001)" status="success" nbButton  style="margin-bottom: 1%;"
+      <button *ngIf="role.getroleid() > 888  || !role.getmenurole(3001)" status="success" nbButton  style="margin-bottom: 1%;"
       [routerLink]="['/pages/business/add-business']">Add Bussiness</button>
     <table class="table">
       <tr>
-        <th *ngIf="role.getroleid() > 777  || !role.getmenurole(3003)">Action</th>
+        <th *ngIf="role.getroleid() > 888  || !role.getmenurole(3003)">Action</th>
         <th>Business Name</th>
         <th>Mobile No</th>
        <th>Email Address</th>
@@ -15,7 +15,7 @@
        
       </tr>
       <tr *ngFor="let item of pagedItems">
-        <td *ngIf="role.getroleid() > 777  || !role.getmenurole(3003)" style="cursor:pointer;" [routerLink]="['/pages/business/edit-business']" [queryParams]="{id:item.id}"><i class="nb-edit"></i></td>
+        <td *ngIf="role.getroleid() > 888  || !role.getmenurole(3003)" style="cursor:pointer;" [routerLink]="['/pages/business/edit-business']" [queryParams]="{id:item.id}"><i class="nb-edit"></i></td>
         <td>{{item.bname}}</td>
         <td>{{item.bphoneno}}</td>
         <td>{{item.bemail}}</td>

@@ -9,7 +9,7 @@ import { AuthGuard } from "./_services/auth.guard";
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: PagesComponent,
     children: [
       {
@@ -17,11 +17,11 @@ const routes: Routes = [
         component: ECommerceComponent,
         canActivate: [AuthGuard],
       },
-      {
-        path: "iot-dashboard",
-        component: DashboardComponent,
-        canActivate: [AuthGuard],
-      },
+      // {
+      //   path: "iot-dashboard",
+      //   component: DashboardComponent,
+      //   canActivate: [AuthGuard],
+      // },
       {
         path: "layout",
         loadChildren: () =>
@@ -60,7 +60,7 @@ const routes: Routes = [
           import("./admin/admin-routing.module").then(
             (m) => m.AdminRoutingModule
           ),
-          canActivate:[AuthGuard]
+          // canActivate:[AuthGuard]
       },
 
 
@@ -104,9 +104,6 @@ const routes: Routes = [
       //     ),
       // },
 
-
-
-
       {
         path: "Geo-details",
         loadChildren: () =>
@@ -114,15 +111,6 @@ const routes: Routes = [
             (m) => m.GeoRoutingModule
           ),
       },
- 
-
-  
-      
-
-
-
-
-
       {
         path: "maps",
         loadChildren: () =>

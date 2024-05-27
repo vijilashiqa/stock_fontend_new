@@ -5,7 +5,7 @@
       <!-- <toaster-container></toaster-container> -->
       <div class="row" style="margin-bottom: 1%;">
         <div>
-          <button *ngIf="role.getroleid() > 777 ||   !role.getmenurole(1004)" status="success" nbButton (click)="Adddistrict()">Add District</button> 
+          <button *ngIf="(role.getroleid() > 777||!role.getmenurole(1004))" status="success" nbButton (click)="Adddistrict()">Add District</button> 
         </div>
       </div>
      

@@ -46,10 +46,10 @@ export class AddModelComponent {
   }
 
   async addhsn() {
-    this.submit = true;
-    if (this.addmodel.invalid) {
-      return;
-    }
+    // this.submit = true;
+    // if (this.addmodel.invalid) {
+    //   return;
+    // }
     let method = this.item ? "editmodel" : "addmodel";
     if (this.item) this.addmodel.value["modelid"] = this.item;
     let result = await this.models[method](this.addmodel.value);

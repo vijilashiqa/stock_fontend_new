@@ -52,7 +52,7 @@ export class PagesComponent {
 
         {
           title: 'District',
-          hidden: !(this.role.find(x => x == 1004) || this.role.find(x => x == 1005)|| this.role.find(x=>x == 1005)),
+          hidden: !(this.role.find(x => x == 1004) || this.role.find(x => x == 1005)|| this.role.find(x=>x == 1006)),
 
           children: [
             {
@@ -190,53 +190,6 @@ export class PagesComponent {
 
     
 
-
-    {
-      title: 'Invoice',
-      hidden: !(this.role.find(x => x == 5001) || this.role.find(x => x == 5002) || this.role.find(x => x == 5003) || this.role.find(x => x == 5004)|| this.role.find(x => x == 5005)|| this.role.find(x => x == 5006)),
-
-      icon: 'printer-outline',
-      children: [
-        // {
-        //   title: 'Add HSN',
-        //   link: '/pages/vendor/Add-hsn',
-        // },
-        {
-          title: 'Add Invoice',
-          link: '/pages/vendor/add-invoice',
-          hidden: !this.role.find(x => x == 5001),
-        },
-
-        {
-          title: 'List Invoice',
-          link: '/pages/vendor/list-invoice',
-          hidden: !this.role.find(x => x == 5002),
-        },
-
-
-        {
-          title: 'Serial No',
-          hidden: !(this.role.find(x => x == 5004)||this.role.find(x => x == 5005) ),
-
-          children: [
-
-            {
-              title: 'Add Serial No',
-              link: '/pages/vendor/add-serial',
-              hidden: !this.role.find(x => x == 5004),
-            },
-        
-            {
-              title: 'List Serial No',
-              link: '/pages/vendor/list-serial',
-              hidden: !this.role.find(x => x == 5005),
-            },
-           
-          ],
-        },
-       
-      ],
-    },
 
 
 
@@ -390,21 +343,65 @@ export class PagesComponent {
              
             ],
           },
-
-
-
-
-         
-         
-
         ],
       },
+
+
+
+
+      
+    {
+      title: 'Invoice',
+      hidden: !(this.role.find(x => x == 5001) || this.role.find(x => x == 5002) || this.role.find(x => x == 5003) || this.role.find(x => x == 5004)|| this.role.find(x => x == 5005)|| this.role.find(x => x == 5006)),
+
+      icon: 'printer-outline',
+      children: [
+        // {
+        //   title: 'Add HSN',
+        //   link: '/pages/vendor/Add-hsn',
+        // },
+        {
+          title: 'Add Invoice',
+          link: '/pages/vendor/add-invoice',
+          hidden: !this.role.find(x => x == 5001),
+        },
+
+        {
+          title: 'List Invoice',
+          link: '/pages/vendor/list-invoice',
+          hidden: !this.role.find(x => x == 5002),
+        },
+
+
+        {
+          title: 'Serial No',
+          hidden: !(this.role.find(x => x == 5004)||this.role.find(x => x == 5005)||this.role.find(x => x == 5006) ),
+
+          children: [
+
+            {
+              title: 'Add Serial No',
+              link: '/pages/vendor/add-serial',
+              hidden: !this.role.find(x => x == 5004),
+            },
+        
+            {
+              title: 'List Serial No',
+              link: '/pages/vendor/list-serial',
+              hidden: !this.role.find(x => x == 5005),
+            },
+           
+          ],
+        },
+       
+      ],
+    },
 
 
       
       {
         title: 'Assets Mapping',
-     hidden:!  ( this.role.find(x => x == 7001)||this.role.find(x => x == 7002)||this.role.find(x => x == 7003)),
+     hidden:!  ( this.role.find(x => x == 7001)||this.role.find(x => x == 7002)||this.role.find(x => x == 7003 ||this.role.find(x => x == 7004))),
         icon: 'pin-outline',
         children: [
 

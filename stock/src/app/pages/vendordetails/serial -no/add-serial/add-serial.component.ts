@@ -30,10 +30,10 @@ export class AddSerialComponent {
   failure: any = []; getvalue; indiv1
   submit: boolean; vv1
   channellist: any = [];
-  disabled = false; getinvoiced
+  disabled = false; getinvoiced;resp
   channelsrv;
   result; datacount
-  alert: any;
+  alert: any;i
   editable: boolean = false;
   id;
   router: any;
@@ -144,33 +144,24 @@ export class AddSerialComponent {
 
   Download() {
     const worksheet: JSXLSX.WorkSheet = JSXLSX.utils.json_to_sheet(this.failure);
-    console.log('failure thwr ######3', this.failure)
     const wb: JSXLSX.WorkBook = JSXLSX.utils.book_new();
     JSXLSX.utils.book_append_sheet(wb, worksheet, "Sheet1");
-    /* save to file */
     JSXLSX.writeFile(wb, "stb_failed_report" + EXCEL_EXTENSION);
   }
 
 
-  async addchannelsrv() {
+  async addserialno() {
     this.submit = true;
-    // this.isValidFormSubmitted = false;
     const invalid = [];
     const control = this.ctrl
     for (const name in control) {
       if (control[name].invalid) {
         invalid.push(name);
-        this.toast.warning("Missing Data", name);
-
-        // console.log('Serial No is missing ', name);
-
       }
     }
     if (this.addserial.invalid) {
-      // window.alert('Please fill mandatory fields');
       return;
     }
-
     if (this.val["modetype"] == 1) {
       let result = await this.serialnos.addserial(this.addserial.value);
       if (result && result[0].err_code == 0) {
@@ -178,7 +169,6 @@ export class AddSerialComponent {
         this.route.navigate(["/pages/vendor/list-serial"]);
       } else {
         this.toast.warning("", result[0]["msg"]);
-        // console.log("warning",result[0].err_code)
       }
     }
     if (this.bulk.length && this.val["modetype"] == 0) {
@@ -194,16 +184,33 @@ export class AddSerialComponent {
         }
         this.addserial.value["serial_num"] = this.bulk
       }
-      let resp = await this.serialnos.addserial(this.addserial.value);
-      console.log("bulkResult????????????????? ", resp);
-      if (resp && resp[0].err_code == 0) {
-        this.toast.success('', resp[0]["msg"]);
+       this.resp = await this.serialnos.addserial(this.addserial.value);
+      console.log("bulkResult????????????????? ", this.resp);
+      console.log("response length", this.resp.length)
+      if (this.resp && this.resp[0].err_code == 0) {
+        this.toast.success('', this.resp[0]["msg"]);
         this.route.navigate(["/pages/vendor/list-serial"]);
       } else {
-        let item = resp
+        let item = this.resp;
         this.Error(item)
       }
+
+
+      for( this.i=0;this.i < this.resp.length; this.i++)
+
+        {
+console.log("length of the  upload", this.resp[this.i])
+console.log(" error code ", this.resp[this.i].err_code !==0)
+        }
+
+        if(this.resp[this.i] !== 0){
+          let item = this.resp;
+          this.Error(item)
+  
+        }
     }
+
+  
   }
 
 
@@ -279,8 +286,6 @@ export class AddSerialComponent {
   }
 
   addserialf() {
-
-
     this.serial_num.push(this.createserial());
   }
 

@@ -2,7 +2,7 @@
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
     <nb-card-header>List Invoice Details</nb-card-header>
     <nb-card-body>
-      <button *ngIf="role.getroleid() > 777  || !role.getmenurole(5001)"  status="success" nbButton  style="margin-bottom: 1%;"
+      <button *ngIf="role.getroleid() > 888  || !role.getmenurole(5001)"  status="success" nbButton  style="margin-bottom: 1%;"
       [routerLink]="['/pages/vendor/add-invoice']">Add Invoice</button>
     <table class="table">
       <tr>
@@ -33,7 +33,7 @@
           </li> -->
 
 
-<li *ngIf="role.getroleid() > 777  || !role.getmenurole(5003)" style="cursor:pointer;"  class="dropdown-item" title="Edit" [routerLink]="['/pages/vendor/edit-invoice']" [queryParams]="{id:item.id}">
+<li *ngIf="role.getroleid() > 888  || !role.getmenurole(5003)" style="cursor:pointer;"  class="dropdown-item" title="Edit" [routerLink]="['/pages/vendor/edit-invoice']" [queryParams]="{id:item.id}">
 
   <i style="font-size: 20px" class="nb-edit"></i>&nbsp;Edit
 

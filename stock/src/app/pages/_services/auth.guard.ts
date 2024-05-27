@@ -4,7 +4,7 @@ import { Router, CanActivate, ActivatedRoute, NavigationStart } from '@angular/r
 
 
 @Injectable({ providedIn: 'root' })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate  {
     cuser; menu_access;idd
 
     
@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate {
 
             console.log("menu access", this.menu_access)
             var menu = (this.router.url).split('/');
-            console.log("URL", menu)
+            console.log("URL @@@@@@@@@@@@", menu[2])
             if (!this.cuser) {
                 // not logged in so redirect to login page with the return url
                 this.router.navigate(['auth/login']);
@@ -130,7 +130,6 @@ export class AuthGuard implements CanActivate {
                     case "edit-make":
                         this.validate(6003);
                         break;
-
                     case "add-make":
                         this.validate(6001);
                         break;
@@ -170,14 +169,11 @@ export class AuthGuard implements CanActivate {
                     case "edit-ownuse":
                         this.validate(7003);
                         break;
-                   
-                        
-
                     default:
-                        if (menu[2] == 'iot-dashboard') {
+                        if (menu[2] == 'dashboard') {
                             return true;
                         } else {
-                            this.router.navigate(['/pages/dashboard']);
+                            this.router.navigate(['auth/login']);
                         }
                         break;
                 }
@@ -186,7 +182,7 @@ export class AuthGuard implements CanActivate {
         }, 1);
         if (!localStorage.getItem('userinfo')) {
             // not logged in so redirect to login page with the return url
-            this.router.navigate(['/auth/logout']);
+            this.router.navigate(['auth/login']);
             return false;
         }
         return true;

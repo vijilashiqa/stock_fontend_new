@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { GeoRoutingModule } from './geo-routing.module';
+import { GeoRoutingModule, routedComponents } from './geo-routing.module';
 import { AddStateComponent } from './State/add-state/add-state.component';
 import { NbButtonModule, NbCardModule, NbSpinnerModule, NbTabsetModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { AddHubComponent } from './hub/add-hub/add-hub.component';
 import { ListHubComponent } from './hub/list-hub/list-hub.component';
 @NgModule({
   declarations: [
+    routedComponents,
     AddStateComponent,
     ListStateComponent,
     AddDistrictComponent,

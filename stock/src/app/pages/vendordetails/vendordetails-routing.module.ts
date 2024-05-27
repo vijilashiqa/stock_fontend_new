@@ -20,11 +20,13 @@ import { EditSerialComponent } from "./serial -no/edit-serial/edit-serial.compon
 import { AddOwnComponent } from "./own-use/add-own/add-own.component";
 import { EditOwnComponent } from "./own-use/edit-own/edit-own.component";
 import { ListOwnComponent } from "./own-use/list-own/list-own.component";
+import { AuthGuard } from "../_services/indexservice";
 
 const routes: Routes = [
   {
     path: "AddVendor",
     component: AddVendorComponent,
+    canActivate: [AuthGuard],
   },
 
   {
@@ -35,10 +37,12 @@ const routes: Routes = [
   {
     path: "edit-vendor",
     component: EditVendorComponent,
+    // canActivate: [AuthGuard],
   },
   {
     path: "Add-hsn",
     component: AddHsnComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "list-hsn",
@@ -47,6 +51,7 @@ const routes: Routes = [
   {
     path: "add-invoice",
     component: AddInvoiceComponent,
+    canActivate: [AuthGuard],
   },
 
   {
@@ -58,12 +63,14 @@ const routes: Routes = [
     path: "edit-invoice",
 
     component: EditInvoiceComponent,
+    // canActivate: [AuthGuard],
   },
 
   {
     path: "add-make",
 
     component: AddMakeComponent,
+    canActivate: [AuthGuard],
   },
 
   {
@@ -74,6 +81,7 @@ const routes: Routes = [
   {
     path: "add-device",
     component: AddDeviceComponent,
+    canActivate: [AuthGuard],
   },
 
   {
@@ -84,6 +92,7 @@ const routes: Routes = [
   {
     path: "add-model",
     component: AddModelComponent,
+    canActivate: [AuthGuard],
   },
 
   {
@@ -94,6 +103,7 @@ const routes: Routes = [
   {
     path: "add-serial",
     component: AddSerialComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "list-serial",
@@ -103,6 +113,7 @@ const routes: Routes = [
   {
     path: "edit-serial",
     component: EditSerialComponent,
+    // canActivate: [AuthGuard],
   },
   {
     path: "add-ownuse",
@@ -112,6 +123,7 @@ const routes: Routes = [
   {
     path: "edit-ownuse",
     component: EditOwnComponent,
+    // canActivate: [AuthGuard],
   },
 
   {

@@ -95,8 +95,7 @@
                      </td> 
                     
                         <td style="text-align: center;border: 1px solid black;">{{item && item.itemgst == 0 ? (item.itemamt
-                           - ((item.igst?item.igst:(item.cgst + item.sgst)) | tax:item.itemamt:item.itemgst)) :
-                         (  item.itemamt)}}
+                           - ((item.igst?item.igst:(item.cgst + item.sgst)) | tax:item.itemamt:item.itemgst)) :(item.itemamt)}}
                         </td>
                            <td style="text-align: center;border: 1px solid black;">{{item && item.itemgst == 0 ? item.itemqty * (item.itemamt
                               - ((item.igst?item.igst:(item.cgst + item.sgst)) | tax:item.itemamt:item.itemgst)) :( item.itemqty * item.itemamt)}}

@@ -35,6 +35,6 @@ import { AdminModule } from "./admin/admin.module";
     // BrowserModule
     AdminModule
   ],
-  declarations: [PagesComponent, ErrormessageComponent, LoginComponent],
+  declarations: [PagesComponent, ErrormessageComponent],
 })
 export class PagesModule {}

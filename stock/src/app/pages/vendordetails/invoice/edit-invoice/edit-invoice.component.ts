@@ -472,7 +472,7 @@ if (this.getinvoice2?.["gsttype"]  == 1  && this.disabled == false) {
   addvalidation(idx: number) {
     const controlArray = <FormArray>this.editinvoice.get('invoiceid');
     console.log("disable @@@@@@@@", this.disabled, "gst type", this.getinvoice2?.["gsttype"], "index", idx);
-    if (this.gsttypevalue == 0 || this.getinvoice2?.["gsttype"] && this.disabled == false) {
+    if (this.gsttypevalue == 0 || this.getinvoice2?.["gsttype"] == 0 && this.disabled == false) {
       this.editinvoice.get('sgst').clearValidators();
       this.editinvoice.get('sgst').updateValueAndValidity();
       this.editinvoice.get('cgst').clearValidators();
@@ -504,7 +504,7 @@ if (this.getinvoice2?.["gsttype"]  == 1  && this.disabled == false) {
       controlArray.controls[idx].get('sgst').updateValueAndValidity();
     }
 
-    if (this.gsttypevalue == 1 || this.getinvoice2?.["gsttype"] && this.disabled == true) {
+    if (this.gsttypevalue == 1 || this.getinvoice2?.["gsttype"] == 1 && this.disabled == true) {
       this.editinvoice.get('igst').clearValidators();
       this.editinvoice.get('igst').updateValueAndValidity();
       this.editinvoice.get('sgst').setValidators(Validators.required);
@@ -518,7 +518,7 @@ if (this.getinvoice2?.["gsttype"]  == 1  && this.disabled == false) {
       controlArray.controls[idx].get('cgst').clearValidators();
       controlArray.controls[idx].get('cgst').updateValueAndValidity();
     }
-    if (this.gsttypevalue == 1 || this.getinvoice2?.["gsttype"] && this.disabled == false) {
+    if (this.gsttypevalue == 1 || this.getinvoice2?.["gsttype"] == 1 && this.disabled == false) {
       this.editinvoice.get('sgst').clearValidators();
       this.editinvoice.get('sgst').updateValueAndValidity();
       this.editinvoice.get('cgst').clearValidators();

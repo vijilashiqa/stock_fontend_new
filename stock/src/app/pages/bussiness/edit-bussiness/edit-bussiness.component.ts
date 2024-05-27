@@ -253,7 +253,7 @@ export class EditBussinessComponent {
   }
 
   addBankdetails(
-    bank = 0,
+    bank = "",
     bbname = "",
     bbacctno = 0,
     bbifsc = "",
@@ -271,7 +271,7 @@ export class EditBussinessComponent {
   }
 
   createBankdetails(
-    bank = 0,
+    bank = "",
     bbname = "",
     bbacctno = 0,
     bbifsc = "",
@@ -280,7 +280,7 @@ export class EditBussinessComponent {
     bstatus = 0
   ): FormGroup {
     return this._fb.group({
-      bank: [bank || " ", Validators.required],
+      bank: [bank || "", Validators.required],
       bbname: [bbname || "", Validators.required],
       bbacctno: [bbacctno || "", Validators.required],
       bbifsc: [bbifsc || "", Validators.required],

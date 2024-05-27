@@ -4,17 +4,17 @@
     <nb-card-body>
        <div class="row"  style="margin-bottom: 1%;">
         <div>
-           <button *ngIf="role.getroleid() > 777 ||  !role.getmenurole(1001)"  status="success" nbButton (click)="Addstate()">Add State</button>
+           <button *ngIf="role.getroleid() > 888 ||  !role.getmenurole(1001)"  status="success" nbButton (click)="Addstate()">Add State</button>
         </div>
       </div>
      
       <table class="table">
         <tr>
-          <th *ngIf="role.getroleid() > 777  || !role.getmenurole(1003)">Action</th>
+          <th *ngIf="role.getroleid() > 888  || !role.getmenurole(1003)">Action</th>
           <th>State Name</th>
         </tr>
         <tr *ngFor="let item of pagedItems">
-          <td *ngIf="role.getroleid() > 777  || !role.getmenurole(1003)"><a (click)="editstate(item.state_pk)" title="Update"><i class="nb-edit"></i></a></td>
+          <td *ngIf="role.getroleid() > 888  || !role.getmenurole(1003)"><a (click)="editstate(item.state_pk)" title="Update"><i class="nb-edit"></i></a></td>
           <td>{{item.state_name}}</td>
         </tr>
       </table>

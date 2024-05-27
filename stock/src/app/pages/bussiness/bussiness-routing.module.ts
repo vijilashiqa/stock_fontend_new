@@ -4,6 +4,7 @@ import { AddBussinessComponent } from './add-bussiness/add-bussiness.component';
 import { ListBussinessComponent } from './list-bussiness/list-bussiness.component';
 import { EditVendorComponent } from '../vendordetails/vendor/edit-vendor/edit-vendor.component';
 import { EditBussinessComponent } from './edit-bussiness/edit-bussiness.component';
+import { AuthGuard } from '../_services/indexservice';
 
 const routes: Routes = [
 
@@ -11,21 +12,26 @@ const routes: Routes = [
 
     path : 'add-business',
 
-    component : AddBussinessComponent
+    component : AddBussinessComponent,
+    canActivate: [AuthGuard],
   },
 
   {
 
     path : 'list-business' ,
 
-    component : ListBussinessComponent
+    component : ListBussinessComponent,
+
+    // canActivate: [AuthGuard],
   },
 
   {
 
     path :'edit-business' ,
 
-    component : EditBussinessComponent
+    component : EditBussinessComponent,
+
+    // canActivate: [AuthGuard],
   }
 ];
 
