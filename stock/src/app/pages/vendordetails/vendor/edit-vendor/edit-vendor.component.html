@@ -7,7 +7,7 @@
           <nb-tabset>
             <nb-tab tabTitle="Stock Details">
               <div class="modal-body">
-                <div class="form-group row">
+                <div class="form-group row" *ngIf="role.getroleid() > 888 " >
                   <div class="col-sm-6">
                     <label>
                       Select Business <span style="color: red">*</span></label>

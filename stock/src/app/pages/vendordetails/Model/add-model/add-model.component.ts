@@ -7,6 +7,7 @@ import { NbToastrService } from "@nebular/theme";
 import { BusinessService } from "../../../_services/business.service";
 import { DeviceService } from "../../../_services/device.service";
 import { ModelService } from "../../../_services/model.service";
+import { RoleservicesService } from "../../../_services/roleservices.service";
 
 
 @Component({
@@ -32,13 +33,22 @@ export class AddModelComponent {
     private route: Router,
     private devices: DeviceService,
     private bussiness: BusinessService,
-    private toast: NbToastrService
+    private toast: NbToastrService,
+    public role: RoleservicesService,
   ) { }
 
   async ngOnInit() {
     console.log("item@@@@@@@@", this.item);
     await this.createForm();
-    await this.getBusiness();
+    if(this.role.getroleid() > 888){
+      await this.getBusiness()
+      }
+  else{
+    this.addmodel.get('bid').setValue(this.role.getbusiness());
+  }
+
+
+    // await this.getBusiness();
     await this.getmake();
     await this.getdevice();
     if(this.item) await this.editmodel();
@@ -63,27 +73,29 @@ export class AddModelComponent {
     }
   }
 
-  async getBusiness() {
-    this.getbusinessd = await this.bussiness.getbusiness({});
+  async getBusiness(event = '') {
+    console.log("evet",event)
+    this.getbusinessd = await this.bussiness.getbusiness({like :event});
     this.getbuss = this.getbusinessd[0];
   }
 
 
 
-  async getmake() {
+  async getmake(event='') {
     if((this.item) || this.addmodel.value["bid"] )   {
-    this.getmakel = await this.make.selectmake({});
+    this.getmakel = await this.make.selectmake({like :event , bid :this.addmodel.value["bid"] });
     console.log("get make ", this.getmakel);
     }
   }
 
 
-  async getdevice() {
+  async getdevice(event ='') {
     if((this.item) || this.addmodel.value["bid"] ) 
-    this.getdevicel = await this.devices.selectdevice({});
+    this.getdevicel = await this.devices.selectdevice({like: event ,bid :this.addmodel.value["bid"]});
     console.log("get device ", this.getdevicel);
-    // }
   }
+
+
   async editmodel() {
     this.editmodell = await this.models.getmodel({ modelid: this.item })
     console.log('edit data%%%%%%%%%%%%%%', this.editmodell)

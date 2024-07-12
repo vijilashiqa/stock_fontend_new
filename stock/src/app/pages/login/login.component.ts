@@ -54,7 +54,6 @@ export class LoginComponent implements OnInit  {
         localStorage.setItem('token', JSON.stringify(result[0]['token']))
         localStorage.setItem('ref_token', JSON.stringify(result[0]['refresh_token']))
         localStorage.setItem('userinfo', JSON.stringify(result[0]['user_details']));
-        // window.localStorage.setItem('subsexp_date', result[0][1].exp_date)
         this.router.navigate(['/pages/dashboard'])
       } else {
         this.toastsrv.warning(" ",result[0]['msg']);

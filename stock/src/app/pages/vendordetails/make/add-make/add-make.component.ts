@@ -6,6 +6,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { MakeService } from "../../../_services/make.service";
 import { NbToastrService } from "@nebular/theme";
 import { BusinessService } from "../../../_services/business.service";
+import { RoleservicesService } from "../../../_services/roleservices.service";
 
 
 @Component({
@@ -29,13 +30,19 @@ export class AddMakeComponent {
     private make: MakeService,
     private route: Router,
     private bussiness: BusinessService,
-    private toast: NbToastrService
+    private toast: NbToastrService,
+    public role: RoleservicesService,
   ) { }
 
   async ngOnInit() {
     console.log("item@@@@@@@@", this.item);
     await this.createForm();
-    await this.getBusiness()
+    if(this.role.getroleid() > 888){
+      await this.getBusiness()
+      }
+  else{
+    this.addmake.get('bid').setValue(this.role.getbusiness());
+  }
     if(this.item){
       await this.editmaked();
 
@@ -60,10 +67,9 @@ export class AddMakeComponent {
     }
   }
 
-  async getBusiness() {
-    this.getbusinessd = await this.bussiness.getbusiness({});
+  async getBusiness(event ='') {
+    this.getbusinessd = await this.bussiness.getbusiness({like :event});
     this.getbuss = this.getbusinessd[0];
-    // console.log("get business ", this.getbuss);
   }
 
   async editmaked() {

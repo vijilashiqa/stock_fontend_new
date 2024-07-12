@@ -15,6 +15,7 @@ import { InvoiceService } from "../../../_services/invoice.service";
 import { DeviceService } from "../../../_services/device.service";
 import { MakeService } from "../../../_services/make.service";
 import { ModelService } from "../../../_services/model.service";
+import { RoleservicesService } from "../../../_services/roleservices.service";
 @Component({
   selector: "ngx-edit-invoice",
   templateUrl: "./edit-invoice.component.html",
@@ -63,7 +64,8 @@ export class EditInvoiceComponent {
     private route: Router,
     private models: ModelService,
     private aRoute: ActivatedRoute,
-    private invoiceser: InvoiceService
+    private invoiceser: InvoiceService,
+     public role: RoleservicesService,
   ) { }
 
   async ngOnInit() {
@@ -75,7 +77,7 @@ export class EditInvoiceComponent {
     await this.Changedata();
     await this.getinvoiceitem();
     await this.getBusiness();
-    await this.getbusinessaddress("");
+    await this.getbusinessaddress();
     await this.changeaddress();
     await this.getVendor();
     await this.getvendoraddrs();
@@ -112,15 +114,15 @@ export class EditInvoiceComponent {
       this.toast.warning("", result[0]["msg"]);
     }
   }
-  async getBusiness() {
-    this.getbusinessd = await this.Business.getbusiness({});
+  async getBusiness(event ='') {
+    this.getbusinessd = await this.Business.getbusiness({like: event});
     this.getbuss = this.getbusinessd[0];
     // console.log("get business ", this.getbuss);
   }
-  async getbusinessaddress($event) {
+  async getbusinessaddress(event='') {
     this.getbusinessaddres = await this.Business.getbusinessaddredit({
       id: this.editinvoice.value["busid"],
-      like: $event,
+      like: event,
     });
     this.getadd = this.getbusinessaddres[0];
     await this.Changedata()
@@ -136,13 +138,14 @@ export class EditInvoiceComponent {
     await this.disable();
   }
 
-  async getVendor() {
-    this.getvendorlist = await this.vendor.listvendor({});
+  async getVendor(event ='') {
+    this.getvendorlist = await this.vendor.listvendor({like :event});
     this.getvend = this.getvendorlist[0];
   }
-  async getvendoraddrs() {
+  async getvendoraddrs(event ='') {
     this.getvendora = await this.vendor.getvendoraddreditd({
       id: this.editinvoice.value["vendorid"],
+      like:event
     });
     this.getvd = this.getvendora[0];
     // console.log("vendor address ",this.getvd);
@@ -230,8 +233,8 @@ export class EditInvoiceComponent {
     //  this.getdistrict( "") 
     this.getmodel()
   }
-  async getmake() {
-    this.getmakel = await this.make.selectmake({});
+  async getmake(event ='') {
+    this.getmakel = await this.make.selectmake({like :event, bid :this.editinvoice.value["busid"]});
     // console.log("get make ", this.getmakel);
   }
   dropdownd($event) {
@@ -241,15 +244,15 @@ export class EditInvoiceComponent {
     this.getmodel()
   }
 
-  async getdevice() {
-    this.getdevicel = await this.devices.selectdevice({});
+  async getdevice(event ='') {
+    this.getdevicel = await this.devices.selectdevice({like :event , bid :this.editinvoice.value["busid"]});
     // console.log("get device ", this.getdevicel);
 
   }
 
-  async getmodel() {
+  async getmodel(event ='') {
 
-    this.getmodell = await this.invoiceser.getmodel_edit({ makeid: this.dropdata, deviceid: this.dropdata1 });
+    this.getmodell = await this.invoiceser.getmodel_edit({ makeid: this.dropdata, deviceid: this.dropdata1,like:event , bid :this.editinvoice.value["busid"]});
     this.getmodel2 = this.getmodell[0]
     // console.log("get model", this.getmodel2);
  }

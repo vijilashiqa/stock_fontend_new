@@ -3,11 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ITreeOptions } from 'angular-tree-component';
 import { toJS } from "mobx";
-import { ToastrService } from 'ngx-toastr';
-import { MenuroleService } from '../../../_services/menurole.service';
 import { NbToastrService } from '@nebular/theme';
 import { BusinessService } from '../../../_services/business.service';
 import { UserService } from '../../../_services/user.service';
+import { RoleservicesService } from '../../../_services/roleservices.service';
 
 @Component({
   selector: 'ngx-add-user',
@@ -192,12 +191,7 @@ export class AddUserComponent {
 
       ]
     },
-
-
-
-
-
-    {
+{
       name: 'Assest Mapping',
       children: [
         { id: 7001, name: 'Add Assest' },
@@ -231,25 +225,24 @@ export class AddUserComponent {
     private router: Router,
     private bussiness :BusinessService,
     private user :UserService,
+    public role:RoleservicesService
   ) {
-    this.edit = JSON.parse(localStorage.getItem('profile_e'));
     
   }
-  ngOnInit() {
-  //  this.id = this.aRoute.snapshot.queryParams.id;
-   //console.log("id********",this.id)
+ async ngOnInit() {
     this.createForm();
-
-    this. getBusiness();
-    // if (this.edit)
-    // console.log('edit**********',this.edit)
-    //   this.editRole();
+    if(this.role.getroleid() > 888){
+      await this.getBusiness()
+      }
+  else{
+    this.addmenurole.get('bid').setValue(this.role.getbusiness());
+  }
   }
 
   getbusinessd; getbuss
 
-  async getBusiness() {
-    this.getbusinessd = await this.bussiness.getbusiness({});
+  async getBusiness(event ='') {
+    this.getbusinessd = await this.bussiness.getbusiness({like :event});
     this.getbuss = this.getbusinessd[0];
     // console.log("get business ", this.getbuss);
   }
@@ -269,10 +262,7 @@ async  AddProfile() {
       this.submit = true;
       return;
     }
-    var  val = this.addmenurole.value; 
-    // if (this.edit) {
-      // val['id'] = this.edit['id'];
-        this.addmenurole.value['menurole'] = this.selectednodes();
+      this.addmenurole.value['menurole'] = this.selectednodes();
       let result = await this.user.adduser(this.addmenurole.value);
       if (result && result[0].err_code == 0) {
         this.toast.success(" ",result[0]['msg']);
@@ -308,7 +298,6 @@ async  AddProfile() {
 
   createForm() {
     this.addmenurole = new FormGroup({
-     
       bid: new FormControl("", Validators.required),
       urole:new FormControl("", Validators.required),
       loginid: new FormControl("", Validators.required),

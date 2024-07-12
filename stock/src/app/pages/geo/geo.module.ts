@@ -13,15 +13,17 @@ import { ListDistrictComponent } from './district/list-district/list-district.co
 import { ListStateComponent } from './State/list-state/list-state.component';
 import { AddHubComponent } from './hub/add-hub/add-hub.component';
 import { ListHubComponent } from './hub/list-hub/list-hub.component';
+import { AddSerialnoComponent } from './hub/add-serialno/add-serialno.component';
 @NgModule({
   declarations: [
-    routedComponents,
+    // routedComponents,
     AddStateComponent,
     ListStateComponent,
     AddDistrictComponent,
     ListDistrictComponent,
     AddHubComponent,
-    ListHubComponent
+    ListHubComponent,
+    AddSerialnoComponent,
   ],
   imports: [
     NbCardModule,
@@ -45,7 +47,6 @@ import { ListHubComponent } from './hub/list-hub/list-hub.component';
   entryComponents:[
     AddStateComponent,
     AddDistrictComponent,
-    AddHubComponent
   ]
 })
 export class GeoModule { }

@@ -44,6 +44,7 @@ export class AddVendorComponent implements OnInit {
   listarea;
   filtro;
   dropdata;
+  banklist;banklist1
 
   constructor(
     private _fb: FormBuilder,
@@ -59,9 +60,20 @@ export class AddVendorComponent implements OnInit {
 
   async ngOnInit() {
     await this.createForm();
-    await this.getstate();
-    // await this.getdistrict();
+
+
+    if(this.role.getroleid() > 888){
+
+    
     await this.getbusiness('')
+    }
+else{
+
+  this.addvendor.get('bid').setValue(this.role.getbusiness());
+}
+
+
+    await this.getstate();
     await this.getbanf()
   }
 
@@ -123,7 +135,6 @@ export class AddVendorComponent implements OnInit {
   }
 
   async getstate($event = "") {
-    
     this.getstates = await this.stateser.getstate({ like: $event });
     console.log("state", this.getstates);
   }
@@ -141,12 +152,11 @@ export class AddVendorComponent implements OnInit {
     this.stockinid.at(index).get('dist').setValue('');
   }
 
-  banklist;banklist1
 
 
-  async getbanf(){
+  async getbanf(event =''){
 
-    this.banklist = await this.Bussiness.getbank({})
+    this.banklist = await this.Bussiness.getbank({like :event})
 
     this.banklist1= this.banklist[0]
 console.log("bank list ", this.banklist);

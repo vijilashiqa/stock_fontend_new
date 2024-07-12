@@ -8,6 +8,7 @@ import { MenuroleService } from '../../../_services/menurole.service';
 import { NbToastrService } from '@nebular/theme';
 import { BusinessService } from '../../../_services/business.service';
 import { UserService } from '../../../_services/user.service';
+import { RoleservicesService } from '../../../_services/roleservices.service';
 
 @Component({
   selector: 'ngx-edit-user',
@@ -231,6 +232,7 @@ export class EditUserComponent {
     private router: Router,
     private bussiness :BusinessService,
     private userservi :UserService,
+    public role:RoleservicesService
   ) {
     this.edit = JSON.parse(localStorage.getItem('profile_e'));
     
@@ -239,8 +241,15 @@ async  ngOnInit() {
   //  this.id = this.aRoute.snapshot.queryParams.id;
    //console.log("id********",this.id)
    await this.createForm();
-    // if (this.edit)
-    // console.log('edit**********',this.edit)
+
+   if(this.role.getroleid() > 888){
+    await this.getBusiness()
+    }
+else{
+  this.AddProfileForm.get('bid').setValue(this.role.getbusiness());
+}
+
+
   await    this.editRole();
     await  this.createForm()
     await this.getBusiness()

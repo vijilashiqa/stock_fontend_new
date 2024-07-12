@@ -16,6 +16,9 @@ import { ErrormessageComponent } from "../../../errormessage/errormessage.compon
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ModelService } from "../../../_services/model.service";
 import { OwnuseService } from "../../../_services/ownuse.service";
+import { RoleservicesService } from "../../../_services/roleservices.service";
+import { DepartmentService } from "../../../_services/department.service";
+import { HubService } from "../../../_services/hub.service";
 const EXCEL_EXTENSION = ".xlsx";
 
 @Component({
@@ -42,7 +45,7 @@ export class AddOwnComponent {
   listhead; vv; getserialnof1
   listhdcas; count;editserialnolist
   listchnnel; getiteml1; model_sid
-  bulkmeta: any = [];
+  bulkmeta: any = [];getdepartment
   bulk = []; getiteml
   arrayBuffer: any;addorremoveser
   Remove;  file: any[];
@@ -52,21 +55,30 @@ export class AddOwnComponent {
     private modal: NgbModal,
     private bussiness: BusinessService,
     private invoiceser: InvoiceService,
-    private modelserv: ModelService,
+    private departmentser: DepartmentService,
     private ownuseservices: OwnuseService,
     private toast: NbToastrService,
+    private hubservices :HubService,
     private aRoute: ActivatedRoute,
+    public role: RoleservicesService,
     private serialnos: SerialnoService,
   ) { }
 
   async ngOnInit() {
- 
-    
     this.id = this.aRoute.snapshot.queryParams["id"];
-     this.model_sid = this.aRoute.snapshot.queryParams["model_sid"];
-    await this.createForm();
+    this.model_sid = this.aRoute.snapshot.queryParams["model_sid"];
+    await this.createForm();    
+    if(this.role.getroleid() > 888){
+      await this.getBusiness()
+      }
+  else{
+    this.addownuseForm.get('bid').setValue(this.role.getbusiness());
+  }
+
+  // await  this.getdepartmentf()
     await this.getBusiness();
     await this.getitem();
+    // await this.gethub()
     // if (this.id) {
     //   await this.edit();
     //   await this.editserialno()
@@ -79,16 +91,18 @@ export class AddOwnComponent {
 
  
   
-  async getBusiness() {
-    this.getbusinessd = await this.bussiness.getbusiness({});
+  async getBusiness(event ='') {
+    this.getbusinessd = await this.bussiness.getbusiness({like:event});
     this.getbuss = this.getbusinessd[0];
+    console.log("bussiness",this.getbuss);
+    
   }
-  async getinvoice() {
-    this.getinvoiced = await this.invoiceser.getinvoice({})
+  async getinvoice(event ='') {
+    this.getinvoiced = await this.invoiceser.getinvoice({like :event})
     console.log("invoice ", this.getinvoiced);
   }
-  async getitem() {
-    this.getiteml = await this.invoiceser.getinvoice_item_edit({ id: this.addownuseForm.value['invno'] })
+  async getitem(event ='') {
+    this.getiteml = await this.invoiceser.getinvoice_item_edit({ id: this.addownuseForm.value['invno'] ,busid :this.addownuseForm.value['bid'] , like:  event})
     this.getiteml1 = this.getiteml[0];
     console.log("get item ", this.getiteml1);
   }
@@ -102,24 +116,26 @@ export class AddOwnComponent {
     this.iiid = event.iiid
     this.getserialno()
   }
+  clearbussiness(){
+    this.addownuseForm.controls.itemname.setValue("");
+    // this.addownuseForm.controls.hubid.setValue("");
+    this.addownuseForm.controls.depid.setValue("");
+    this.addownuseForm.controls.model_sid.setValue("");
+  }
 
-
-
-
-
-  changeinvoicef() {
+ changeinvoicef() {
     this.addownuseForm.controls.itemname.setValue("");
   }
   async addchannelsrv() {
     this.submit = true;
-    // const invalid = [];
-    // const control =  this.addownuseForm.controls;
-    // for (const name in control) {
-    //   if (control[name].invalid) {
-    //     invalid.push(name);
-    //     this.toast.warning(name, "please fill mantrity data");
-    //   }
-    // }
+    const invalid = [];
+    const control =  this.addownuseForm.controls;
+    for (const name in control) {
+      if (control[name].invalid) {
+        invalid.push(name);
+        this.toast.warning(name, "please fill mantrity data");
+      }
+    }
     if (this.addownuseForm.invalid) {
       return;
     }
@@ -159,6 +175,17 @@ export class AddOwnComponent {
 
 
   }
+
+  gethublist
+
+  // async gethub(event=''){
+
+
+  //   this.gethublist = await this.hubservices.gethub({like :event ,bid :this.addownuseForm.value["bid"] })
+  //   console.log("GET HUB ",this.gethublist);
+    
+
+  // }
 
 
   Error(item) {
@@ -229,6 +256,17 @@ clearValidation() {
 }
 
 
+
+
+async getdepartmentf(event =''){
+
+  this.getdepartment =await this.departmentser.selectdepartment({like :event ,busid :this.addownuseForm.value["bid"]})
+
+  console.log("get deprtment", this.getdepartment);
+  
+}
+
+
   
   metavalue() {
     this.bulkmeta = [
@@ -265,6 +303,8 @@ clearValidation() {
     this.addownuseForm = new FormGroup({
       bid: new FormControl(this.editdata["bid"] || "", Validators.required),
       itemname:new FormControl (this.editdata["iiid"] || "", Validators.required),
+      depid:new FormControl (this.editdata["depid"] || "", Validators.required),
+      // hubid:new FormControl (this.editdata["hubid"] || "", Validators.required),
        model_sid:new FormControl (this.editdata["model_sid"] || "" ,Validators.required),
        modetype :new FormControl (this.editdata["modetype"] || "0" ,Validators.required),
     });

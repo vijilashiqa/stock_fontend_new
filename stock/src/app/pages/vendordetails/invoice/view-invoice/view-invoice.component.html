@@ -19,20 +19,20 @@
                            <tbody>
                               <tr>
                                  <td>Bussiness Name</td>
-                                 <td>:{{bussiness.busname}}</td> <br>
+                                 <td style="font-size: 14px;">:{{bussiness.busname}}</td> <br>
                               </tr>
 
                               <tr>
                                  <td>Address</td>
-                                 <td>:{{bussiness.busaddr}}</td>
+                                 <td style="font-size: 14px;">:{{bussiness.busaddr}}</td>
                               </tr>
                               <tr>
                                  <td>Mobile No</td>
-                                 <td>:{{bussiness?bussiness.bphoneno:''}}</td>
+                                 <td style="font-size: 14px;">:{{bussiness?bussiness.bphoneno:''}}</td>
                               </tr>
                               <tr>
                                  <td>GST No</td>
-                                 <td>:{{bussiness?bussiness.busgstno==null?'--':bussiness.busgstno:''}}
+                                 <td style="font-size: 14px;">:{{bussiness?bussiness.busgstno==null?'--':bussiness.busgstno:''}}
                                  </td>
                               </tr>
 
@@ -46,31 +46,26 @@
                            <tbody>
                               <tr>
                                  <td>Vendor Name</td>
-                                 <td>:{{bussiness?bussiness.vname:''}}</td>
+                                 <td style="font-size: 14px;">:{{bussiness?bussiness.vname:''}}</td>
+                              </tr>
+                              <tr >
+                                 <td>Address</td>
+                                 <td style="font-size: 14px;">:{{bussiness?bussiness.vaddr:''}}</td>
                               </tr>
                               <tr>
-                                 <td>Vendor Address </td>
-                                 <td>:{{bussiness?bussiness.vaddr:''}}</td>
-                              </tr>
-                              <tr>
-                                 <td>Vendor Mobile</td>
-                                 <td>:{{bussiness ? bussiness.vmobile:'N/A'}}</td>
+                                 <td>Mobile</td>
+                                 <td style="font-size: 14px;">:{{bussiness ? bussiness.vmobile:'N/A'}}</td>
                               </tr>
                               <tr>
                                  <td>GST No</td>
-                                 <td>:{{bussiness?bussiness.vgstno:''}}</td>
+                                 <td style="font-size: 14px;">:{{bussiness?bussiness.vgstno:''}}</td>
                               </tr>
                            </tbody>
                         </table>
                      </td>
                   </div>
                </div>
-
-
-
             </table>
-
-            
             <br>
             <table style="border: 1px solid black;;border-collapse: collapse; width: 100%">
                <thead style=" border: 1px solid black">

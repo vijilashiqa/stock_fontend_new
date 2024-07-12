@@ -12,13 +12,9 @@ export class JwtrequestService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
  
         request = request.clone({url:env.baseUrl+request.url});
-        //  console.log('requestttt',request);
-         
         const token = this.Roleserv.getToken();
         const ref_token = this.Roleserv.getRefreshtoken();
         if (token) {
-          // console.log("Request@@@",request);
-          
             request = request.clone({
                 setHeaders: {
                     authorization: token,

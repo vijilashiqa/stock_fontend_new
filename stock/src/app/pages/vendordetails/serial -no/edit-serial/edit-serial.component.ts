@@ -19,6 +19,7 @@ import { BusinessService } from "../../../_services/business.service";
 import { InvoiceService } from "../../../_services/invoice.service";
 import { SerialnoService } from "../../../_services/serialno.service";
 import { NbToastrService } from "@nebular/theme";
+import { RoleservicesService } from "../../../_services/roleservices.service";
 
 // import { ErrormsgComponent } from "../errormsg/errormsg.component";
 // import { Item } from "@syncfusion/ej2-angular-navigations";
@@ -52,7 +53,7 @@ export class EditSerialComponent {
   bulkmeta: any = [];
   bulk = []; getiteml
   arrayBuffer: any;getserial
-  file: any[];assignadd
+  file: any[];assignadd;getinvoice1
   constructor(
     private route: Router,
     private fb: FormBuilder,
@@ -61,13 +62,20 @@ export class EditSerialComponent {
     private toast: NbToastrService,
     private aRoute: ActivatedRoute,
     private serialnos: SerialnoService,
+    public role :RoleservicesService
   ) { }
 
   async ngOnInit() {
     this.id = this.aRoute.snapshot.queryParams["id"];
     await this.createForm();
     await this.edit();
-    await this.getBusiness();
+    if(this.role.getroleid() > 888){
+      await this.getBusiness()
+      }
+  else{
+    this.editserial.get('bid').setValue(this.role.getbusiness());
+  }
+    // await this.getBusiness();
     await this.getinvoice();
     await this.getitem();
     await this.getserialno()
@@ -99,16 +107,17 @@ export class EditSerialComponent {
 
   
 
-  async getBusiness() {
-    this.getbusinessd = await this.bussiness.getbusiness({});
+  async getBusiness(event ='') {
+    this.getbusinessd = await this.bussiness.getbusiness({like :event});
     this.getbuss = this.getbusinessd[0];
   }
 
 
 
-  async getinvoice() {
-    this.getinvoiced = await this.invoiceser.getinvoice({})
-    console.log("invoice ", this.getinvoiced);
+  async getinvoice(event ='') {
+    this.getinvoiced = await this.invoiceser.getinvoice({like:event, busid:this.editserial.value['bid']})
+    this.getinvoice1=this.getinvoiced[0]
+    console.log("invoice in edit ", this.getinvoice1);
   }
 
   changeinvoicef( ) {
@@ -169,7 +178,7 @@ console.log("serial no @@@@@@@@@@:" ,item.serial_num)
     for (const name in control) {
       if (control[name].invalid) {
         invalid.push(name);
-        // console.log('data missing ', name);
+        console.log('data missing ', name);
       }
     }
     if (this.editserial.invalid) {
@@ -237,7 +246,7 @@ console.log("serial no @@@@@@@@@@:" ,item.serial_num)
 
   createinvoice(serial_num =0,model_sid=0): FormGroup {
     return this.fb.group({
-      serialno: [ serial_num || '' ,Validators.required],
+      serialno: [ serial_num ],
       id:[model_sid ? model_sid : '']    
     });
   }

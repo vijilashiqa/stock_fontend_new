@@ -51,7 +51,7 @@
           <div class="form-group row">
             <div class="col-sm-6">
                 <label>Location Name<span style="color: red">*</span></label>
-                <input type="text" class="form-control" name="locname" formControlName="locname" placeholder="Enter Name"
+                <input type="text" class="form-control" name="locname" formControlName="locname" placeholder="Enter Location Name"
                 [ngClass]="{ 'is-invalid': submit && addLocationForm.controls.locname.errors }"/>
                 <div *ngIf="
                 this.addLocationForm.controls.locname.errors &&
@@ -65,8 +65,9 @@
             
             <div class="col-sm-6">
                 <label>Location Address<span style="color: red">*</span></label>
-                <input type="text" class="form-control" name="locaddress" formControlName="locaddress" placeholder="Enter Name"
-                [ngClass]="{ 'is-invalid': submit && addLocationForm.controls.locaddress.errors }"/>
+                <textarea type="text" class="form-control" name="locaddress" formControlName="locaddress" placeholder="Enter Location Address"
+                [ngClass]="{ 'is-invalid': submit && addLocationForm.controls.locaddress.errors }">
+                </textarea>
                 <div *ngIf="
                 this.addLocationForm.controls.locaddress.errors &&
                 this.addLocationForm.controls.locaddress.errors.required &&
@@ -77,8 +78,99 @@
             </div>
 
         </div>
+
+
+
+
+        <div class="form-group row">
+          <!-- <div class="col-sm-6">
+              <label>Select Mode <span style="color: red">*</span></label>
+              <select class="form-control" formControlName="modetype"  
+                 [ngClass]="{ 'is-invalid': submit && addLocationForm.controls.modetype.errors }">
+                 <option value="null" selected>Select Mode</option>
+                 <option value="1">Hub</option>
+                 <option value="0">Other </option>
+              </select>
+              <div
+                 *ngIf="this.addLocationForm.controls.modetype.errors && (this.addLocationForm.controls.modetype.errors.required) && submit"
+                 class="error-text">
+                 Mode is required!
+           </div>
+            </div> -->
+
+            <div class="col-sm-6">
+              <label>Hub Name<span style="color: red">*</span></label>
+              <auto-completen     
+              [addclass]="{error:submit && this.addLocationForm.controls.hubid.errors}"
+              addclass="form-control" optValues="hubname"
+                  formControlName="hubid" (keyUp)="gethub($event)"
+                  placeholder="Select Hub Name" optId="hbid" [item]="gethublist">
+              </auto-completen>
+              <div *ngIf="
+              this.addLocationForm.controls.hubid.errors &&
+              this.addLocationForm.controls.hubid.errors.required &&
+              submit
+            " class="error-text">
+            HUB  Name is required!
           </div>
-        <!-- </div> -->
+              </div>
+
+
+
+              <!-- <div class="col-sm-6"  *ngIf="this.addLocationForm.value['modetype']== 0">
+                <label>Name<span style="color: red">*</span></label>
+                <input type="text" class="form-control" name="locname" formControlName="name" placeholder="Enter Name"
+                [ngClass]="{ 'is-invalid': submit && addLocationForm.controls.name.errors }"/>
+                <div *ngIf="
+                this.addLocationForm.controls.name.errors &&
+                this.addLocationForm.controls.name.errors.required &&
+                submit
+              " class="error-text">
+              Location Name is required!
+            </div>
+            </div> -->
+
+
+          </div>
+
+
+
+
+          <!-- <div class="form-group row">
+              <div class="col-sm-6"  *ngIf="this.addLocationForm.value['modetype']== 0">
+                <label>Mobile No<span style="color: red">*</span></label>
+                <input type="text" class="form-control" name="locname" formControlName="mobileno" placeholder="Enter Mobile No"
+                [ngClass]="{ 'is-invalid': submit && addLocationForm.controls.mobileno.errors }"/>
+                <div *ngIf="
+                this.addLocationForm.controls.mobileno.errors &&
+                this.addLocationForm.controls.mobileno.errors.required &&
+                submit
+              " class="error-text">
+              Location Name is required!
+            </div>
+            </div>
+
+
+            <div class="col-sm-6"  *ngIf="this.addLocationForm.value['modetype']== 0">
+            <label>Remarks<span style="color: red">*</span></label>
+            <textarea type="text" class="form-control" name="locname" formControlName="remarks" placeholder="Enter Remarks"
+            [ngClass]="{ 'is-invalid': submit && addLocationForm.controls.remarks.errors }">
+          </textarea>
+            <div *ngIf="
+            this.addLocationForm.controls.remarks.errors &&
+            this.addLocationForm.controls.remarks.errors.required &&
+            submit
+          " class="error-text">
+          Location Name is required!
+        </div>
+        </div>
+
+
+
+            </div> -->
+
+</div>
+
         <div class="modal-footer">
           <button type="submit" status="success" nbButton style="cursor:pointer">Add</button>
           <button type="button" status="danger" nbButton style="cursor:pointer" (click)="close()">Cancel</button>

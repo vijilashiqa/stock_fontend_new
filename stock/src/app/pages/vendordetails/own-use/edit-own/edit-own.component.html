@@ -5,11 +5,12 @@
           <form [formGroup]="editownuse" class="form-horizontal"  (ngSubmit)="editownf();">
              <div class="modal-body">
                 <div class="form-group row">
-                   <div class="col-sm-3" *ngIf="!this.id">
+                   <div class="col-sm-3"  *ngIf="role.getroleid() > 888">
                       <label> Business Name<span style="color: red">*</span></label>
                       <auto-completen [addclass]="{
                                error: submit && this.editownuse.controls.bid.errors 
-                             }" addclass="form-control" optValues="bname" formControlName="bid" (keyUp)="getBusiness()"
+                             }" addclass="form-control" optValues="bname" formControlName="bid" (keyUp)="getBusiness($event)"
+                             (changed)="getitem($event.target);getdepartmentf();gethub();clearall()"
                          placeholder="Select Business Name" Id="id" [item]="getbuss">
                       </auto-completen>
                       <div *ngIf="
@@ -22,13 +23,41 @@
                    </div> 
 
 
-                
+                   <div class="col-sm-3" >
+                     <label> Select Department <span style="color: red">*</span></label>
+                     <auto-completen [addclass]="{error: submit && this.editownuse.controls.depid.errors }"
+                     addclass="form-control" optValues="depname" formControlName="depid" (changed)="getserialno();changeserialno()"
+                        (keyUp)="getdepartmentf($event)" placeholder="Select item Name" Id="id" [item]="getdepartment">
+                     </auto-completen>
+                     <div
+                     *ngIf="this.editownuse.controls.depid.errors && (this.editownuse.controls.depid.errors.required) && submit"
+                     class="error-text">
+                     Department is required!
+                  </div>
 
-                  <div class="col-sm-3" >
+                     </div>
+                
+                     <!-- <div class="col-sm-3" >
+                        <label>Hub Name<span style="color: red">*</span></label>
+                        <auto-completen     
+                        [addclass]="{error:submit && this.editownuse.controls.hubid.errors}"
+                        addclass="form-control" optValues="hubname"
+                            formControlName="hubid" (keyUp)="gethub($event)"
+                            placeholder="Select Hub Name" optId="hbid" [item]="gethublist">
+                        </auto-completen>
+                        <div *ngIf="
+                        this.editownuse.controls.hubid.errors &&
+                        this.editownuse.controls.hubid.errors.required &&
+                        submit
+                      " class="error-text">
+                      HUB  Name is required!
+                    </div>
+                        </div> -->
+                  <div class="col-sm-3">
                      <label> Select Item <span style="color: red">*</span></label>
                      <auto-completen [addclass]="{error: submit && this.editownuse.controls.itemname.errors }"
                      addclass="form-control" optValues="itemname" formControlName="itemname" (changed)="getserialno();changeserialno()"
-                        (keyUp)="getBusiness()" placeholder="Select item Name" optId="modelid" [item]="getiteml1">
+                        (keyUp)="getitem($event)" placeholder="Select item Name" optId="iiid" [item]="getiteml1">
                      </auto-completen>
                      <div
                      *ngIf="this.editownuse.controls.itemname.errors && (this.editownuse.controls.itemname.errors.required) && submit"
@@ -36,6 +65,20 @@
                      Mode is required!
                   </div>
                   </div>
+
+                  <div class="col-sm-3" >
+                     <label> Select Serial No <span style="color: red">*</span></label>
+                     <auto-completen    [addclass]="{error: submit && this.editownuse.controls.model_sid.errors }"
+                        addclass="form-control" optValues="serial_num" formControlName="model_sid"
+                        (keyUp)="getserialno()" placeholder="Select Serial No" optId="model_sid" [item]="editserialnolist">
+                     </auto-completen>
+                     <div
+                     *ngIf="this.editownuse.controls.model_sid.errors && (this.editownuse.controls.model_sid.errors.required) && submit"
+                     class="error-text">
+                     Mode is required!
+                  </div>              
+                   </div>
+                 
 
                   <div class="col-sm-3" *ngIf="!this.id" >
                      <label>Select Mode <span style="color: red">*</span></label>
@@ -52,19 +95,7 @@
                   </div>
 
 
-                  <div class="col-sm-3" >
-                     <label> Select Serial No <span style="color: red">*</span></label>
-                     <auto-completen    [addclass]="{error: submit && this.editownuse.controls.model_sid.errors }"
-                        addclass="form-control" optValues="serial_num" formControlName="model_sid"
-                        (keyUp)="getserialno()" placeholder="Select Serial No" optId="model_sid" [item]="editserialnolist">
-                     </auto-completen>
-                     <div
-                     *ngIf="this.editownuse.controls.model_sid.errors && (this.editownuse.controls.model_sid.errors.required) && submit"
-                     class="error-text">
-                     Mode is required!
-                  </div>              
-                   </div>
-
+                
 
 <!--                   
 
@@ -77,23 +108,26 @@
                            Here</b></a>
                   </div> -->
 
+               </div>
+                  <div class="form-group row">
 
-                  <div class="form-group" class="col-sm-2"  >
+                   
+   
+                  <div  class="col-sm-3">
                      <div *ngIf="id">
                        <label>Status<span style="color: red">*</span></label>
                        <select 
                        class="form-control" style="background-color: #e9ecef00  !important"
                        name="sstatus" formControlName="sstatus" type="number">
-                       <option value=1>Active</option>
-                       <option value=0>Deactive</option>
+                       <option value="1">Active</option>
+                       <option value="0">Deactive</option>
                      </select>
                      <!-- <small *ngIf="user.hasError('required','sstatus')&&submit" class="error-text">Status  Name  is Required! </small> -->
 
                      </div>
                   
-                     </div>
 
-
+</div>
 
                       </div>
                    </div>

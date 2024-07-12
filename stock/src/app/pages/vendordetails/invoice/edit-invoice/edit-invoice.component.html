@@ -8,13 +8,13 @@
               <nb-tab tabTitle="Vendor Details">
                 <div class="modal-body">
                   <div class="form-group row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6" *ngIf="role.getroleid() > 888">
                       <label> Business Name<span style="color: red">*</span></label>
                       <auto-completen [addclass]="{
                             error: submit && this.editinvoice.controls.busid.errors
                           }" addclass="form-control" optValues="bname" (changed)="
-                            getbusinessaddress($event);changedr();changeaddres();changeaddres();
-                            getBusiness();" formControlName="busid" (keyUp)="getBusiness()"
+                            getbusinessaddress($event.target);changedr();changeaddres();changeaddres();getmake();getmodel() ;getdevice();
+                            getBusiness($event.target);" formControlName="busid" (keyUp)="getBusiness($event)"
                         placeholder="Select Business Name" Id="id" [item]="getbuss">
                       </auto-completen>
                       <div *ngIf="
@@ -47,7 +47,7 @@
                       <label> Vendor Name <span style="color:red">*</span></label>
                       <auto-completen [addclass]="{error:submit && this.editinvoice.controls.vendorid.errors}"
                         addclass="form-control" optValues="vcompany" (changed)="getvendoraddrs();changevendor();getVendor();changedr();"
-                        formControlName="vendorid" (keyUp)="getBusiness()" placeholder="Select Vendor Name" Id="id"
+                        formControlName="vendorid" (keyUp)="getBusiness($event)" placeholder="Select Vendor Name" Id="id"
                         [item]="getvend">
                       </auto-completen>
                       <div *ngIf="
@@ -62,7 +62,7 @@
                     <div class="col-sm-6">
                       <label> Vendor Address<span style="color:red">*</span></label>
                       <auto-completen [addclass]="{error:submit && this.editinvoice.controls.vaddr.errors}" (changed)="changeaddress();"
-                        addclass="form-control" optValues="addrname" formControlName="vaddr" (keyUp)="getvendoraddrs();changeaddress();"
+                        addclass="form-control" optValues="addrname" formControlName="vaddr" (keyUp)="getvendoraddrs($event);changeaddress();"
                         placeholder="Select Loction Name" Id="id" [item]="getvd">
                       </auto-completen>
                       <div *ngIf="
@@ -168,7 +168,7 @@
     <label>Make Name<span style="color:red">*</span></label>
     <auto-completen 
      [addclass]="{error:submit &&  this.user['controls']['makeid'].invalid && submit}" 
-     addclass="form-control" optValues="makename"  [formControl]="getInvoiceByIndex(idx)['makeid']"  (keyUp)="getmake();addvalidation(idx);" (changed)=" dropdown($event);getmodel()"
+     addclass="form-control" optValues="makename"  [formControl]="getInvoiceByIndex(idx)['makeid']"  (keyUp)="getmake($event);addvalidation(idx);" (changed)=" dropdown($event);getmodel()"
   placeholder="Select Business Name" optId="makeid" [item]="getmakel">
 </auto-completen>
 <small *ngIf="user.hasError('required','makeid')&&submit" class="error-text">Make Name is Required! </small>
@@ -178,7 +178,7 @@
   <div class="form-group" class="col-sm-2">
     <label>Device Name<span style="color:red">*</span></label>
     <auto-completen  [addclass]="{error:submit &&  this.user['controls']['deviceid'].invalid && submit}"
-     addclass="form-control" optValues="devicename" id="{{idx}}"  formControlName="deviceid" (keyUp)="getdevice();" (changed)="dropdownd($event);getmodel();changemodel(idx)"
+     addclass="form-control" optValues="devicename" id="{{idx}}"  formControlName="deviceid" (keyUp)="getdevice($event);" (changed)="dropdownd($event);getmodel();changemodel(idx)"
   placeholder="Select Business Name" optId="deviceid" [item]="getdevicel">
 </auto-completen>
 <small *ngIf="user.hasError('required','deviceid')&&submit" class="error-text">Device Name  is Required! </small>
@@ -187,7 +187,7 @@
   <div class="form-group" class="col-sm-2">
     <label>Model Name<span style="color:red">*</span></label>
     <auto-completen  [addclass]="{error:submit &&  this.user['controls']['modelid'].invalid && submit}"
-     addclass="form-control" optValues="modelname"  formControlName="modelid" (keyUp)="getmodel()"
+     addclass="form-control" optValues="modelname"  formControlName="modelid" (keyUp)="getmodel($event)"
     placeholder="Select Business Name" optId="modelid" [item]="getmodel2">
   </auto-completen>
   <small *ngIf="user.hasError('required','modelid')&&submit" class="error-text">Model Name  is Required! </small>

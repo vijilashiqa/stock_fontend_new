@@ -1,0 +1,54 @@
+
+<nb-card>
+    <nb-card-body>
+        <div class="modal-header">
+            <h4 class="modal-title">{{ title }}</h4>
+            <button class="close" aria-label="Close" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form [formGroup]="adddepartment" class="form-horizontal" (ngSubmit)="adddepartmentsf()">
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-sm-6"  *ngIf="role.getroleid() > 888">
+                        <label> Business Name<span style="color: red">*</span></label>
+                        <auto-completen [addclass]="{
+                              error: submit && this.adddepartment.controls.busid.errors
+                            }" addclass="form-control" optValues="bname"  formControlName="busid" (keyUp)="getBusiness($event)"
+                          placeholder="Select Business Name" Id="id" [item]="getbuss">
+                        </auto-completen>
+                        <div *ngIf="
+                              this.adddepartment.controls.busid.errors &&
+                              this.adddepartment.controls.busid.errors.required &&
+                              submit
+                            " class="error-text">
+                          Business Name is required!
+                        </div>
+                      </div>
+          
+        
+                        <div class="col-sm-6"  >
+                            <label> Department Name <span style="color:red">*</span></label>
+                            <input type="text" class="form-control" name="depname" formControlName="depname" placeholder="Enter Name"
+                             [ngClass]="{ 'is-invalid': submit && adddepartment.controls.depname.errors }"/>
+                             <small *ngIf="adddepartment.controls.depname.errors &&(adddepartment.controls.depname.errors.required )&& submit"
+                             class="invalid-feedback">Department Name is required! </small>
+                          </div>
+</div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit"  status="success" nbButton>
+                    {{ item ? "Update" : "Add" }}
+                </button>
+
+                <button type="button"  status="danger" nbButton  (click)="close()">
+                    Cancel
+                </button>
+                
+            </div>
+        </form>
+
+
+    </nb-card-body>
+</nb-card>

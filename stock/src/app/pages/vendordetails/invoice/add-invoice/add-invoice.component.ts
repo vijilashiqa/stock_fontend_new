@@ -18,6 +18,7 @@ import { InvoiceService } from "../../../_services/invoice.service";
 import { ModelService } from "../../../_services/model.service";
 import { DeviceService } from "../../../_services/device.service";
 import { MakeService } from "../../../_services/make.service";
+import { RoleservicesService } from "../../../_services/roleservices.service";
 
 @Component({
   selector: "ngx-add-invoice",
@@ -52,19 +53,26 @@ export class AddInvoiceComponent {
     private make: MakeService,
     private route: Router,
     private models: ModelService,
-    private invoiceser: InvoiceService
-
+    private invoiceser: InvoiceService,
+    public role: RoleservicesService,
   ) { }
 
   async ngOnInit() {
     await this.createForm();
-    await this.getBusiness();
-    await this.getbusinessaddress("");
+    if(this.role.getroleid() > 888){
+      await this.getBusiness()
+      }
+  else{
+    this.addinvoice.get('busid').setValue(this.role.getbusiness());
+  }
+
+    // await this.getBusiness();
+    await this.getbusinessaddress();
     await this.getVendor();
     await this.getvendoraddrs();
-    await this.getmake();
-    await this.getdevice();
-    await this.getmodel();
+    // await this.getmake();
+    // await this.getdevice();
+    // await this.getmodel();
   }
 
   async addstockIn() {
@@ -88,23 +96,25 @@ export class AddInvoiceComponent {
       this.toast.warning("", result[0]["msg"]);
     }
   }
-  async getBusiness() {
-    this.getbusinessd = await this.Business.getbusiness({});
+  async getBusiness(event ='') {
+    this.getbusinessd = await this.Business.getbusiness({like :event});
     this.getbuss = this.getbusinessd[0];
     // console.log("get business ", this.getbuss);
   }
-  async getbusinessaddress($event) {
-if(this.addinvoice.value["busid"]){
+  async getbusinessaddress(event ='') {
 
+    console.log("event the ",event);
+    
+if(this.addinvoice.value["busid"]){
   this.getbusinessaddres = await this.Business.getbusinessaddredit({
-    id: this.addinvoice.value["busid"],
-    like: $event,
+    id: this.addinvoice.value["busid"] ||  this.addinvoice.get('busid').setValue(this.role.getbusiness()),
+    like: event,
   });
   this.getadd = this.getbusinessaddres[0];
 
 }
 
-    // console.log("address @@@@ ", this.getadd);
+     console.log("address @@@@ ", this.getadd);
   }
 
 
@@ -112,12 +122,9 @@ if(this.addinvoice.value["busid"]){
 
   async Changedata() {
     let opp = this.addinvoice.value["busaddr"];
-    // console.log("sdsdsada", opp);
     let dd = this.getadd.filter((id) => id.id == opp).map((id) => id.bagstno);
-    // console.log("gst data", dd);
     this.reduceaddress = dd.reduce((a, v) => ({ ...a, v }));
     this.slice2 = this.reduceaddress.slice(0, 2);
-    // console.log("slice@@@@@@@@@@", this.slice2);
     await this.disable();
   }
 
@@ -126,12 +133,11 @@ if(this.addinvoice.value["busid"]){
   async getVendor() {
     this.getvendorlist = await this.vendor.listvendor({});
     this.getvend = this.getvendorlist[0];
-    // console.log("get vendor ", this.getvend);
   }
-  async getvendoraddrs() {
+  async getvendoraddrs(event ='') {
     if(this.addinvoice.value["vendorid"]){
     this.getvendora = await this.vendor.getvendoraddreditd({
-      id: this.addinvoice.value["vendorid"],
+      id: this.addinvoice.value["vendorid"], like:event
     });
     this.getvd = this.getvendora[0];
     // console.log("get vendor ", this.getvd);
@@ -165,10 +171,18 @@ if(this.addinvoice.value["busid"]){
 
 
 
+ async clearall(){
+// console.log("clear all");
+// //     this.invoiceForm.at(index + 1).get('makeid').setValue('');
+// //     this.invoiceForm.at(index +1 ).get('deviceid').setValue('');
+// //     this.invoiceForm.at(index +1).get('modelid').setValue('');
+// // await this.getBusiness('')
+// this.getbusinessd = await this.Business.getbusiness({like :""});
+  }
+
 
   createinvoice(): FormGroup {
     return this._fb.group({
-      // itemname: [""],
       makeid: ["", Validators.required],
       deviceid: ["", Validators.required],
       modelid: ["", Validators.required],
@@ -255,8 +269,8 @@ if(this.addinvoice.value["busid"]){
 
 
 
-  async getmake() {
-    this.getmakel = await this.make.selectmake({});
+  async getmake(event ='') {
+    this.getmakel = await this.make.selectmake({like :event , bid :this.addinvoice.value["busid"]});
     // console.log("get make ", this.getmakel);
 
   }
@@ -340,15 +354,15 @@ if(this.addinvoice.value["busid"]){
 
 
   }
-  async getdevice() {
-    this.getdevicel = await this.devices.selectdevice({});
+  async getdevice(event ='') {
+    this.getdevicel = await this.devices.selectdevice({like :event , bid :this.addinvoice.value["busid"]});
     // console.log("get device ", this.getdevicel);
 
   }
 
-  async getmodel() {
+  async getmodel(event ='') {
 
-    this.getmodell = await this.invoiceser.getmodel_edit({ makeid: this.dropdata, deviceid: this.dropdata1 });
+    this.getmodell = await this.invoiceser.getmodel_edit({ makeid: this.dropdata, deviceid: this.dropdata1, like :event , bid :this.addinvoice.value["busid"] });
     this.getmodel2 = this.getmodell[0]
     // console.log("get model", this.getmodel2);
 

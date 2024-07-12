@@ -7,13 +7,18 @@ import { AddDistrictComponent } from "./district/add-district/add-district.compo
 import { ListHsnComponent } from "../vendordetails/hsn/list-hsn/list-hsn.component";
 import { ListHubComponent } from "./hub/list-hub/list-hub.component";
 import { AuthGuard } from "../_services/indexservice";
-import { geocomponent } from "./geo.component";
+
+import { AddHubComponent } from "./hub/add-hub/add-hub.component";
 
 const routes: Routes = [
+
+
+
   {
-    path: "",
-    component: geocomponent,
-    children: [
+    path: "add-hub",
+
+    component: AddHubComponent,
+  },
       {
         path: "add-state",
         component: AddStateComponent,
@@ -45,8 +50,9 @@ const routes: Routes = [
 
         component: ListHubComponent,
       },
-    ],
-  },
+
+      
+ 
 ];
 
 @NgModule({
@@ -56,10 +62,11 @@ const routes: Routes = [
 export class GeoRoutingModule {}
 
 export const routedComponents = [
-  geocomponent,
+
   AddStateComponent,
   ListStateComponent,
   ListHubComponent,
+
   ListDistrictComponent,
   AddDistrictComponent,
 ];

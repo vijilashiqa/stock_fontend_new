@@ -27,11 +27,15 @@ export class ErrorInterceptor implements HttpInterceptor {
       };
       return this.http.get<any>(env.baseUrl + "/rtoken/renewAccessToken", httpOptions)
   }
+
+
+
+  
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       return next.handle(request).pipe(catchError(err => {
 
 
-        //   console.log('response err',err)
+      console.log('response err',err)
 
         //   console.log('responce @@@@@@@@', next);
           
@@ -59,6 +63,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                           });``
                           window.alert('Session Restored Pls Click Again!')
                           return next.handle(request)
+                          
                       }
                   });
               }
@@ -75,6 +80,11 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
           }
           return throwError(error);
-      }))
+   
+        }))
+
+        
   }
+
+  
 }

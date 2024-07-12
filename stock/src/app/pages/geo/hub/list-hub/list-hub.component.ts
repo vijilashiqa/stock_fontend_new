@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
-
-
-import { DistrictService } from '../../../_services/district.service';
-import { StateService } from '../../../_services/state.service';
 import { PagerService } from '../../../_services/pager.service';
 
-import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { AddHubComponent } from '../add-hub/add-hub.component';
 import { HubService } from '../../../_services/hub.service';
 import { RoleservicesService } from '../../../_services/roleservices.service';
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddSerialnoComponent } from '../add-serialno/add-serialno.component';
 @Component({
   selector: 'ngx-list-hub',
   templateUrl: './list-hub.component.html',
@@ -62,21 +56,22 @@ export class ListHubComponent {
   
   
 
-  addhub() {
-    const modalRef = this.modal.open(AddHubComponent, { container: 'nb-layout', backdrop: false });
-    modalRef.componentInstance.title = 'Add HUB';
+  addserialno(item) {
+    const modalRef = this.modal.open(AddSerialnoComponent, { container: 'nb-layout', backdrop: false });
+    modalRef.componentInstance.title = 'Add Serial No';
+    modalRef.componentInstance.item = item
     modalRef.result.then((data) => {
       this.initiallist();
     })
   };
 
-  edithub(item) {
-    const modalRef = this.modal.open(AddHubComponent, { container: 'nb-layout', backdrop: false });
-    modalRef.componentInstance.title = 'Edit HUB';
-    modalRef.componentInstance.item = item
-    modalRef.result.then((data) => {
-    this.initiallist();
-  })
-}
+//   edithub(item) {
+//     const modalRef = this.modal.open(AddHubComponent, { container: 'nb-layout', backdrop: false });
+//     modalRef.componentInstance.title = 'Edit HUB';
+//     modalRef.componentInstance.item = item
+//     modalRef.result.then((data) => {
+//     this.initiallist();
+//   })
+// }
 
   }

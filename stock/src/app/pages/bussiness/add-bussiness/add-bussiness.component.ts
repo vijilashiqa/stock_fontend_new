@@ -15,9 +15,9 @@ import { DistrictService } from "../../_services/district.service";
 import { BusinessService } from "../../_services/business.service";
 
 @Component({
-  selector: 'ngx-add-bussiness',
-  templateUrl: './add-bussiness.component.html',
-  styleUrls: ['./add-bussiness.component.scss']
+  selector: "ngx-add-bussiness",
+  templateUrl: "./add-bussiness.component.html",
+  styleUrls: ["./add-bussiness.component.scss"],
 })
 export class AddBussinessComponent {
   submit: boolean = false;
@@ -57,12 +57,12 @@ export class AddBussinessComponent {
   async ngOnInit() {
     await this.createForm();
     await this.getstate();
-    await this.getbanf()
+    await this.getbanf();
     // await this.getdistrict();
   }
 
   async addstockIn() {
-    console.log("add@@@@@")
+    console.log("add@@@@@");
     const invalid = [];
     const control = this.addBusiness.controls;
     for (const name in control) {
@@ -70,18 +70,18 @@ export class AddBussinessComponent {
         invalid.push(name);
       }
     }
-    console.log('invalid', invalid);
+    console.log("invalid", invalid);
     this.submit = true;
     if (this.addBusiness.invalid) {
       return;
     }
     let result = await this.Bussiness.addbusiness(this.addBusiness.value);
     if (result && result[0].err_code == 0) {
-      this.toast.success("",result[0]["msg"]);
+      this.toast.success("", result[0]["msg"]);
       this.route.navigate(["/pages/business/list-business"]);
       console.log("add vendor ", result);
     } else {
-      this.toast.warning("",result[0]["msg"]);
+      this.toast.warning("", result[0]["msg"]);
     }
   }
 
@@ -123,24 +123,20 @@ export class AddBussinessComponent {
     console.log("state", this.getstates);
   }
 
+  banklist;
+  banklist1;
 
-  banklist;banklist1
-
-
-  async getbanf(){
-
-    this.banklist = await this.Bussiness.getbank({})
-
-    this.banklist1= this.banklist[0]
-console.log("bank list ", this.banklist);
-
+  async getbanf(event = "") {
+    this.banklist = await this.Bussiness.getbank({ like: event });
+    this.banklist1 = this.banklist[0];
+    console.log("bank list ", this.banklist);
   }
 
   dropdown($event) {
     this.dropdata = $event.state_pk;
-    console.log("drop",this.dropdata)
-     this.getdistrict( "") 
-    }
+    console.log("drop", this.dropdata);
+    this.getdistrict("");
+  }
 
   async getdistrict($event = "") {
     this.dist = await this.districtser.getdistrict({
@@ -155,13 +151,11 @@ console.log("bank list ", this.banklist);
     }
   }
 
-  changestate( index: number) {    
-    this.stockinid.at(index).get('badistid').setValue('');
+  changestate(index: number) {
+    this.stockinid.at(index).get("badistid").setValue("");
   }
 
-
-  changestates(){
-
+  changestates() {
     this.addBusiness.controls.distid.setValue("");
   }
 
@@ -171,8 +165,7 @@ console.log("bank list ", this.banklist);
       baaddress: ["", Validators.required],
       bastateid: ["", Validators.required],
       badistid: ["", Validators.required],
-      baaddrname: ["",Validators.required]
-   
+      baaddrname: ["", Validators.required],
     });
   }
 
@@ -182,9 +175,9 @@ console.log("bank list ", this.banklist);
       pan: new FormControl("", Validators.required),
       bphoneno: new FormControl("", Validators.required),
       bemail: new FormControl("", Validators.required),
-      tinno : new FormControl("", Validators.required),
-      stateid : new FormControl("",  Validators.required),
-      distid : new FormControl("", Validators.required),
+      tinno: new FormControl("", Validators.required),
+      stateid: new FormControl("", Validators.required),
+      distid: new FormControl("", Validators.required),
       stockinid: new FormArray([this.createMaterial()]),
       bankdetails: new FormArray([this.createBankdetails()]),
     });

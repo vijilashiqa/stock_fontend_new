@@ -111,6 +111,19 @@ const routes: Routes = [
             (m) => m.GeoRoutingModule
           ),
       },
+
+
+
+      
+      {
+        path: "department",
+        loadChildren: () =>
+          import("./department/department-routing.module").then(
+            (m) => m.DepartmentRoutingModule
+          ),
+      },
+
+
       {
         path: "maps",
         loadChildren: () =>

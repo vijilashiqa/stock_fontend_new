@@ -1,11 +1,11 @@
-import { Component, Input } from "@angular/core";
+import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NbToastrService } from "@nebular/theme";
 import { StateService } from "../../../_services/state.service";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { DistrictService } from "../../../_services/district.service";
-import { LocationService } from "../../../_services/location.service";
 import { OwnuseService } from "../../../_services/ownuse.service";
+import { HubService } from "../../../_services/hub.service";
 @Component({
   selector: "ngx-add-location",
   templateUrl: "./add-location.component.html",
@@ -26,6 +26,7 @@ export class AddLocationComponent {
     private stateser: StateService,
     private districtser: DistrictService,
     public activeModal: NgbActiveModal,
+    private hubservices :HubService,
     private toast: NbToastrService
   ) {}
 
@@ -33,6 +34,7 @@ export class AddLocationComponent {
     console.log("item@@@@@@@@@@@@@ in ngoninit", this.item);
     this.createForm();
     await this.getstate();
+    await this.gethub()
     if (this.item) {
       await this.edit();
       this.createForm();
@@ -46,7 +48,7 @@ export class AddLocationComponent {
       return;
     }
     if (this.item) this.addLocationForm.value["ownid"] = this.item;
-    let result = await this.locationser.addownuselocation(this.addLocationForm.value);
+    let result = await this.locationser.addown_location(this.addLocationForm.value);
     console.log("result", result[0]);
     if (result && result[0]["err_code"] == 0) {
       this.toast.success("", result[0]["msg"]);
@@ -83,6 +85,16 @@ export class AddLocationComponent {
   }
 
 
+gethublist
+
+  async gethub(even=''){
+
+
+    this.gethublist = await this.hubservices.gethub({like :event})
+    console.log("GET HUB ",this.gethublist);
+    
+
+  }
   async edit() {
     // console.log("item@@@@@@@@@@@@@", this.item);
     // this.editdata = await this.state.getstateedit({ state_pk: this.item });
@@ -113,9 +125,10 @@ export class AddLocationComponent {
         this.editdata?.locaddress || "",
         Validators.required
       ),
+      hubid :new FormControl(this.editdata?.hubid || "",
+      Validators.required),
       
     });
-
 
 
  

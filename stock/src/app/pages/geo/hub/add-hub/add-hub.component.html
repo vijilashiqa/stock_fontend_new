@@ -1,43 +1,170 @@
-<nb-card>
-    <nb-card-body>
-        <div class="modal-header">
-            <h4 class="modal-title">{{ title }}</h4>
-            <button class="close" aria-label="Close" (click)="close()">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+<div class="col-md-12">
+    <nb-card>
+      <nb-card-header>Create HUB Details</nb-card-header>
+      <nb-card-body>
         <form [formGroup]="Addhubform" class="form-horizontal" (ngSubmit)="addhubf()">
-            <div class="modal-body">
+            <div class="modal-body">   
+
+
+
+
                 <div class="form-group row">
-                            <label>Name <span style="color:red">*</span></label>
-                           <input type="text" class="form-control" name="hubname" formControlName="hubname" placeholder="Enter Name"
-                            [ngClass]="{ 'is-invalid': submit && Addhubform.controls.hubname.errors }"/>
-                            <small *ngIf="Addhubform.controls.hubname.errors &&(Addhubform.controls.hubname.errors.required )&& submit"
-                            class="invalid-feedback">HUB Name is required! </small>
+                    <div class="col-sm-6" *ngIf="role.getroleid() > 888">
+                        <label> Business Name<span style="color: red">*</span></label>
+                        <auto-completen [addclass]="{
+                                 error: submit && this.Addhubform.controls.bid.errors 
+                               }" addclass="form-control" optValues="bname" formControlName="bid" (keyUp)="getBusiness($event)"
+                         (changed)="getdepartmentf($event.target);"  placeholder="Select Business Name" Id="id" [item]="getbuss">
+                        </auto-completen>
+                        <div *ngIf="
+                                 this.Addhubform.controls.bid.errors &&
+                                 this.Addhubform.controls.bid.errors.required &&
+                                 submit
+                               " class="error-text">
+                           Business Name is required!
+                        </div>
+                     </div>
+                    
+                     <div class="col-sm-6">
+                        <label> Select Department <span style="color: red">*</span></label>
+                        <auto-completen [addclass]="{error: submit && this.Addhubform.controls.depid.errors }"
+                        addclass="form-control" optValues="depname" formControlName="depid" 
+                        (keyUp)="getdepartmentf($event)" placeholder="Select Department" Id="id" [item]="getdepartment">
+                        </auto-completen>
+                        <div
+                        *ngIf="this.Addhubform.controls.depid.errors && (this.Addhubform.controls.depid.errors.required) && submit"
+                        class="error-text">
+                        Department is required!
+                     </div>
+                    
+                     </div>
+                    </div>
+                    
+
+
+
+
+
+
+
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label> HUB Name <span style="color:red">*</span></label>
+                        <input type="text" class="form-control" name="hubname" formControlName="hubname" placeholder="Enter Name"
+                         [ngClass]="{ 'is-invalid': submit && Addhubform.controls.hubname.errors }"/>
+                         <small *ngIf="Addhubform.controls.hubname.errors &&(Addhubform.controls.hubname.errors.required )&& submit"
+                         class="invalid-feedback">HUB Name is required! </small>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label>HUB Initiate Name <span style="color:red">*</span></label>
+                        <input type="text" class="form-control" name="hubincname" formControlName="hubincname" placeholder="Enter HUB Initiate Name"
+                         [ngClass]="{ 'is-invalid': submit && Addhubform.controls.hubincname.errors }"/>
+                         <small *ngIf="Addhubform.controls.hubincname.errors &&(Addhubform.controls.hubincname.errors.required )&& submit"
+                         class="invalid-feedback">HUB Initiate Name is required! </small>
+                    </div>
+            
+
 </div>
 
 
+
+
+
+
 <div class="form-group row">
-    <!-- <div class="col-md-6"> -->
-            <label>Description</label>
-            <textarea type="text" class="form-control" name="desc" formControlName="desc" placeholder="Enter Description"
-            [ngClass]="{ 'is-invalid': submit && Addhubform.controls.desc.errors }">
-        </textarea>
-            <small *ngIf="Addhubform.controls.desc.errors &&(Addhubform.controls.desc.errors.required )&& submit"
-            class="invalid-feedback">Description Name is required! </small>
-        <!-- </div> -->
+     
+
+        <div class="col-sm-6">
+
+            <label>HUB Mobile<span style="color:red">*</span></label>
+            <input type="number" class="form-control" name="hubmobile" formControlName="hubmobile" placeholder="Enter Mobile NO"
+             [ngClass]="{ 'is-invalid': submit && Addhubform.controls.hubmobile.errors }"/>
+             <small *ngIf="Addhubform.controls.hubmobile.errors &&(Addhubform.controls.hubmobile.errors.required )&& submit"
+             class="invalid-feedback">Mobile NO is required! </small>
+            </div>
+
+
+            <div class="col-sm-6">
+                <label>State<span style="color: red">*</span></label>
+                <auto-completen     
+                [addclass]="{error:submit && this.Addhubform.controls.stateid.errors}"
+                addclass="form-control"  optValues="state_name" formControlName="stateid"   (keyUp)="getstate($event)" 
+                (changed)="getdistrict();  " placeholder="Select State" optId="state_pk" [item]="getstates">
+                </auto-completen>
+                <div *ngIf="
+                this.Addhubform.controls.stateid.errors &&
+                this.Addhubform.controls.stateid.errors.required &&
+                submit
+              " class="error-text">
+              State  Name is required!
+
+                </div>
+</div>
+
+
     </div>
 
+
+
+
+
+            <div class="form-group row">
+               
+
+                    <div class="col-sm-6">
+                        <label>District <span style="color: red">*</span></label>
+                        <auto-completen     
+                        [addclass]="{error:submit && this.Addhubform.controls.destid.errors}"
+                        addclass="form-control"    optValues="district_name" formControlName="destid" (keyUp)="getdistrict($event)"  
+                        placeholder="Select District" optId="district_pk" [item]="dist" >
+                        </auto-completen>
+                        <div *ngIf="
+                        this.Addhubform.controls.destid.errors &&
+                        this.Addhubform.controls.destid.errors.required &&
+                        submit
+                      " class="error-text">
+                      District  Name is required!
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label>HUB Address <span style="color:red">*</span></label>
+                        <textarea type="text" class="form-control" name="hubaddr" formControlName="hubaddr" placeholder="Enter HUB Address"
+                         [ngClass]="{ 'is-invalid': submit && Addhubform.controls.hubaddr.errors }"></textarea>
+                         <small *ngIf="Addhubform.controls.hubaddr.errors &&(Addhubform.controls.hubaddr.errors.required )&& submit"
+                         class="invalid-feedback">HUB Address is required! </small>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group row">
+                     
+                            <div class="col-md-6">
+                                <label>Description</label>
+                                <textarea type="text" class="form-control" name="desc" formControlName="desc" placeholder="Enter Description"
+                                [ngClass]="{ 'is-invalid': submit && Addhubform.controls.desc.errors }">
+                                </textarea>
+                                <small *ngIf="Addhubform.controls.desc.errors &&(Addhubform.controls.desc.errors.required )&& submit"
+                                class="invalid-feedback">Description Name is required! </small>
+                            </div>
+            
+                        </div>
+
+
+
             </div>
-           
             <div class="modal-footer">
                 <button type="submit"  status="success" nbButton>
-                    {{ item ? "Update" : "Add" }}
+                    {{ id ? "Update" : "Add" }}
                 </button>
-                <button type="button"  status="danger" nbButton  (click)="close()">
+                <button type="button"  status="danger" nbButton [routerLink]="['/pages/Geo-details/list-hub']">
                     Cancel
                 </button>
             </div>
         </form>
     </nb-card-body>
 </nb-card>
+</div>

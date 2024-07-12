@@ -5,6 +5,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { NbToastrService } from "@nebular/theme";
 import { BusinessService } from "../../../_services/business.service";
 import { DeviceService } from "../../../_services/device.service";
+import { RoleservicesService } from "../../../_services/roleservices.service";
 
 @Component({
   selector: 'ngx-add-device',
@@ -42,13 +43,21 @@ export class AddDeviceComponent {
     private device: DeviceService,
     private route: Router,
     private bussiness :BusinessService,
-    private toast: NbToastrService
+    private toast: NbToastrService,
+    public role: RoleservicesService,
   ) {}
 
   async ngOnInit() {
     console.log("item@@@@@@@@",this.item);
     await this.createForm();
-    await   this.getBusiness()
+
+    if(this.role.getroleid() > 888){
+      await this.getBusiness()
+      }
+  else{
+    this.adddevice.get('bid').setValue(this.role.getbusiness());
+  }
+
     if(this.item) await this.editdevice();
   }
 
@@ -70,10 +79,9 @@ export class AddDeviceComponent {
     } 
   }
 
-  async getBusiness() {
-    this.getbusinessd = await this.bussiness.getbusiness({});
+  async getBusiness(event ='') {
+    this.getbusinessd = await this.bussiness.getbusiness({like :event});
     this.getbuss = this.getbusinessd[0];
-    // console.log("get business ", this.getbuss);
   }
 
 async editdevice() {

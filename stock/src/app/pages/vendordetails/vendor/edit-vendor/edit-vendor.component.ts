@@ -71,18 +71,22 @@ export class EditVendorComponent {
   async ngOnInit() {
     this.id = this.aRoute.snapshot.queryParams.id;
     console.log("id@@@@@@@@@@@@@@@@", this.id);
-
     await this.createForm();
     await this.edit();
+    if(this.role.getroleid() > 888){
+      await this.getbusiness('')
+      }
+  else{
+    this.editvendor.get('bid').setValue(this.role.getbusiness());
+  }
     await this.editbank();
     await this.getaddress();
-    await this.getbusiness('')
     await this.getbanf();
   }
 
   async editstockIn() {
-    // console.log("@@@@@@@@@@@@@");
-    
+    this.submit = true;
+    console.log("@@@@@@@@@@@@@");
     const invalid = [];
     const control = this.editvendor.controls;
     for (const name in control) {
@@ -90,8 +94,8 @@ export class EditVendorComponent {
         invalid.push(name);
       }
     }
-    // console.log('invalid', invalid);
-    this.submit = true;
+    console.log('invalid', invalid);
+    
     if (this.editvendor.invalid) {
       return;
     }
@@ -187,17 +191,14 @@ console.log("bank list ", this.banklist);
     addresname = "",
     state = 0,
     district = 0,
-    address = "",
+    address = 0,
     pincode = 0,
     vastatus=0,
     id=0,
     vid =0,
     
   ) {
-    console.log("daa@@@@@@@", gstno);
-    this.stockinid.push(
-      this.createaddress(gstno, addresname, state, district, address, pincode,vastatus ,id,vid)
-    );
+    this.stockinid.push(this.createaddress(gstno, addresname, state, district, address, pincode,vastatus ,id,vid));
   }
 
 
@@ -208,7 +209,7 @@ console.log("bank list ", this.banklist);
     addresname = "",
     state = 0,
     district = 0,
-    address = "",
+    address = 0,
     pincode = 0,
     vastatus =0,
     id=0,vid=0,
@@ -229,9 +230,9 @@ console.log("bank list ", this.banklist);
       district: [district || "" ,Validators.required],
       address: [address || "" ,Validators.required],
       pincode: [pincode || "" ,Validators.required],
-      vastatus :  [ vastatus ? vastatus : "" ,Validators.required ],
-      id:id ? id : '',
-      vid:vid ? vid : '',
+      vastatus :  [ vastatus ? vastatus : "" || "" ],
+      id:id ? id : "",
+      vid:vid ? vid : "",
     });
   }
   deleteaddress(index: number) {

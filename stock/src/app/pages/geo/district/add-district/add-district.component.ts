@@ -47,10 +47,10 @@ export class AddDistrictComponent {
       this.toast.warning("",result[0]['msg'])
     }
   }
-  async getCountry($event = '') {
+  async getCountry(event = '') {
     console.log("list state");
     
-    this.count = await this.stateas.getstate({ });
+    this.count = await this.stateas.getstate({ like:event});
     console.log("country",this.count);
     
   }

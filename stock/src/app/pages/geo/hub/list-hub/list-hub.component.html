@@ -2,22 +2,47 @@
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
     <nb-card-header>List HUB</nb-card-header>
     <nb-card-body>
-      <!-- <toaster-container></toaster-container> -->
-      <div class="row"  style="margin-bottom: 1%;">
-        <div >
-          <button *ngIf="role.getroleid() > 888  || !role.getmenurole(1007)" status="success" nbButton (click)="addhub()">Add Hub</button>
-        </div>
-      </div>
+      <button *ngIf="role.getroleid() > 888  || !role.getmenurole(1007)"  status="success" nbButton  style="margin-bottom: 1%;"
+        [routerLink]="['/pages/Geo-details/add-hub']">Add HUB</button>
      
       <table class="table">
         <tr>
           <th *ngIf="role.getroleid() > 888  || !role.getmenurole(1009)">Action</th>
+        
+          <th>Bussiness Name</th>
+          <th>Department Name</th>
           <th>HUB Name</th>
+          <th>Initiate Name</th>
+          <th>Mobila No</th>
+          <th>Address</th>
           <th>Description Name</th>
         </tr>
         <tr *ngFor="let item of pagedItems">
-          <td *ngIf="role.getroleid() > 888  || !role.getmenurole(1009)"><a (click)="edithub(item.hbid);" title="Update"><i class="nb-edit"></i></a></td>
+          <!-- <td *ngIf="role.getroleid() > 888  || !role.getmenurole(1009)" style="cursor:pointer;" [routerLink]="['/pages/Geo-details/add-hub']" [queryParams]="{id:item.hbid}"><i class="nb-edit"></i></td> -->
+        
+          <div class="form-group">
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-bs-toggle="dropdown">
+                Action
+              </button>
+              <div class="dropdown-menu" style="min-width: 0rem" style="color: none !important; 
+               text-decoration: none !important;">
+                <a class="dropdown-item" style="cursor: pointer" [routerLink]="['/pages/Geo-details/add-hub']" [queryParams]="{id:item.hbid}">
+                  <i title="Edit Complaint" class="far fa-edit"></i>&nbsp;Edit
+                </a>
+                <a class="dropdown-item" (click)="addserialno(item)">
+                  <i class="far fa-edit" title="Edit Complaint"
+                  ></i>&nbsp;ADD Serial NO
+                </a>
+              </div>
+            </div>
+          </div>
+          <td>{{item.bname}}</td>
+          <td>{{item.depname}}</td>
           <td>{{item.hubname}}</td>
+          <td>{{item.hubincname}}</td>
+          <td>{{item.hubmobile}}</td>
+          <td>{{item.hubaddr}}</td>
           <td>{{item.descs}}</td>
         </tr>
       </table>

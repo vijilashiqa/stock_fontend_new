@@ -13,8 +13,9 @@ import { ShareModule } from "../share/share.module";
 import { CommonModule } from "@angular/common";
 import { VendordetailsModule } from "./vendordetails/vendordetails.module";
 import { ErrormessageComponent } from './errormessage/errormessage.component';
-import { LoginComponent } from './login/login.component';
+
 import { AdminModule } from "./admin/admin.module";
+import { DepartmentModule } from "./department/department.module";
 
 // import { BrowserModule } from "@angular/platform-browser";
 
@@ -33,7 +34,8 @@ import { AdminModule } from "./admin/admin.module";
     ShareModule,
     CommonModule,
     // BrowserModule
-    AdminModule
+    AdminModule,
+    DepartmentModule
   ],
   declarations: [PagesComponent, ErrormessageComponent],
 })

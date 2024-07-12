@@ -140,7 +140,7 @@
                                                     <auto-completen   
                                                     [addclass]="{error:submit &&  this.user['controls']['bank'].invalid && submit}"
                                                       addclass="form-control"
-                                                   optValues="bname" formControlName="bank" (keyUp)="getbanf()" placeholder="Select Bank" Id="id" [item]="banklist1">
+                                                   optValues="bname" formControlName="bank" (keyUp)="getbanf($event)" placeholder="Select Bank" Id="id" [item]="banklist1">
                                                     </auto-completen>
                                                 <small *ngIf="user.hasError('required','bank')&&submit" class="error-text"> Bank Details is Required! </small> 
 

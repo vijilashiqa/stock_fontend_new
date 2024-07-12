@@ -8,7 +8,7 @@
             <nb-tab tabTitle="Stock Details">
               <div class="modal-body">
 
-                <div class="form-group row">
+                <div class="form-group row"  *ngIf="role.getroleid() > 888 ">
                   <div  class="col-sm-6">
                     <label> Select Business <span style="color: red">*</span></label>
                     <auto-completen  [addclass]="{error:submit && this.addvendor.controls.bid.errors}"
@@ -88,7 +88,7 @@
                         <auto-completen   
                         [addclass]="{error:submit &&  this.user['controls']['bank'].invalid && submit}"
                           addclass="form-control"
-                       optValues="bname" formControlName="bank" (keyUp)="getbanf()" placeholder="Select Bank" Id="id" [item]="banklist1">
+                       optValues="bname" formControlName="bank" (keyUp)="getbanf($event)" placeholder="Select Bank" Id="id" [item]="banklist1">
                         </auto-completen>
                     <small *ngIf="user.hasError('required','bank')&&submit" class="error-text"> Bank Details is Required! </small> 
                     

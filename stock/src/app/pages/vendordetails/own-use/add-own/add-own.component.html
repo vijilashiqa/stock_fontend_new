@@ -5,12 +5,12 @@
           <form [formGroup]="addownuseForm" class="form-horizontal"  (ngSubmit)="addchannelsrv();">
              <div class="modal-body">
                 <div class="form-group row">
-                   <div class="col-sm-3">
+                   <div class="col-sm-3" *ngIf="role.getroleid() > 888">
                       <label> Business Name<span style="color: red">*</span></label>
                       <auto-completen [addclass]="{
                                error: submit && this.addownuseForm.controls.bid.errors 
-                             }" addclass="form-control" optValues="bname" formControlName="bid" (keyUp)="getBusiness()"
-                         placeholder="Select Business Name" Id="id" [item]="getbuss">
+                             }" addclass="form-control" optValues="bname" formControlName="bid" (keyUp)="getBusiness($event)"
+                       (changed)="getitem();getdepartmentf($event.target);clearbussiness();"  placeholder="Select Business Name" Id="id" [item]="getbuss">
                       </auto-completen>
                       <div *ngIf="
                                this.addownuseForm.controls.bid.errors &&
@@ -21,14 +21,42 @@
                       </div>
                    </div> 
 
+                   <div class="col-sm-3" >
+                     <label> Select Department <span style="color: red">*</span></label>
+                     <auto-completen [addclass]="{error: submit && this.addownuseForm.controls.depid.errors }"
+                     addclass="form-control" optValues="depname" formControlName="depid" (changed)="changeserialno()"
+                        (keyUp)="getdepartmentf($event)" placeholder="Select item Name" Id="id" [item]="getdepartment">
+                     </auto-completen>
+                     <div
+                     *ngIf="this.addownuseForm.controls.depid.errors && (this.addownuseForm.controls.depid.errors.required) && submit"
+                     class="error-text">
+                     Department is required!
+                  </div>
 
+                     </div>
                 
 
+                     <!-- <div class="col-sm-3" >
+                        <label>Hub Name<span style="color: red">*</span></label>
+                        <auto-completen     
+                        [addclass]="{error:submit && this.addownuseForm.controls.hubid.errors}"
+                        addclass="form-control" optValues="hubname"
+                            formControlName="hubid" (keyUp)="gethub($event)"
+                            placeholder="Select Hub Name" optId="hbid" [item]="gethublist">
+                        </auto-completen>
+                        <div *ngIf="
+                        this.addownuseForm.controls.hubid.errors &&
+                        this.addownuseForm.controls.hubid.errors.required &&
+                        submit
+                      " class="error-text">
+                      HUB  Name is required!
+                    </div>
+                        </div> -->
                   <div class="col-sm-3">
                      <label> Select Item <span style="color: red">*</span></label>
                      <auto-completen [addclass]="{error: submit && this.addownuseForm.controls.itemname.errors }"
                      addclass="form-control" optValues="itemname" formControlName="itemname" (changed)="getserialno();changeserialno()"
-                        (keyUp)="getBusiness()" placeholder="Select item Name" optId="modelid" [item]="getiteml1">
+                        (keyUp)="getitem($event)" placeholder="Select item Name" optId="iiid" [item]="getiteml1">
                      </auto-completen>
                      <div
                      *ngIf="this.addownuseForm.controls.itemname.errors && (this.addownuseForm.controls.itemname.errors.required) && submit"
@@ -37,22 +65,7 @@
                   </div>
                   </div>
 
-                  <div class="col-sm-3" >
-                     <label>Select Mode <span style="color: red">*</span></label>
-                     <select class="form-control" formControlName="modetype"  (change)="clearValidation()"
-                        [ngClass]="{ 'is-invalid': submit && addownuseForm.controls.modetype.errors }">
-                        <option value="null" selected>Select Mode</option>
-                        <option value="1">Bulk</option>
-                        <option value="0">Individual </option>
-                     </select>
-                     <div
-                        *ngIf="this.addownuseForm.controls.modetype.errors && (this.addownuseForm.controls.modetype.errors.required) && submit"
-                        class="error-text">
-                        Mode is required!
-                     </div>
-                  </div>
-
-
+                 
                   <div class="col-sm-3" *ngIf="addownuseForm.value['modetype']=='0'" >
                      <label> Select Serial No <span style="color: red">*</span></label>
                      <auto-completen    [addclass]="{error: submit && this.addownuseForm.controls.model_sid.errors }"
@@ -64,6 +77,31 @@
                      class="error-text">
                      Mode is required!
                   </div>                  </div>
+                  
+
+                  </div>
+                  <div class="form-group row">
+
+
+                   
+                     
+                     <div class="col-sm-3" >
+                        <label>Select Mode <span style="color: red">*</span></label>
+                        <select class="form-control" formControlName="modetype"  (change)="clearValidation()"
+                           [ngClass]="{ 'is-invalid': submit && addownuseForm.controls.modetype.errors }">
+                           <option value="null" selected>Select Mode</option>
+                           <option value="1">Bulk</option>
+                           <option value="0">Individual </option>
+                        </select>
+                        <div
+                           *ngIf="this.addownuseForm.controls.modetype.errors && (this.addownuseForm.controls.modetype.errors.required) && submit"
+                           class="error-text">
+                           Mode is required!
+                        </div>
+                     </div>
+   
+   
+
 
 
                   

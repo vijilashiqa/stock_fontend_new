@@ -49,9 +49,9 @@ export class OwnuseService {
   
 
 
-  async addownuselocation(params) {
+  async addown_location(params) {
 
-    return await this.http.post("/own_use/addownuselocation", params).toPromise();
+    return await this.http.post("/own_use/addown_location", params).toPromise();
   }
 
 }

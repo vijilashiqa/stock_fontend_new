@@ -7,36 +7,22 @@
     <table class="table">
       <tr >
         <th *ngIf="role.getroleid() > 888  || !role.getmenurole(7003) ">Action</th>
+        <th>Id</th>
         <th>Business Name</th>
+        <th>Department Name</th>
         <th>Serial No</th> 
         <th>Item Name</th>
+        <!-- <th>Hub Name</th> -->
         <th>Status</th>      
       </tr>
       <tr *ngFor="let item of pagedItems">
-
-
-        <td *ngIf="role.getroleid() > 888  || !role.getmenurole(7003)" style="padding: 1px" class="last" data-title="'Action'">
-          <div class="dropdown ghost-dropdown" ngbDropdown>
-            <button type="button" style="margin-left: -10%" class="btn btn-sm btn-success dropdown-toggle"
-              data-bs-toggle="dropdown">
-              Action
-            </button>
-          <ul style="width: 106px;margin:3px;z-index: 1;" class="dropdown-menu" ngbDropdownMenu>
-          
-
-<li  style="cursor:pointer;"  class="dropdown-item" title="Edit">
-  <i [routerLink]="['/pages/vendor/edit-ownuse']" [queryParams]="{id:item.ownid , model_sid :item.model_sid}" class="nb-edit" style=" cursor: pointer;" *ngIf="item.sstatus == 1">  &nbsp;Edit</i>
-</li>
-
-<li class="dropdown-item" title="View" (click)="get_location(item.ownid)" >
-  <i style="font-size: 11px;" class="far fa-eye "></i>&nbsp; Add Location
-</li>
-     </ul>
-        </div>
-      </td>
+        <th>{{item.ownid}}</th>
+        <td *ngIf="role.getroleid() > 888  || !role.getmenurole(7003)" style="cursor:pointer;" [routerLink]="['/pages/vendor/edit-ownuse']" [queryParams]="{id:item.ownid , model_sid :item.model_sid}"><i class="nb-edit"></i></td>
         <td>{{item.bname}}</td>
+        <td>{{item.depname}}</td>
         <td>{{item.serial_num}}</td>
         <td>{{item.itemname}}</td>
+        <!-- <td>{{item.hubname}}</td> -->
         <td>{{item.sstatus == 0 ? "Assets Removed" :"Assets Assigned "}}</td>
 
       </tr>

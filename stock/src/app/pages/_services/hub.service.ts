@@ -33,6 +33,18 @@ export class HubService {
     return await this.http.post("/hub/listhub", params).toPromise();
   }
 
+  
 
+  async getserialno(params) {
+
+    return await this.http.post("/hub/getserialno", params).toPromise();
+  }
+
+
+
+  async updateownuse(params) {
+
+    return await this.http.post("/hub/updateownuse", params).toPromise();
+  }
   
 }

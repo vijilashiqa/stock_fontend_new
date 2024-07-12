@@ -15,6 +15,7 @@ import { NbToastrService } from "@nebular/theme";
 import { ErrormessageComponent } from "../../../errormessage/errormessage.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ModelService } from "../../../_services/model.service";
+import { RoleservicesService } from "../../../_services/roleservices.service";
 const EXCEL_EXTENSION = ".xlsx";
 @Component({
   selector: 'ngx-add-serial',
@@ -32,7 +33,7 @@ export class AddSerialComponent {
   channellist: any = [];
   disabled = false; getinvoiced;resp
   channelsrv;
-  result; datacount
+  result; datacount; getinvoice1 ;getinvoice2
   alert: any;i
   editable: boolean = false;
   id;
@@ -54,13 +55,22 @@ export class AddSerialComponent {
     private toast: NbToastrService,
     private aRoute: ActivatedRoute,
     private serialnos: SerialnoService,
+    public role:RoleservicesService
   ) { }
 
   async ngOnInit() {
     this.id = this.aRoute.snapshot.queryParams["id"];
     await this.createForm();
-    await this.getBusiness();
-    await this.getinvoice();
+
+    if(this.role.getroleid() > 888){
+      await this.getBusiness()
+      }
+  else{
+    this.addserial.get('bid').setValue(this.role.getbusiness());
+  }
+
+    // await this.getBusiness();
+    // await this.getinvoice();
     await this.getitem();
     // await this.getqty()
     if (this.id) {
@@ -92,25 +102,25 @@ export class AddSerialComponent {
   //     this.addserial.get(i).updateValueAndValidity();
   //   }
   // }
-  async getBusiness() {
-    this.getbusinessd = await this.bussiness.getbusiness({});
+
+  
+  async getBusiness( event ='') {
+    this.getbusinessd = await this.bussiness.getbusiness({like :event});
     this.getbuss = this.getbusinessd[0];
   }
-  async getinvoice() {
-    this.getinvoiced = await this.invoiceser.getinvoice({})
-    console.log("invoice ", this.getinvoiced);
+
+ 
+
+  async getinvoice(event='') {
+    this.getinvoiced = await this.invoiceser.getinvoice({ like: event ,busid:this.addserial.value['bid'] })
+this.getinvoice1=this.getinvoiced[0]
+    console.log("invoice ", this.getinvoice1);
   }
   async getitem() {
     this.vv = this.addserial.value['invno']
     this.getiteml = await this.invoiceser.getinvoice_item_edit({ id: this.addserial.value['invno'] })
     this.getiteml1 = this.getiteml[0];
     console.log("invoice ", this.getiteml1);
-
-
-
-
-
-
   }
 
 
@@ -139,7 +149,9 @@ export class AddSerialComponent {
   }
 
 
-
+changebussiness(){
+  this.addserial.controls.invno.setValue("");
+}
 
 
   Download() {
@@ -239,7 +251,6 @@ console.log(" error code ", this.resp[this.i].err_code !==0)
     console.log("array", controlArray.controls[idx].value);
     if (this.getvalue == 0) {
       console.log("validation SINGLE")
-      // this.serial_num.removeAt(0);
       controlArray.controls[idx].get('serialno').clearValidators();
       controlArray.controls[idx].get('serialno').updateValueAndValidity();
     }
@@ -249,15 +260,6 @@ console.log(" error code ", this.resp[this.i].err_code !==0)
       controlArray.controls[idx].get('serialno').updateValueAndValidity();
     }
   }
-
-
-
-
-
-
-
-
-
 
 
   filereader(file, callback) {
@@ -280,6 +282,7 @@ console.log(" error code ", this.resp[this.i].err_code !==0)
       callback([]);
     }
   }
+
 
   get serial_num(): FormArray {
     return this.addserial.get('serial_num') as FormArray;

@@ -8,11 +8,12 @@
             <div class="modal-body">
                <div class="form-group row">
 
-                  <div class="col-sm-4">
+                  <div class="col-sm-4" *ngIf="role.getroleid() > 888">
                      <label> Business Name<span style="color: red">*</span></label>
                      <auto-completen [addclass]="{
                               error: submit && this.addserial.controls.bid.errors 
-                            }" addclass="form-control" optValues="bname" formControlName="bid" (keyUp)="getBusiness()"
+                            }" addclass="form-control" optValues="bname" formControlName="bid" (keyUp)="getBusiness($event)" 
+                            (changed)="getinvoice($event.target);changebussiness()"
                         placeholder="Select Business Name" Id="id" [item]="getbuss">
                      </auto-completen>
                      <div *ngIf="
@@ -30,7 +31,7 @@
                      <auto-completen [addclass]="{
                               error: submit && this.addserial.controls.invno.errors 
                             }" addclass="form-control" optValues="invno" formControlName="invno" (changed)="getitem();changeinvoicef()"
-                        (keyUp)="getinvoice()" placeholder="Select Invoice Name" Id="id" [item]="getinvoiced">
+                        (keyUp)="getinvoice($event)" placeholder="Select Invoice Name" Id="id" [item]="getinvoice1">
                      </auto-completen>
                      <div *ngIf="
                               this.addserial.controls.invno.errors &&

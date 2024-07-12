@@ -1,42 +1,26 @@
-
 <div class="container" style="    margin-bottom: 9%;">
- 
+
     <div>
-        <img style="max-width: 70%;padding-left: 26%; width: 100%;      margin-bottom: 10%;" src="/assets/images/bluelogo.png">
+        <img style="max-width: 70%;padding-left: 26%; width: 100%;      margin-bottom: 10%;"
+            src="/assets/images/bluelogo.png">
     </div>
 
-    <form [formGroup] ="UserForm" (ngSubmit)="login()">
-        <!-- <toaster-container [toasterconfig]></toaster-container> -->
-<!-- 
-        <div class="form-group" >
-                <label>Select Mode <span style="color: red">*</span></label>
-                <select class="form-control" formControlName="urole" 
-                   [ngClass]="{ 'is-invalid': submit && UserForm.controls.urole.errors }">
-                   <option value="" selected>Select Mode</option>
-                   <option value="888">Admin</option>
-                   <option value="777">Admin Employee</option>
-                   <option value="999">Developer </option>
-                </select>
-                <small *ngIf="UserForm.controls.urole.errors &&(UserForm.controls.urole.errors.required )&& submit"
-                class="invalid-feedback">Mode Type is required! </small>
-             </div> -->
-
-
-
-<div class="form-group" >
-    <label for="username">usernames</label>
-    <input type="text" nbInput fullWidth status="info"   [ngClass]="{ 'is-invalid': submit && UserForm.controls.loginid.errors }"
-    placeholder="userName"  name="loginid" class="form-control" formControlName="loginid">
-    <small *ngIf="UserForm.controls.loginid.errors &&(UserForm.controls.loginid.errors.required )&& submit"
-    class="invalid-feedback">userName is required! </small>
-</div>
-<div class="form-group">
-    <label for="Password">Password</label>
-    <input type="password" name="pwd" [ngClass]="{ 'is-invalid': submit && UserForm.controls.pwd.errors }"
-     placeholder="password" class="form-control" formControlName="pwd">
-     <small *ngIf="UserForm.controls.pwd.errors &&(UserForm.controls.pwd.errors.required )&& submit"
-     class="invalid-feedback">Password is required! </small>
-</div>
-<button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
- </form>
+    <form [formGroup]="UserForm" (ngSubmit)="login()">
+        <div class="form-group">
+            <label for="username">usernames</label>
+            <input type="text" nbInput fullWidth status="info"
+                [ngClass]="{ 'is-invalid': submit && UserForm.controls.loginid.errors }" placeholder="userName"
+                name="loginid" class="form-control" formControlName="loginid">
+            <small *ngIf="UserForm.controls.loginid.errors &&(UserForm.controls.loginid.errors.required )&& submit"
+                class="invalid-feedback">userName is required! </small>
+        </div>
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <input type="password" name="pwd" [ngClass]="{ 'is-invalid': submit && UserForm.controls.pwd.errors }"
+                placeholder="password" class="form-control" formControlName="pwd">
+            <small *ngIf="UserForm.controls.pwd.errors &&(UserForm.controls.pwd.errors.required )&& submit"
+                class="invalid-feedback">Password is required! </small>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+    </form>
 </div>

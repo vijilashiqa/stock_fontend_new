@@ -66,19 +66,7 @@ export class PagesComponent {
         },
 
 
-        {
-          title: 'Hub',
-          hidden: !(this.role.find(x => x == 1007) || this.role.find(x => x == 1008)|| this.role.find(x=>x == 1009)),
-          children: [
-            {
-              title: 'List Hub',
-              hidden: !(this.role.find(x=>x == 1008)),
-              link: '/pages/Geo-details/list-hub',
-             
-            },
-           
-          ],
-        },
+     
 
 
       ],
@@ -120,7 +108,7 @@ export class PagesComponent {
 
 
     {
-      title: 'Business',
+      title: 'Business Details',
       hidden: !(this.role.find(x => x == 3001) || this.role.find(x => x == 3002)|| this.role.find(x=>x == 3003)),
       icon: 'pantone-outline',
       children: [
@@ -186,7 +174,31 @@ export class PagesComponent {
 
 
 
+    {
+      title: 'Department Details',
+        icon: 'layout',
+      // link: '/pages/layout/stepper',
+      // hidden: !(this.role.find(x => x == 4001) || this.role.find(x => x == 4002) || this.role.find(x => x == 4003)),
+
+      children: [
       
+        // {
+        //   title: 'Add Department',
+        //   link: '/pages/department/add-department',
+        //   hidden: !this.role.find(x => x == 4001),
+        // },
+       
+{
+          title: 'List Department',
+          link: '/pages/department/list-department',
+          hidden: !this.role.find(x => x == 4002),
+
+        },
+      
+
+      ],
+      
+    },
 
     
 
@@ -397,7 +409,27 @@ export class PagesComponent {
       ],
     },
 
+    {
+      title: 'Hub',
+      icon: 'shuffle-2',
+      hidden: !(this.role.find(x => x == 1007) || this.role.find(x => x == 1008)|| this.role.find(x=>x == 1009)),
+      children: [
+        {
+          title: 'Add Hub',
+          hidden: !(this.role.find(x=>x == 1007)),
+          link: '/pages/Geo-details/add-hub',
+         
+        },
 
+        {
+          title: 'List Hub',
+          hidden: !(this.role.find(x=>x == 1008)),
+          link: '/pages/Geo-details/list-hub',
+         
+        },
+       
+      ],
+    },
       
       {
         title: 'Assets Mapping',
@@ -406,19 +438,25 @@ export class PagesComponent {
         children: [
 
           {
-            title: 'Add Assets ',
+            title: 'Add Own Use Assets ',
             link: '/pages/vendor/add-ownuse',
             hidden: !this.role.find(x => x == 7001),
           },
       
           {
-            title: 'List Assets ',
+            title: 'List Own Use Assets ',
             link: '/pages/vendor/list-ownuse',
             hidden: !this.role.find(x => x == 7002),
           },
          
         ],
       },
+
+
+
+
+      
+      
 
       // {
       //   title: 'Modal & Overlays',
