@@ -63,7 +63,12 @@ export class AddInvoiceComponent {
       await this.getBusiness()
       }
   else{
+    console.log("34433434",this.role.getbusiness());
+    
     this.addinvoice.get('busid').setValue(this.role.getbusiness());
+     await this.getmake();
+    await this.getdevice();
+    await this.getmodel();
   }
 
     // await this.getBusiness();
@@ -148,11 +153,9 @@ if(this.addinvoice.value["busid"]){
   }
   async changeaddress() {
     let opp1 = this.addinvoice.value["vaddr"];
-    // console.log("change address", opp1);
     let dd = this.getvd.filter((id) => id.id == opp1).map((id) => id.gst_no);
     this.reducesvendor = dd.reduce((a, v) => ({ ...a, v }));
     this.sllice1 = this.reducesvendor.slice(0, 2);
-    // console.log("slice@@@@@@@@@@", this.sllice1);
     await this.disable();
   }
 
@@ -170,6 +173,10 @@ if(this.addinvoice.value["busid"]){
   }
 
 
+  changemake(index : number){
+    this.invoiceForm.at(index).get('deviceid').setValue('');
+    this.invoiceForm.at(index).get('modelid').setValue('');
+  }
 
  async clearall(){
 // console.log("clear all");

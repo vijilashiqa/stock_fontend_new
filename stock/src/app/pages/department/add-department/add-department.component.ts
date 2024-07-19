@@ -50,16 +50,16 @@ export class AddDepartmentComponent {
   ) {}
 
   async ngOnInit() {
-    console.log("item@@@@@@@@",this.item);
+    // console.log("item@@@@@@@@",this.item);
     await this.createForm();
-
     if(this.role.getroleid() > 888){
       await this.getBusiness()
       }
   else{
-    this.adddepartment.get('bid').setValue(this.role.getbusiness());
+    console.log("dfasdfasdfsdfasdfsadf",this.role.getbusiness());
+    
+    this.adddepartment.get('busid').setValue(this.role.getbusiness());
   }
-
     if(this.item) await this.editdepartmentfun();
   }
 

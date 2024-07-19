@@ -70,8 +70,12 @@ export class AddHubComponent {
       }
   else
   {
+    console.log("this.role.getbusiness()",this.role.getbusiness());
     this.Addhubform.get('bid').setValue(this.role.getbusiness());
+    await this.getdepartmentf()
   }
+
+  await this.getstate();
     if (this.id) {
     await this.editaddhub();
     // await this.gethub();

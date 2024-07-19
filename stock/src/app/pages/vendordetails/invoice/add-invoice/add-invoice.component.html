@@ -166,7 +166,7 @@
                         <div class="form-group" class="col-sm-2">
                           <label>Make Name<span style="color:red">*</span></label>
                           <auto-completen   [addclass]="{error:submit &&  this.user['controls']['makeid'].invalid && submit}"
-                            addclass="form-control" optValues="makename"  [formControl]="getInvoiceByIndex(idx)['makeid']"  (keyUp)="getmake($event);" (changed)=" dropdown($event);getmodel()"
+                            addclass="form-control" optValues="makename"  [formControl]="getInvoiceByIndex(idx)['makeid']"  (keyUp)="getmake($event);" (changed)=" dropdown($event);getmodel();changemake(idx)"
                         placeholder="Select Business Name" optId="makeid" [item]="getmakel">
                       </auto-completen>
                       <small *ngIf="user.hasError('required','makeid')&&submit" class="error-text">Make Name is Required! </small>

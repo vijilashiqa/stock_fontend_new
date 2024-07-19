@@ -73,17 +73,10 @@ export class AddOwnComponent {
       }
   else{
     this.addownuseForm.get('bid').setValue(this.role.getbusiness());
+    await  this.getdepartmentf()
   }
-
-  // await  this.getdepartmentf()
     await this.getBusiness();
-    await this.getitem();
-    // await this.gethub()
-    // if (this.id) {
-    //   await this.edit();
-    //   await this.editserialno()
-    //   // await this.getserialno()
-    // }
+    await this.getitem(); 
   }
  
   
@@ -232,7 +225,7 @@ export class AddOwnComponent {
 
 
   async getserialno() {
-    this.getserialnof = await this.ownuseservices.selectmodel_serial({ modelid: this.addownuseForm.value["itemname"] })
+    this.getserialnof = await this.ownuseservices.selectmodel_serial({ inv_itemid: this.addownuseForm.value["itemname"] })
     this.getoperatorlist = this.getserialnof
   }
 

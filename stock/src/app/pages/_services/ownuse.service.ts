@@ -44,11 +44,6 @@ export class OwnuseService {
     return await this.http.post("/own_use/selectmodel_serialedit", params).toPromise();
   }
  
-  
-
-  
-
-
   async addown_location(params) {
 
     return await this.http.post("/own_use/addown_location", params).toPromise();

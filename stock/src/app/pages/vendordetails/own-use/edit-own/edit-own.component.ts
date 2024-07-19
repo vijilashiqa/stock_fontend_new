@@ -34,21 +34,21 @@ export class EditOwnComponent {
   editflag = false; getmodelqty
   failure: any = []; getvalue; indiv1
   submit: boolean; vv1
-  channellist: any = [];editdataown
+  channellist: any = []; editdataown
   disabled = false; getinvoiced
-  channelsrv; iiid;calarray;editserialnolist
-  result; datacount;array1=[]
+  channelsrv; iiid; calarray; editserialnolist
+  result; datacount; array1 = []
   alert: any; getserialnof
   editable: boolean = false;
   id; getoperatorlist
   router: any; getmodelid
   listhead; vv; getserialnof1
-  listhdcas; count
+  listhdcas; count; getdepartment
   listchnnel; getiteml1; model_sid
   bulkmeta: any = [];
   bulk = []; getiteml
-  arrayBuffer: any;addorremoveser
-  Remove;  file: any[];
+  arrayBuffer: any; addorremoveser
+  Remove; file: any[]; modelselect; model
   constructor(
     private route: Router,
     private modal: NgbModal,
@@ -58,61 +58,55 @@ export class EditOwnComponent {
     private toast: NbToastrService,
     public role: RoleservicesService,
     private aRoute: ActivatedRoute,
-    private hubservices :HubService,
+    private hubservices: HubService,
     private departmentser: DepartmentService,
   ) { }
 
   async ngOnInit() {
- 
-    
+
+
     this.id = this.aRoute.snapshot.queryParams["id"];
-     this.model_sid = this.aRoute.snapshot.queryParams["model_sid"];
-     await this.createForm();
-     await this.getownusedata();
-     if(this.role.getroleid() > 888){
+    this.model_sid = this.aRoute.snapshot.queryParams["model_sid"];
+    await this.createForm();
+    await this.getownusedata();
+    if (this.role.getroleid() > 888) {
       await this.getBusiness()
-      }
-  else{
-    this.editownuse.get('bid').setValue(this.role.getbusiness());
-    console.log("this.role.getbusiness()", this.role.getbusiness());
-    
-  }
-  // this.editownuse.get('bid').setValue(this.role.getbusiness());
+    }
+    else {
+      this.editownuse.get('bid').setValue(this.role.getbusiness());
       await this.getdepartmentf();
-      await this.getitem();
-      // await this.gethub();
-      await this.editserialno();
+    }
+    // await this.getdepartmentf();
+    await this.getitem();
+    await this.editserialno();
+    await this.selectmodel();
   }
   async getownusedata() {
     this.editown = await this.ownuseservices.getownuse({ id: this.id, model_sid: this.model_sid });
     console.log("edit ", this.editown)
-    this.createForm();
+    await this.selectmodel();
+    await this.createForm();
   }
 
-
-
-
-  async editserialno(){
-    this.editserialnolist = await  this.ownuseservices.selectmodel_serialedit({ model_sid : this.editown["model_sid"] })
-    console.log(" editserialnolist@@@@@@@@@@@@",this.editserialnolist);
-    
-      }
-
-
-  
-  async getBusiness(event ='') {
-    this.getbusinessd = await this.bussiness.getbusiness({like :event});
+  async getitem(event = '') {
+    this.getiteml = await this.invoiceser.getinvoice_item_edit({ id: this.editownuse.value['invno'], like: event, busid: this.editownuse.value['bid'] })
+    this.getiteml1 = this.getiteml[0];
+    console.log("get item ", this.getiteml1);
+  }
+  async getBusiness(event = '') {
+    this.getbusinessd = await this.bussiness.getbusiness({ like: event });
     this.getbuss = this.getbusinessd[0];
   }
   async getinvoice() {
     this.getinvoiced = await this.invoiceser.getinvoice({})
     console.log("invoice ", this.getinvoiced);
   }
-  async getitem(event ='') {
-    this.getiteml = await this.invoiceser.getinvoice_item_edit({ id: this.editownuse.value['invno'],like :event , busid :this.editownuse.value['bid'] })
-    this.getiteml1 = this.getiteml[0];
-    console.log("get item ", this.getiteml1);
-  }
+
+cleardep(){
+  this.editownuse.controls.itemname.setValue("");
+
+}
+
 
   changeserialno() {
     this.editownuse.controls.model_sid.setValue("");
@@ -120,7 +114,7 @@ export class EditOwnComponent {
   async editownf() {
     this.submit = true;
     const invalid = [];
-    const control =  this.editownuse.controls;
+    const control = this.editownuse.controls;
     for (const name in control) {
       if (control[name].invalid) {
         invalid.push(name);
@@ -152,53 +146,41 @@ export class EditOwnComponent {
 
   }
 
-
-  getdepartment 
-  async getdepartmentf(event =''){
-
-    this.getdepartment =await this.departmentser.selectdepartment({ like :event ,busid :this.editownuse.value["bid"]})
-  
-    console.log("get deprtment", this.getdepartment);
-    
+  async selectmodel() {
+    this.model = this.editownuse.value["itemname"];  // select item
+    this.modelselect = await this.getiteml1?.filter(x => x.iiid == this.model).map(x => x.modelid).join()
+    console.log("select model", this.modelselect);
   }
 
-  
-  clearall(){
+  async editserialno() {
+    await this.selectmodel();
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@', this.modelselect);
+    this.editserialnolist = await this.ownuseservices.selectmodel_serialedit({ model_sid: this.editown["model_sid"], modelid: this.modelselect })
+    console.log(" editserialnolist@@@@@@@@@@@@", this.editserialnolist);
 
+  }
+
+  async getdepartmentf(event = '') {
+    this.getdepartment = await this.departmentser.selectdepartment({ like: event, busid: this.editownuse.value["bid"] })
+    console.log("get deprtment", this.getdepartment);
+
+  }
+
+
+  clearall() {
+    console.log("clear");
     this.editownuse.controls.depid.setValue("");
-    this.editownuse.controls.hubid.setValue("");
     this.editownuse.controls.itemname.setValue("");
     this.editownuse.controls.model_sid.setValue("");
-    // this.editownuse.controls.depid.setValue("");
   }
-
-  
-  // gethublist
-
-  // async gethub(event=''){
-
-
-  //   this.gethublist = await this.hubservices.gethub({like :event , bid :this.editownuse.value["bid"]})
-  //   console.log("GET HUB ",this.gethublist);
-    
-
-  // }
-
-  async getserialno() {
-    this.getserialnof = await this.ownuseservices.selectmodel_serial({ model_sid: this.editownuse.value["itemname"] })
-    this.getoperatorlist = this.getserialnof
-  }
-  
-  
-  
 
   createForm() {
     this.editownuse = new FormGroup({
-      bid: new FormControl(this.editown["bid"] ),
-      depid:new FormControl(this.editown["depid"] || "", Validators.required ),
-      itemname:new FormControl (this.editown["iiid"] || "", Validators.required),
-       model_sid:new FormControl (this.editown["model_sid"] || "", Validators.required),
-       sstatus :new FormControl(this.editown["sstatus"] || "", Validators.required)
+      bid: new FormControl(this.editown["bid"]),
+      depid: new FormControl(this.editown["depid"] || "", Validators.required),
+      itemname: new FormControl(this.editown["iiid"] || "", Validators.required),
+      model_sid: new FormControl(this.editown["model_sid"] || "", Validators.required),
+      sstatus: new FormControl(this.editown["sstatus"] || "", Validators.required)
     });
   }
 

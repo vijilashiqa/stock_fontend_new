@@ -71,12 +71,16 @@ export class EditSerialComponent {
     await this.edit();
     if(this.role.getroleid() > 888){
       await this.getBusiness()
+      // await this.getinvoice();
       }
   else{
+    console.log("this.role.getbusiness()",this.role.getbusiness());
+    
     this.editserial.get('bid').setValue(this.role.getbusiness());
+    await this.getinvoice();
   }
     // await this.getBusiness();
-    await this.getinvoice();
+    // await this.getinvoice();
     await this.getitem();
     await this.getserialno()
 

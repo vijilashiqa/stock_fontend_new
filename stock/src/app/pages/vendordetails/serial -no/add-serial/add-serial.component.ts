@@ -67,10 +67,9 @@ export class AddSerialComponent {
       }
   else{
     this.addserial.get('bid').setValue(this.role.getbusiness());
-  }
+    await this.getinvoice();
 
-    // await this.getBusiness();
-    // await this.getinvoice();
+  }
     await this.getitem();
     // await this.getqty()
     if (this.id) {

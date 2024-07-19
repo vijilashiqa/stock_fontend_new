@@ -45,14 +45,16 @@ export class AddModelComponent {
       }
   else{
     this.addmodel.get('bid').setValue(this.role.getbusiness());
+    await this.getmake();
+    await this.getdevice();
   }
 
 
     // await this.getBusiness();
+
+    if(this.item) await this.editmodel();
     await this.getmake();
     await this.getdevice();
-    if(this.item) await this.editmodel();
-
   }
 
   async addhsn() {
