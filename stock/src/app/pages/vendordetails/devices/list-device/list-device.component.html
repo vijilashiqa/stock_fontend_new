@@ -1,23 +1,57 @@
 
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
-    <nb-card-header>List Device</nb-card-header>
+    <!-- <nb-card-header>List Device</nb-card-header> -->
+    <nb-card-header>List Device<a class="right" (click)="search=!search">Advanced Search</a></nb-card-header>
+
     <nb-card-body>
-      <!-- <toaster-container></toaster-container> -->
       <div class="row" style="margin-bottom: 1%;">
         <div>
           <button  *ngIf="role.getroleid() > 888 || !role.getmenurole(6004)" status="success" nbButton (click)="adddevice()">Add device</button>
         </div>
       </div>
+
+
+
+      <form [hidden]='!search' class="form-horizontal">
+        <div class="modal-body">
+      
+        <div class="row">
+      
+          <div class="col-sm-4" *ngIf="role.getroleid() > 888">
+            <label> Business Name<span style="color: red">*</span></label>
+            <auto-completen  addclass="form-control" optValues="bname"  [(ngModel)]= "busid" (keyUp)="getBusiness($event)" name="busid" (changed)="getdevicesf();changedbusiness()"
+              placeholder="Select Business Name" Id="id" [item]="getbuss">
+            </auto-completen>
+          </div>
+        
+          <div class="col-sm-4" >
+            <label>Device <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="devicename"  [(ngModel)]= "devices"  name="devices"
+              placeholder="Select VendorName NO" optId="deviceid" [item]="getdev">
+            </auto-completen>
+          </div>
+      
+      
+       
+        </div>
+       
+      
+      
+      <br>
+        <button type="button" class="btn btn-md btn-success" (click)='initiallist();'
+        style="margin: auto; display: block;">Search</button>
+      
+      </div>
+      </form>
+
      
       <table class="table">
         <tr >
-          <th>ID</th>
           <th *ngIf="role.getroleid() > 888 || !role.getmenurole(6006)">Action</th>
           <th *ngIf="role.getroleid() > 888">Business Name</th>
           <th>Device Name</th>
         </tr>
         <tr *ngFor="let item of pagedItems">
-          <td>{{item.deviceid}}</td>
           <td *ngIf="role.getroleid() > 888 || !role.getmenurole(6006)" ><a (click)="editdevice(item.deviceid);" title="Update"><i class="nb-edit"></i></a></td>
           <td *ngIf="role.getroleid() > 888">{{item.bname}}</td>
           <td>{{item.devicename}}</td>

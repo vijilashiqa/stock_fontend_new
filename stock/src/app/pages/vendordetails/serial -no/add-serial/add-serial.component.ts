@@ -31,10 +31,10 @@ export class AddSerialComponent {
   failure: any = []; getvalue; indiv1
   submit: boolean; vv1
   channellist: any = [];
-  disabled = false; getinvoiced;resp
+  disabled = false; getinvoiced; resp
   channelsrv;
-  result; datacount; getinvoice1 ;getinvoice2
-  alert: any;i
+  result; datacount; getinvoice1; getinvoice2
+  alert: any; i
   editable: boolean = false;
   id;
   router: any;
@@ -55,23 +55,22 @@ export class AddSerialComponent {
     private toast: NbToastrService,
     private aRoute: ActivatedRoute,
     private serialnos: SerialnoService,
-    public role:RoleservicesService
+    public role: RoleservicesService
   ) { }
 
   async ngOnInit() {
     this.id = this.aRoute.snapshot.queryParams["id"];
     await this.createForm();
 
-    if(this.role.getroleid() > 888){
+    if (this.role.getroleid() > 888) {
       await this.getBusiness()
-      }
-  else{
-    this.addserial.get('bid').setValue(this.role.getbusiness());
-    await this.getinvoice();
+    }
+    else {
+      this.addserial.get('bid').setValue(this.role.getbusiness());
+      await this.getinvoice();
 
-  }
+    }
     await this.getitem();
-    // await this.getqty()
     if (this.id) {
       await this.edit();
     }
@@ -102,17 +101,17 @@ export class AddSerialComponent {
   //   }
   // }
 
-  
-  async getBusiness( event ='') {
-    this.getbusinessd = await this.bussiness.getbusiness({like :event});
+
+  async getBusiness(event = '') {
+    this.getbusinessd = await this.bussiness.getbusiness({ like: event });
     this.getbuss = this.getbusinessd[0];
   }
 
- 
 
-  async getinvoice(event='') {
-    this.getinvoiced = await this.invoiceser.getinvoice({ like: event ,busid:this.addserial.value['bid'] })
-this.getinvoice1=this.getinvoiced[0]
+
+  async getinvoice(event = '') {
+    this.getinvoiced = await this.invoiceser.getinvoice({ like: event, bid: this.addserial.value['bid'] })
+    this.getinvoice1 = this.getinvoiced[0]
     console.log("invoice ", this.getinvoice1);
   }
   async getitem() {
@@ -148,9 +147,9 @@ this.getinvoice1=this.getinvoiced[0]
   }
 
 
-changebussiness(){
-  this.addserial.controls.invno.setValue("");
-}
+  changebussiness() {
+    this.addserial.controls.invno.setValue("");
+  }
 
 
   Download() {
@@ -175,12 +174,10 @@ changebussiness(){
     }
     if (this.val["modetype"] == 1) {
       let result = await this.serialnos.addserial(this.addserial.value);
-      if (result && result[0].err_code == 0) {
-        this.toast.success("", result[0]["msg"]);
-        this.route.navigate(["/pages/vendor/list-serial"]);
-      } else {
-        this.toast.warning("", result[0]["msg"]);
-      }
+      let item = result;
+      this.Error(item)
+      this.route.navigate(["/pages/vendor/list-serial"]);
+
     }
     if (this.bulk.length && this.val["modetype"] == 0) {
       let result = this.metavalue();
@@ -195,7 +192,7 @@ changebussiness(){
         }
         this.addserial.value["serial_num"] = this.bulk
       }
-       this.resp = await this.serialnos.addserial(this.addserial.value);
+      this.resp = await this.serialnos.addserial(this.addserial.value);
       console.log("bulkResult????????????????? ", this.resp);
       console.log("response length", this.resp.length)
       if (this.resp && this.resp[0].err_code == 0) {
@@ -207,21 +204,19 @@ changebussiness(){
       }
 
 
-      for( this.i=0;this.i < this.resp.length; this.i++)
+      for (this.i = 0; this.i < this.resp.length; this.i++) {
+        console.log("length of the  upload", this.resp[this.i])
+        console.log(" error code ", this.resp[this.i].err_code !== 0)
+      }
 
-        {
-console.log("length of the  upload", this.resp[this.i])
-console.log(" error code ", this.resp[this.i].err_code !==0)
-        }
+      if (this.resp[this.i] !== 0) {
+        let item = this.resp;
+        this.Error(item)
 
-        if(this.resp[this.i] !== 0){
-          let item = this.resp;
-          this.Error(item)
-  
-        }
+      }
     }
 
-  
+
   }
 
 
@@ -303,13 +298,10 @@ console.log(" error code ", this.resp[this.i].err_code !==0)
   }
 
   Error(item) {
-    const modalRef = this.modal.open(ErrormessageComponent, { size: 'lg', container: 'nb-layout', backdrop: false });
+    const modalRef = this.modal.open(ErrormessageComponent, { size: 'md', container: 'nb-layout', backdrop: false });
     modalRef.componentInstance.title = 'Error List';
     modalRef.componentInstance.item = item;
-    modalRef.result.then((data) => {
-      ;
-
-    })
+    modalRef.result.then((data) => {})
 
   }
 

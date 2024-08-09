@@ -1,13 +1,66 @@
 <!-- <p>businesslist works!</p> -->
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
-    <nb-card-header>List Own Use Assets Details</nb-card-header>
+    <!-- <nb-card-header>List Own Use Assets Details</nb-card-header> -->
+    <nb-card-header>List Own Use Assets Details<a class="right" (click)="search=!search">Advanced Search</a></nb-card-header>
     <nb-card-body>
       <button *ngIf="role.getroleid() > 888  || !role.getmenurole(7001)"  status="success" nbButton  style="margin-bottom: 1%;"
       [routerLink]="['/pages/vendor/add-ownuse']">Add own</button>
-    <table class="table">
+    
+    
+    
+      <form [hidden]='!search' class="form-horizontal">
+        <div class="modal-body">
+      
+        <div class="row">
+      
+          <div class="col-sm-4" *ngIf="role.getroleid() > 888 ">
+            <label> Business Name<span style="color: red">*</span></label>
+            <auto-completen  addclass="form-control" optValues="bname"  [(ngModel)]= "busid" (keyUp)="getBusiness($event)" name="busid"
+            (changed)="getdepf();getserialnof();changebusiness();"  placeholder="Select Business Name" Id="id" [item]="getbuss">
+            </auto-completen>
+          </div>
+        
+          <div class="col-sm-4" >
+            <label>Department Name <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="depname"  [(ngModel)]= "depart"  name="depart"  (keyUp)="getdepf($event)"
+              placeholder="Select Department Name" Id="id" [item]="getdepartment">
+            </auto-completen>
+          </div>
+
+           
+          <div class="col-sm-3" >
+            <label>Serial No  <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="serial_num"  [(ngModel)]= "serialno"  name="serialno" (keyUp)="getserialnof($event)"
+              placeholder="Select Invoice NO" optId="model_sid" [item]="getserialno">
+            </auto-completen>
+          </div>
+
+        </div>
+       
+      
+      
+      <br>
+        <button type="button" class="btn btn-md btn-success" (click)='initiallist();'
+        style="margin: auto; display: block;">Search</button>
+      
+      </div>
+      </form>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <table class="table">
       <tr >
         <th *ngIf="role.getroleid() > 888  || !role.getmenurole(7003) ">Action</th>
-        <th>Id</th>
+        <!-- <th>Id</th> -->
         <th>Business Name</th>
         <th>Department Name</th>
         <th>Serial No</th> 
@@ -16,7 +69,7 @@
         <th>Status</th>      
       </tr>
       <tr *ngFor="let item of pagedItems">
-        <th>{{item.ownid}}</th>
+        <!-- <th>{{item.ownid}}</th> -->
         <td *ngIf="role.getroleid() > 888  || !role.getmenurole(7003)" style="cursor:pointer;" [routerLink]="['/pages/vendor/edit-ownuse']" [queryParams]="{id:item.ownid , model_sid :item.model_sid}"><i class="nb-edit"></i></td>
         <td>{{item.bname}}</td>
         <td>{{item.depname}}</td>

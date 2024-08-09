@@ -43,5 +43,10 @@ export class VendorService {
   async getvendorbankedit(params) {
     return await this.http.post("/vendors/getvendorbankedit",params).toPromise();
   }
+
+   
+  async getcompany(params) {
+    return await this.http.post("/vendors/getcompany",params).toPromise();
+  }
 }
 

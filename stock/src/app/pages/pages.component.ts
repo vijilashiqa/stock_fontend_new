@@ -66,9 +66,22 @@ export class PagesComponent {
         },
 
 
-     
+      ],
+    },
 
 
+
+
+    {
+      title: 'Admin Details',
+      hidden: !(this.role.find(x => x == 2001) || this.role.find(x => x == 2002)|| this.role.find(x=>x == 2003)),
+      icon: 'person-add-outline',
+      children: [
+        {
+          title: 'List Admin Details',
+          hidden: ! this.role.find(x=> x == 2002),
+          link: '/pages/admin/list-admin',
+        },
       ],
     },
 
@@ -78,12 +91,12 @@ export class PagesComponent {
       icon: 'shield-outline',
       children: [
      
-        {
-          title: 'Add User Details',
-          hidden: ! this.role.find(x=> x == 2001),
-          link: '/pages/admin/add-user',
+        // {
+        //   title: 'Add User Details',
+        //   hidden: ! this.role.find(x=> x == 2001),
+        //   link: '/pages/admin/add-user',
          
-        },
+        // },
 
         {
           title: 'List User Details',
@@ -101,6 +114,8 @@ export class PagesComponent {
 
       ],
     },
+
+
 
 
 
@@ -127,28 +142,9 @@ export class PagesComponent {
     },
 
 
-
-    // {
-    //   title: 'Business',
-    //   icon: 'browser',
-    //   children: [
-    //     {
-    //       title: 'Add business',
-    //       link: '/pages/business/add-business',
-    //     },
-    //     {
-    //       title: 'List business',
-    //       link: '/pages/business/list-business',
-    //     },
-       
-    //   ],
-
-
-
       {
         title: 'Vendor Details',
           icon: 'person-outline',
-        // link: '/pages/layout/stepper',
         hidden: !(this.role.find(x => x == 4001) || this.role.find(x => x == 4002) || this.role.find(x => x == 4003)),
 
         children: [
@@ -181,12 +177,6 @@ export class PagesComponent {
       // hidden: !(this.role.find(x => x == 4001) || this.role.find(x => x == 4002) || this.role.find(x => x == 4003)),
 
       children: [
-      
-        // {
-        //   title: 'Add Department',
-        //   link: '/pages/department/add-department',
-        //   hidden: !this.role.find(x => x == 4001),
-        // },
        
 {
           title: 'List Department',
@@ -412,18 +402,18 @@ export class PagesComponent {
     {
       title: 'Hub',
       icon: 'shuffle-2',
-      hidden: !(this.role.find(x => x == 1007) || this.role.find(x => x == 1008)|| this.role.find(x=>x == 1009)),
+      hidden: !(this.role.find(x => x == 6001) || this.role.find(x => x == 6002)),
       children: [
         {
           title: 'Add Hub',
-          hidden: !(this.role.find(x=>x == 1007)),
+          hidden: !(this.role.find(x=>x == 6001)),
           link: '/pages/Geo-details/add-hub',
          
         },
 
         {
           title: 'List Hub',
-          hidden: !(this.role.find(x=>x == 1008)),
+          hidden: !(this.role.find(x=>x == 6002)),
           link: '/pages/Geo-details/list-hub',
          
         },

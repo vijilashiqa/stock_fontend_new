@@ -7,6 +7,7 @@ import{ LogService} from '../_services/log.service'
 import { RoleservicesService } from '../_services/roleservices.service';
 import { environment as env } from '../../../environments/environment';
 import {NbToastrService,} from '@nebular/theme';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor(private logservices: LogService,
       private role: RoleservicesService,
       private http: HttpClient,
+      private router: Router,
       private httpBackend: HttpBackend,
       private alert: NbToastrService
   ) { this.http = new HttpClient(this.httpBackend) }
@@ -28,18 +30,9 @@ export class ErrorInterceptor implements HttpInterceptor {
       return this.http.get<any>(env.baseUrl + "/rtoken/renewAccessToken", httpOptions)
   }
 
-
-
-  
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       return next.handle(request).pipe(catchError(err => {
-
-
-      console.log('response err',err)
-
-        //   console.log('responce @@@@@@@@', next);
-          
-           const error = (err.error || {}).message || err.statusText || err;
+      const error = (err.error || {}).message || err.statusText || err;
           if (err && err.error.status === 401) {
               if (err.error.restore === true) {
                   this.getRefreshToken().subscribe((resp) => {
@@ -53,7 +46,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                              bodyOutputType: BodyOutputType.TrustedHtml,
                           };
                           this.alert.warning(toast);
-                          this.logservices.logout();
+                          this.router.navigate(['/auth/login'])
                       } else {
                           localStorage.setItem('token', JSON.stringify(resp[0]['token']))
                           request = request.clone({
@@ -68,15 +61,16 @@ export class ErrorInterceptor implements HttpInterceptor {
                   });
               }
               else {
-                  const toast: Toast = {
-                      type: err.error.status == 401 ? 'warning' : 'warning',
-                      title: err.error.status == 401 ? 'Failure' : 'Failure',
-                      body: 'LoggedIn On Another Device',
-                      timeout: 3000,
-                      showCloseButton: true,
-                     bodyOutputType: BodyOutputType.TrustedHtml,
-                  };
+                //   const toast: Toast = {
+                //       type: err.error.status == 401 ? 'warning' : 'warning',
+                //       title: err.error.status == 401 ? 'Failure' : 'Failure',
+                //       body: 'LoggedIn On Another Device',
+                //       timeout: 3000,
+                //       showCloseButton: true,
+                //       bodyOutputType: BodyOutputType.TrustedHtml,
+                //   };
                   window.alert('Kindly Logout & Login Once Again')
+                  this.router.navigate(['/auth/login'])
               }
           }
           return throwError(error);

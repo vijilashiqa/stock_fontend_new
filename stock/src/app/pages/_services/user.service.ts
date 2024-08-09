@@ -13,6 +13,10 @@ export class UserService {
 	  }
 
 	  
+	async editurole(params) {
+		return await this.http.post("/menurole/editurole", params).toPromise();
+	  }
+
 
 
     async adduser(params) {
@@ -29,4 +33,7 @@ export class UserService {
 	  async getuser(params) {
 		return await this.http.post("/users/getuser", params).toPromise();
 	  } 
+
+
+
   }

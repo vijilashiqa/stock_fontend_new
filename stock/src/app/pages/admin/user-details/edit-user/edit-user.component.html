@@ -26,7 +26,7 @@
                    </div>
 
 
-                   <div class="col-sm-6">
+                   <!-- <div class="col-sm-6">
                      <label>User Type<span style="color:red">*</span></label>
                      <select name="urole" formControlName="urole" class="form-control"  style="   background-color:white !important;"
                          [ngClass]="{ 'is-invalid': submit && AddProfileForm.controls.urole.errors }">
@@ -38,7 +38,24 @@
                      <small
                          *ngIf="AddProfileForm.controls.urole.errors &&(AddProfileForm.controls.urole.errors.required )&& submit"
                          class="invalid-feedback">urole is required! </small>
-                 </div>
+                 </div> -->
+
+
+                 <div class="col-sm-6">
+                  <label>User Type<span style="color:red">*</span></label>
+                  <auto-completen [addclass]="{
+                   error: submit && this.AddProfileForm.controls.urole.errors
+                 }" addclass="form-control" optValues="rolename"  formControlName="urole" (keyUp)="editRole()"
+               placeholder="Select User Type" optId="role" [item]="editumenu">
+             </auto-completen>
+                      <div *ngIf="
+                      this.AddProfileForm.controls.urole.errors &&
+                      this.AddProfileForm.controls.urole.errors.required &&
+                      submit
+                    " class="error-text">
+                  Business Name is required!
+                </div>
+              </div>
 
 
 

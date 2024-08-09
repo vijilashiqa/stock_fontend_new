@@ -1,15 +1,67 @@
 <!-- <p>businesslist works!</p> -->
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
-    <nb-card-header>List Vendor Details</nb-card-header>
+    <!-- <nb-card-header>List Serial No</nb-card-header> -->
+    <nb-card-header>List  Serial No<a class="right" (click)="search=!search">Advanced Search</a></nb-card-header>
     <nb-card-body>
       <button *ngIf="role.getroleid() > 888  || !role.getmenurole(5004)" status="success" nbButton   style="margin-bottom: 1%;"
       [routerLink]="['/pages/vendor/add-serial']">Add Serial NO</button>
+
+      <form [hidden]='!search' class="form-horizontal">
+        <div class="modal-body">
+      
+        <div class="row">
+      
+          <div class="col-sm-3"  *ngIf="role.getroleid() > 888 ">
+            <label> Business Name<span style="color: red">*</span></label>
+            <auto-completen  addclass="form-control" optValues="bname"  [(ngModel)]= "busid" (keyUp)="getBusiness($event)" name="busid" (changed)="getitem();getserialnof();clearbusiness();getinvoicef()"
+              placeholder="Select Business Name" Id="id" [item]="getbuss">
+            </auto-completen>
+          </div>
+        
+          <div class="col-sm-3" >
+            <label>Item Name <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="itemname"  [(ngModel)]= "modelid"  name="modelid"
+              placeholder="Select Modelid Name NO" optId="modelid" [item]="getiteml1">
+            </auto-completen>
+          </div>
+
+          <!-- <div class="col-sm-3" >
+            <label>Invoice  <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="invno"  [(ngModel)]= "invoice"  name="invoice"
+              placeholder="Select Invoice NO" Id="id" [item]="getinvoice">
+            </auto-completen>
+          </div> -->
+
+
+          
+          <div class="col-sm-3" >
+            <label>Serial No  <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="serial_num"  [(ngModel)]= "serialno"  name="serialno"
+              placeholder="Select Invoice NO" optId="model_sid" [item]="getserialno">
+            </auto-completen>
+          </div>
+       
+        </div>
+       
+      
+      
+      <br>
+        <button type="button" class="btn btn-md btn-success" (click)='initiallist();'
+        style="margin: auto; display: block;">Search</button>
+      
+      </div>
+      </form>
+
+
+
+
     <table class="table">
       <tr>
         <th *ngIf="role.getroleid() > 888  || !role.getmenurole(5006)">Action</th>
         <th *ngIf="role.getroleid() > 888">Business Name</th>
         <th>Invoice No</th>
         <th>Item name</th>
+        <th>Serial No</th>
         <!-- <th>Email</th> -->
         <!-- <th>Address</th> -->
        
@@ -19,6 +71,7 @@
         <td *ngIf="role.getroleid() > 888">{{item.bname}}</td>
         <td>{{item.invno}}</td>
         <td>{{item.itemname}}</td>
+        <td>{{item.serial_num}}</td>
         <!-- <td>{{item.vmail}}</td> -->
 
       </tr>

@@ -28,16 +28,18 @@
 
                    <div class="col-sm-6">
                      <label>User Type<span style="color:red">*</span></label>
-                     <select name="urole" formControlName="urole" class="form-control"
-                         [ngClass]="{ 'is-invalid': submit && addmenurole.controls.urole.errors }">
-                         <option value=""> Select UserType</option>
-                         <option value="999">Developer</option>
-                         <option value="888">Admin</option>
-                         <option value="777">Admin Employee</option>
-                     </select>
-                     <small
-                         *ngIf="addmenurole.controls.urole.errors &&(addmenurole.controls.urole.errors.required )&& submit"
-                         class="invalid-feedback">urole is required! </small>
+                     <auto-completen [addclass]="{
+                      error: submit && this.addmenurole.controls.urole.errors
+                    }" addclass="form-control" optValues="rolename"  formControlName="urole" (keyUp)="editRole()"
+                  placeholder="Select User Type" optId="role" [item]="editumenu">
+                </auto-completen>
+                         <div *ngIf="
+                         this.addmenurole.controls.urole.errors &&
+                         this.addmenurole.controls.urole.errors.required &&
+                         submit
+                       " class="error-text">
+                     Business Name is required!
+                   </div>
                  </div>
 
 

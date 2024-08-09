@@ -9,32 +9,72 @@ import { BusinessService } from '../../_services/business.service';
   styleUrls: ['./list-bussiness.component.scss']
 })
 export class ListBussinessComponent {
-  pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25;broadcastlist;data;count;loading=false;
+  pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25;businesslist;data;count;loading=false;search;busid;
+    getbusinessd;getbuss;mobile = '';getmobilel;getmob;email=''
   constructor(
     private pageservice :PagerService,
     private business :BusinessService,
     public role: RoleservicesService,
+    private Business :BusinessService
   ) { }
 
  async ngOnInit() {
-  // if(this.role.getroleid() > 888 )
   await this.initiallist();
+  if(this.role.getroleid() > 888){
+    await this.getBusiness()
+    }
+else{
+  this.busid = this.role.getbusiness();
+  console.log("after the ",this.busid);
+  await this.getmobile();
+  await this.getmail()
+}
 
-
-  console.log("get role id @@@@@@@@@@@", this.role.getroleid());
   }
+
+
+  changebusiness(){
+   this.mobile='';
+   this.email='';
+  }
+
+
+  changemobile(){
+    this.email='';
+  }
+
+  async getBusiness(event ='') {
+    this.getbusinessd = await this.Business.getbusiness({like :event});
+    this.getbuss = this.getbusinessd[0];
+    // console.log("get business ", this.getbuss);
+  }
+
+  
+
+  async getmobile(event ='') {
+    this.getmobilel = await this.Business.getmobile({like :event,id: this.busid});
+    this.getmob = this.getmobilel[0];
+    console.log("get mobile ", this.getmob);
+  }
+  getemail;getmaill
+
+  async getmail(event ='') {
+    this.getemail = await this.Business.getmail({like :event ,id: this.busid });
+    this.getmaill = this.getemail[0];
+    console.log("get mobile ", this.getmaill);
+  }
+
+
 
   async initiallist() {
     this.loading=true;
-    this.broadcastlist = await this.business.listbusiness({index:(this.page - 1) * this.limit,limit:this.limit});
-    console.log('area=====', this.broadcastlist)
-    this.data = this.broadcastlist[0];
-    this.count = this.broadcastlist[1].count;
+    this.businesslist = await this.business.listbusiness({index:(this.page - 1) * this.limit, limit:this.limit , mobile: this.mobile ,busid : this.busid ,mail:this.email });
+    // console.log('area=====', this.businesslist)
+    this.data = this.businesslist[0];
+    this.count = this.businesslist[1].count;
     this.loading=false;
     this.setPage();
-
   }
-  Addvendor(){}
 
   
   getlist(page) {

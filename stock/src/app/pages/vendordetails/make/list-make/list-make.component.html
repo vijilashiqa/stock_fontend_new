@@ -1,6 +1,7 @@
 
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
-    <nb-card-header>List Make</nb-card-header>
+    <!-- <nb-card-header>List Make</nb-card-header> -->
+    <nb-card-header>List Make <a class="right" (click)="search=!search">Advanced Search</a></nb-card-header>
     <nb-card-body>
       <!-- <toaster-container></toaster-container> -->
       <div class="row" style="margin-bottom: 1%;">
@@ -8,16 +9,54 @@
           <button  *ngIf="role.getroleid() > 888  || !role.getmenurole(6001)" status="success" nbButton (click)="addmake()">Add Make</button>
         </div>
       </div>
-     
+      <form [hidden]='!search' class="form-horizontal">
+        <div class="modal-body">
+      
+        <div class="row">
+      
+          <div class="col-sm-4" *ngIf="role.getroleid() > 888">
+            <label> Business Name<span style="color: red">*</span></label>
+            <auto-completen  addclass="form-control" optValues="bname"  [(ngModel)]= "busid" (keyUp)="getBusiness($event)" name="busid" (changed)="getmakef();changebusiness()" 
+              placeholder="Select Business Name" Id="id" [item]="getbuss">
+            </auto-completen>
+          </div>
+        
+          <div class="col-sm-4" >
+            <label>Make <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="makename"  [(ngModel)]= "makes"  name="makes" (keyUp)="getmakef($event)"
+              placeholder="Select Make " optId="makeid" [item]="getmake">
+            </auto-completen>
+          </div>
+      
+      
+          <!-- <div class="col-sm-4" >
+            <label>Company Name <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="vcompany"  [(ngModel)]= "company"  name="company"
+              placeholder="Select Mobile NO" Id="id" [item]="getven">
+            </auto-completen>
+          </div> -->
+        </div>
+       
+      
+      
+      <br>
+        <button type="button" class="btn btn-md btn-success" (click)='initiallist();'
+        style="margin: auto; display: block;">Search</button>
+      
+      </div>
+      </form>
+
+
+
       <table class="table">
         <tr>
-          <th>ID</th>
+          <!-- <th>ID</th> -->
           <th *ngIf="role.getroleid() > 888  || !role.getmenurole(6003)">Action</th>
           <th *ngIf="role.getroleid() > 888">Business Name</th>
           <th>Make Name</th>
         </tr>
         <tr *ngFor="let item of pagedItems">
-          <td>{{item.makeid}}</td>
+          <!-- <td>{{item.makeid}}</td> -->
           <td *ngIf="role.getroleid() > 888  || !role.getmenurole(6003)"><a (click)="editmake(item.makeid)" title="Update"><i class="nb-edit"></i></a></td>
           <td *ngIf="role.getroleid() > 888">{{item.bname}}</td>
           <td>{{item.makename}}</td>

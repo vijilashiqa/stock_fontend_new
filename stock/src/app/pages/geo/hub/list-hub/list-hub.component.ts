@@ -5,6 +5,8 @@ import { HubService } from '../../../_services/hub.service';
 import { RoleservicesService } from '../../../_services/roleservices.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddSerialnoComponent } from '../add-serialno/add-serialno.component';
+import { BusinessService } from '../../../_services/business.service';
+import { DepartmentService } from '../../../_services/department.service';
 @Component({
   selector: 'ngx-list-hub',
   templateUrl: './list-hub.component.html',
@@ -12,7 +14,7 @@ import { AddSerialnoComponent } from '../add-serialno/add-serialno.component';
 })
 export class ListHubComponent {
 
-  pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25;getlisthub;data;count;
+  pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25;getlisthub;data;count;search;busid;depart;hub
   loading=false;
   
   constructor(
@@ -20,18 +22,30 @@ export class ListHubComponent {
     private hubser :HubService,
     public role :RoleservicesService,
     public pageservice: PagerService,
+    public departmentrtser :DepartmentService,
+    private  Business :BusinessService,
  
     ) { }
-  ngOnInit() {
+async  ngOnInit() {
 
-    this.initiallist();
+await    this.initiallist();
+
+    if(this.role.getroleid() > 888){
+      await this.getBusiness()
+      }
+  else{
+    this.busid = this.role.getbusiness();
+    await this.getdepf()
+    await this.gethubf()
   }
+  }
+
 
 
 
   async initiallist() {
     this.loading=true;
-    this.getlisthub = await this.hubser.listhub({index:(this.page - 1) * this.limit,limit:this.limit});
+    this.getlisthub = await this.hubser.listhub({index:(this.page - 1) * this.limit,limit:this.limit , bid: this.busid , depid : this.depart ,hubid : this.hub});
     console.log('list hub=====', this.getlisthub)
     this.data = this.getlisthub[0];
     console.log("data",this.data)
@@ -54,7 +68,45 @@ export class ListHubComponent {
     this.pagedItems = this.data;
   }
   
-  
+  changebusiness(){
+    console.log('clear');
+    
+    this.depart ='';
+    this.hub='';
+  }
+
+ 
+
+  getbusinessd;getbuss
+  async getBusiness(event ='') {
+    this.getbusinessd = await this.Business.getbusiness({like :event});
+    this.getbuss = this.getbusinessd[0];
+    console.log("get business ", this.getbuss);
+  }
+
+
+
+  getdepartment;getdepartmentlist
+
+
+  async getdepf(event ='') {
+    this.getdepartmentlist = await this.departmentrtser.selectdepartment({like :event , busid: this.busid});
+    this.getdepartment = this.getdepartmentlist;
+    console.log("get dept ", this.getdepartment);
+  }
+
+
+
+  gethub;gethublist
+
+
+  async gethubf(event ='') {
+    this.gethublist = await this.hubser.gethub({like :event , bid: this.busid});
+    this.gethub = this.gethublist;
+    console.log("get hub ", this.gethub);
+  }
+
+
 
   addserialno(item) {
     const modalRef = this.modal.open(AddSerialnoComponent, { container: 'nb-layout', backdrop: false });

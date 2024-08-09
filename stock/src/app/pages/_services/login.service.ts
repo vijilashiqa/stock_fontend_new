@@ -15,12 +15,13 @@ export class LoginService {
   ) { }
 
 
-  login(params) {
+ async login(params) {
     console.log('LOGIN', params)
-    return this.http.post<any>("/login/account", params);
+    return await this.http.post<any>("/login/account", params).toPromise();
   }
   logout() {
     this.router.navigate(['/auth/login'])
+    localStorage.removeItem('token');
     localStorage.clear();
   }
 

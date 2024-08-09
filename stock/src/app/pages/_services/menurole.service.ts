@@ -34,4 +34,14 @@ export class MenuroleService {
 	  async getfullname(params) {
 		return await this.http.post("/menurole/getfullname", params).toPromise();
 	  } 
+
+
+	  async getumenu(params){
+
+		return await this.http.post("/menurole/getumenurole", params).toPromise();
+	
+	  }
+	  async listurole(params){
+		return await this.http.post("/menurole/listurole", params).toPromise();
+	  }
 }

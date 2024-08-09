@@ -63,16 +63,6 @@ export class AddDepartmentComponent {
     if(this.item) await this.editdepartmentfun();
   }
 
-
-
-  
-  // async getBusiness(event ='') {
-  //   this.getbusinessd = await this.bussiness.getbusiness({like :event});
-  //   this.getbuss = this.getbusinessd[0];
-  // } 
-
-
-
   async adddepartmentsf() {
     this.submit = true;
     if (this.adddepartment.invalid) {

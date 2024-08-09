@@ -1,17 +1,68 @@
 <!-- <p>businesslist works!</p> -->
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
-    <nb-card-header>List Invoice Details</nb-card-header>
+    <!-- <nb-card-header>List Invoice Details</nb-card-header> -->
+    <nb-card-header>List Invoice Details<a class="right" (click)="search=!search">Advanced Search</a></nb-card-header>
     <nb-card-body>
       <button *ngIf="role.getroleid() > 888  || !role.getmenurole(5001)"  status="success" nbButton  style="margin-bottom: 1%;"
       [routerLink]="['/pages/vendor/add-invoice']">Add Invoice</button>
+
+
+      <form [hidden]='!search' class="form-horizontal">
+        <div class="modal-body">
+         
+        <div class="row">
+      
+          <div class="col-sm-4"  *ngIf="role.getroleid() > 888" >
+            <label> Business Name<span style="color: red">*</span></label>
+            <auto-completen  addclass="form-control" optValues="bname"  [(ngModel)]= "busid" (keyUp)="getBusiness($event)" name="busid" (changed)="getvendorf();getinvoicef();changbusiness()"
+              placeholder="Select Business Name" Id="id" [item]="getbuss">
+            </auto-completen>
+          </div>
+        
+          <div class="col-sm-4" >
+            <label>Vendor Name <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="vcompany"  [(ngModel)]= "vendor"  name="vendor" (keyUp)="getvendorf($event)"
+              placeholder="Select VendorName NO" Id="id" [item]="getvendor">
+            </auto-completen>
+          </div>
+
+          <div class="col-sm-4" >
+            <label>Invoice  <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="invno"  [(ngModel)]= "invoice"  name="invoice" (keyUp)="getinvoicef($event)"
+              placeholder="Select Invoice NO" Id="id" [item]="getinvoice">
+            </auto-completen>
+          </div>
+       
+        </div>
+       
+      
+      
+      <br>
+        <button type="button" class="btn btn-md btn-success" (click)='initiallist();'
+        style="margin: auto; display: block;">Search</button>
+      
+      </div>
+      </form>
+
+      <div class="row">
+        <div class="col-md-12">
+          <label class="left">
+            <h5>Invoice Count : {{ count }}</h5>
+          </label>
+          <i (click)="Download()" class="green right fa fa-file-excel" aria-hidden="true"></i>
+        </div>
+      </div>
+
     <table class="table">
       <tr>
-        <th >Action</th>
+        <th  >Action</th>
+        <th *ngIf="role.getroleid() > 888 ">Business Name</th>
         <th>Business Address</th>
+        <th>Vendor Name</th>
         <th>Vendor Address</th>
         <th>Invoice No</th>
-        <th>Invoice Date</th>
-        <th>GST Type<th>
+        <!-- <th>Invoice Date</th> -->
+        <!-- <th>GST Type<th> -->
        
       </tr>
       <tr *ngFor="let item of pagedItems">
@@ -22,7 +73,7 @@
               Action
             </button>
           <ul style="width: 106px;margin:3px;z-index: 1;" class="dropdown-menu" ngbDropdownMenu>
-            <li class="dropdown-item" title="View" (click)="get_invoice(item.id)" >
+            <li  class="dropdown-item" title="View" (click)="get_invoice(item.id)" >
               <i style="font-size: 20px;" class="far fa-eye "></i>&nbsp;View
             </li>
 
@@ -50,11 +101,13 @@
 
 
         <!-- <td style="cursor:pointer;" [routerLink]="['/pages/vendor/edit-invoice']" [queryParams]="{id:item.id}"><i class="nb-edit"></i></td> -->
+      <td *ngIf="role.getroleid() > 888 ">{{item.busname}}</td>
         <td>{{item.busaddr}}</td>
+        <td>{{item.vcompany}}</td>
         <td>{{item.vaddr}}</td>
         <td>{{item.invno}}</td>
-        <td>{{item.invdate  | date:'d MMM y '}}</td>
-        <td>{{item.gsttype == 0 ? 'Inclusive' : 'Exclusive' }}</td>
+        <!-- <td>{{item.invdate  | date:'d MMM y '}}</td> -->
+        <!-- <td>{{item.gsttype == 0 ? 'Inclusive' : 'Exclusive' }}</td> -->
    
       </tr>
     </table>

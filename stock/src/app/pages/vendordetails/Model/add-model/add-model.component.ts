@@ -48,10 +48,6 @@ export class AddModelComponent {
     await this.getmake();
     await this.getdevice();
   }
-
-
-    // await this.getBusiness();
-
     if(this.item) await this.editmodel();
     await this.getmake();
     await this.getdevice();

@@ -22,7 +22,6 @@ export class ListMenuroleComponent {
      private pageservice: PagerService,  
      private router: Router,
      public  role:RoleservicesService,
-    //  private menurole :MenuroleService
     ) 
      { }
 
@@ -34,7 +33,7 @@ export class ListMenuroleComponent {
   }
   async initiallist() {
     this.loading=true;
-    this.getuser = await this.menurole.listrole({index:(this.page - 1) * this.limit,limit:this.limit , id : this.loginid});
+    this.getuser = await this.menurole.listurole({index:(this.page - 1) * this.limit,limit:this.limit });
     console.log('gestuser*****', this.getuser)
     this.data = this.getuser[0];
     this.count = this.getuser[1].count;
@@ -53,7 +52,6 @@ export class ListMenuroleComponent {
 
 
  async getfullnamef(){
-
     this.getfullnamel = await this.menurole.getfullname({});
     console.log("get full name ",this.getfullnamel);
     
@@ -65,7 +63,7 @@ export class ListMenuroleComponent {
     this.pagedItems = this.data;
   }
   edit(item) {
-    localStorage.setItem('profile_e', JSON.stringify(item));
+    localStorage.setItem('geturole', JSON.stringify(item));
     this.router.navigate(['/pages/admin/edit-admin']);
   }
 }

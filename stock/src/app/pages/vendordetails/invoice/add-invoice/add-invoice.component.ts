@@ -66,6 +66,7 @@ export class AddInvoiceComponent {
     console.log("34433434",this.role.getbusiness());
     
     this.addinvoice.get('busid').setValue(this.role.getbusiness());
+    await this.getVendor()
      await this.getmake();
     await this.getdevice();
     await this.getmodel();
@@ -73,7 +74,7 @@ export class AddInvoiceComponent {
 
     // await this.getBusiness();
     await this.getbusinessaddress();
-    await this.getVendor();
+    // await this.getVendor();
     await this.getvendoraddrs();
     // await this.getmake();
     // await this.getdevice();
@@ -116,15 +117,9 @@ if(this.addinvoice.value["busid"]){
     like: event,
   });
   this.getadd = this.getbusinessaddres[0];
-
 }
-
-     console.log("address @@@@ ", this.getadd);
+console.log("address @@@@ ", this.getadd);
   }
-
-
-
-
   async Changedata() {
     let opp = this.addinvoice.value["busaddr"];
     let dd = this.getadd.filter((id) => id.id == opp).map((id) => id.bagstno);
@@ -132,11 +127,8 @@ if(this.addinvoice.value["busid"]){
     this.slice2 = this.reduceaddress.slice(0, 2);
     await this.disable();
   }
-
-
-
   async getVendor() {
-    this.getvendorlist = await this.vendor.listvendor({});
+    this.getvendorlist = await this.vendor.listvendor({busid:this.addinvoice.value["busid"] });
     this.getvend = this.getvendorlist[0];
   }
   async getvendoraddrs(event ='') {
@@ -145,10 +137,7 @@ if(this.addinvoice.value["busid"]){
       id: this.addinvoice.value["vendorid"], like:event
     });
     this.getvd = this.getvendora[0];
-    // console.log("get vendor ", this.getvd);
     let getgst = this.getvd.gst_no;
-
-    // console.log("gst no@@", getgst);
   }
   }
   async changeaddress() {
@@ -280,6 +269,16 @@ if(this.addinvoice.value["busid"]){
     this.getmakel = await this.make.selectmake({like :event , bid :this.addinvoice.value["busid"]});
     // console.log("get make ", this.getmakel);
 
+  }
+
+
+  changebusiness(){
+
+    this.addinvoice.controls["busaddr"].setValue("");
+    this.addinvoice.controls["vaddr"].setValue("");
+    this.addinvoice.controls["vendorid"].setValue("");
+    this.addinvoice.controls["invno"].setValue("");
+    this.addinvoice.controls["invdate"].setValue(""); 
   }
 
 

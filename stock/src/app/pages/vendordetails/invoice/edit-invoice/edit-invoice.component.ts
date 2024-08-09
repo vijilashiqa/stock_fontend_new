@@ -169,15 +169,15 @@ export class EditInvoiceComponent {
     this.getinvoicelitem = await this.invoiceser.getinvoice_item_edit({
       id: this.id,
     });
-    // console.log("edit the item", this.getinvoicelitem[0]);
+    console.log("edit the item", this.getinvoicelitem[0]);
     this.item1 = this.getinvoicelitem[0];
     this.countitem = this.getinvoicelitem[1].cnt;
 
-    // console.log("count@@@@@@@@@@@@@@@",this.countitem);
+    console.log("count@@@@@@@@@@@@@@@",this.countitem);
 
 
     for (let item of this.item1) {
-      console.log("item status length*****", this.item1.length);
+      console.log("item status length*****", this.item1);
       console.log("slice in the item", this.sllice1, this.slice2);
       this.nlength =this.item1.length
       let taxper = Number(item.sgst || this.editinvoice.value['sgst']) + Number(item.cgst || this.editinvoice.value['cgst']) || Number(item.igst || this.editinvoice.value['igst']);

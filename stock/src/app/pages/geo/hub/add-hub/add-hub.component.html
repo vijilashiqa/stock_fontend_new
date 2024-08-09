@@ -4,10 +4,6 @@
       <nb-card-body>
         <form [formGroup]="Addhubform" class="form-horizontal" (ngSubmit)="addhubf()">
             <div class="modal-body">   
-
-
-
-
                 <div class="form-group row">
                     <div class="col-sm-6" *ngIf="role.getroleid() > 888">
                         <label> Business Name<span style="color: red">*</span></label>
@@ -39,15 +35,7 @@
                     
                      </div>
                     </div>
-                    
-
-
-
-
-
-
-
-
+                
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label> HUB Name <span style="color:red">*</span></label>
@@ -68,16 +56,8 @@
 
 </div>
 
-
-
-
-
-
 <div class="form-group row">
-     
-
-        <div class="col-sm-6">
-
+             <div class="col-sm-6">
             <label>HUB Mobile<span style="color:red">*</span></label>
             <input type="number" class="form-control" name="hubmobile" formControlName="hubmobile" placeholder="Enter Mobile NO"
              [ngClass]="{ 'is-invalid': submit && Addhubform.controls.hubmobile.errors }"/>

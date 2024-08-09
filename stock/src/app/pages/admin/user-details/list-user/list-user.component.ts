@@ -12,7 +12,7 @@ import { MenuroleService } from '../../../_services/menurole.service';
 export class ListUserComponent  {
   data: any = []; pager: any = {}; 
   head: any = []; head_opt = ''; opt_type = ''; opt_name = ''; status = ''; opt: any = [];
-  operator_name = '';   user: any; getuser;loading =false; fname = '';loginid=''
+  operator_name = '';   user: any; getuser;loading =false; fname = '';loginid='';search
   page: number = 1; pagedItems: any = []; limit = 25;getcitylist;count;getfullnamel;
 
   constructor(
@@ -51,17 +51,16 @@ export class ListUserComponent  {
 
 
  async getfullnamef(){
-
     this.getfullnamel = await this.menurole.getfullname({});
     console.log("get full name ",this.getfullnamel);
-    
-
-  }
+      }
 
   setPage() {
     this.pager = this.pageservice.getPager(this.count, this.page, this.limit);
     this.pagedItems = this.data;
   }
+
+
   edit(item) {
     localStorage.setItem('profile_e', JSON.stringify(item));
     this.router.navigate(['/pages/admin/edit-user']);

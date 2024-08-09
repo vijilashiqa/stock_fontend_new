@@ -1,7 +1,12 @@
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
-    <nb-card-header>List of Admin Role</nb-card-header>
-  
+    <!-- <nb-card-header>List of Admin Role</nb-card-header> -->
+    <nb-card-header>List of Admin Role <a class="right" (click)="search=!search">Advanced Search</a></nb-card-header>
+
     <nb-card-body>
+      <button *ngIf="role.getroleid() > 888 " status="success" nbButton  style="margin-bottom: 1%;"
+        [routerLink]="['/pages/admin/add-user']">Add user</button> 
+
+<div class="modal-body" autocomplete="off" [hidden]='!search'>
    <div class="container">
       <div class="row">
         <div class="col-sm-3">
@@ -16,11 +21,7 @@
         style="margin: auto; display: block ; text-align: center;margin-top:5px ; margin-bottom: 5px;">
         Search
       </button>
-  
-  
-  
-  
-  
+  </div>
   
       <table class="table">
         <tr>
@@ -38,5 +39,17 @@
   
         </tr>
       </table>
+
+      <div class="pagination">
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+          <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+          <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+          <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+            (click)="getlist(page);">{{page}}</a>
+          <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+          <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+            (click)="page=pager.totalPages;getlist();">Last</a>
+        </ul>
+      </div>
     </nb-card-body>
   </nb-card>

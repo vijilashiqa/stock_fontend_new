@@ -11,11 +11,12 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { GeoModule } from "./geo/geo.module";
 import { ShareModule } from "../share/share.module";
 import { CommonModule } from "@angular/common";
-import { VendordetailsModule } from "./vendordetails/vendordetails.module";
+
 import { ErrormessageComponent } from './errormessage/errormessage.component';
 
 import { AdminModule } from "./admin/admin.module";
 import { DepartmentModule } from "./department/department.module";
+import { VendordetailsModule } from "./vendordetails/vendordetails.module";
 
 // import { BrowserModule } from "@angular/platform-browser";
 

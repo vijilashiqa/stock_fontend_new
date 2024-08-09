@@ -13,7 +13,7 @@
                       <auto-completen [addclass]="{
                             error: submit && this.editinvoice.controls.busid.errors
                           }" addclass="form-control" optValues="bname" (changed)="
-                            getbusinessaddress($event.target);changedr();changeaddres();changeaddres();getmake();getmodel() ;getdevice();
+                            getbusinessaddress($event.target);changedr();changeaddres();changeaddres();getmake();getmodel() ;getdevice();getVendor();
                             getBusiness($event.target);" formControlName="busid" (keyUp)="getBusiness($event)"
                         placeholder="Select Business Name" Id="id" [item]="getbuss">
                       </auto-completen>

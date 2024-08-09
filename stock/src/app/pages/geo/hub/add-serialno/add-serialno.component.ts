@@ -49,9 +49,20 @@ export class AddSerialnoComponent {
     console.log("item@@@@@@@@",this.item);
     await this.createForm();
     if (this.item) {
+    await this.getserialnofu()
+   // await this.editaddhsn();
 
-await this.getserialnofu()
-    // await this.editaddhsn();
+
+//    await this.createForm();
+//    if(this.role.getroleid() > 888){
+    
+//         }
+//  else
+//  {
+//    console.log("this.role.getbusiness()",this.role.getbusiness());
+//    this.addserialform.get('bid').setValue(this.role.getbusiness());
+//     }
+
   }
 }
 

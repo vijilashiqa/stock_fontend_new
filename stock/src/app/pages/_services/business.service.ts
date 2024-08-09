@@ -62,4 +62,14 @@ export class BusinessService {
     return await this.http.post("/business/getbank", params).toPromise();
   }
 
+  async getmobile(params) {
+
+    return await this.http.post("/business/getmobile", params).toPromise();
+  }
+
+
+  async getmail(params) {
+
+    return await this.http.post("/business/getmail", params).toPromise();
+  }
 }

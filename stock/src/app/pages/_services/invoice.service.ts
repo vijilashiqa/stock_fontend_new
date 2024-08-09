@@ -58,4 +58,12 @@ console.log("edit service");
     
     
       }
+
+
+      async selectinvoice(params){
+
+        return await this.http.post("/invoice/selectinvoice", params).toPromise();
+      
+      
+        }
 }

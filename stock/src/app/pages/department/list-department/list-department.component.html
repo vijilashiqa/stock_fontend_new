@@ -1,6 +1,8 @@
 
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
-    <nb-card-header>List Department</nb-card-header>
+    <!-- <nb-card-header>List Department</nb-card-header> -->
+    <nb-card-header>List Department<a class="right" (click)="search=!search">Advanced Search</a></nb-card-header>
+
     <nb-card-body>
       <!-- <toaster-container></toaster-container> -->
       <div class="row" style="margin-bottom: 1%;">
@@ -9,17 +11,55 @@
         </div>
       </div>
      
+
+
+      <form [hidden]='!search' class="form-horizontal">
+        <div class="modal-body">
+      
+        <div class="row">
+      
+          <div class="col-sm-4" *ngIf="role.getroleid() > 888">
+            <label> Business Name<span style="color: red">*</span></label>
+            <auto-completen  addclass="form-control" optValues="bname"  [(ngModel)]= "busid" (keyUp)="getBusiness($event)" name="busid" (changed)="getdepartmentf();changedbusiness()"
+              placeholder="Select Business Name" Id="id" [item]="getbuss">
+            </auto-completen>
+          </div>
+        
+          <div class="col-sm-4" >
+            <label>Department <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="depname"  [(ngModel)]= "department"  name="department" (keyUp)="getdepartmentf($event)"
+              placeholder="Select VendorName NO" Id="id" [item]="getdep">
+            </auto-completen>
+          </div>
+      
+      
+          <!-- <div class="col-sm-4" >
+            <label>Company Name <span style="color: red">*</span></label>
+            <auto-completen addclass="form-control" optValues="vcompany"  [(ngModel)]= "company"  name="company"
+              placeholder="Select Mobile NO" Id="id" [item]="getven">
+            </auto-completen>
+          </div> -->
+        </div>
+       
+      
+      
+      <br>
+        <button type="button" class="btn btn-md btn-success" (click)='initiallist();'
+        style="margin: auto; display: block;">Search</button>
+      
+      </div>
+      </form>
       <!-- &nbsp; -->
       <table class="table">
         <tr>
           <th *ngIf="role.getroleid() > 777  || !role.getmenurole(1006)">Action</th>
-          <th>Bussiness Name</th>
+          <th *ngIf="role.getroleid() > 777">Bussiness Name</th>
           <th>Department Name</th>
           <!-- <th>Description</th> -->
         </tr>
         <tr *ngFor="let item of pagedItems">
           <td *ngIf="role.getroleid() > 777  || !role.getmenurole(1006)" ><a (click)="editdepartent(item.id);" title="Update"><i class="nb-edit"></i></a></td>
-         <td>{{item.bname}}</td>
+         <td *ngIf="role.getroleid() > 777" >{{item.bname}}</td>
           <td>{{item.depname}}</td>
           <!-- <td>{{item.district_name}}</td> -->
         </tr>

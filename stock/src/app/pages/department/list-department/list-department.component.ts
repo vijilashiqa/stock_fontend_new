@@ -9,6 +9,7 @@ import { RoleservicesService } from '../../_services/roleservices.service';
 import { AddDistrictComponent } from '../../geo/district/add-district/add-district.component';
 import { AddDepartmentComponent } from '../add-department/add-department.component';
 import { DepartmentService } from '../../_services/department.service';
+import { BusinessService } from '../../_services/business.service';
 
 @Component({
   selector: 'ngx-list-department',
@@ -17,7 +18,7 @@ import { DepartmentService } from '../../_services/department.service';
 })
 export class ListDepartmentComponent {
 
-  pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25;getdepartment;data;count;
+  pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25;getdepartment;data;count;search;busid='';department;
   loading=false;
   
   constructor(
@@ -25,13 +26,23 @@ export class ListDepartmentComponent {
     public role :RoleservicesService,
     private departmentser :DepartmentService,
     public pageservice: PagerService,
-    private state : StateService
+    private Business : BusinessService,
+
   ) { }
-  ngOnInit() {
+ async ngOnInit() {
 
-    this.initiallist();
-
-    
+   await this.initiallist();
+// await this.getBusiness();
+// await this.getdepartmentf()
+if(this.role.getroleid() > 888){
+  await this.getBusiness()
+  }
+else{
+this.busid = this.role.getbusiness();
+console.log("after the ",this.busid);
+await this.getdepartmentf();
+// await this.getmail()
+}
     
   }
 
@@ -39,7 +50,7 @@ export class ListDepartmentComponent {
 
   async initiallist() {
     this.loading=true;
-    this.getdepartment = await this.departmentser.listdepartment({index:(this.page - 1) * this.limit,limit:this.limit});
+    this.getdepartment = await this.departmentser.listdepartment({index:(this.page - 1) * this.limit,limit:this.limit ,bid : this.busid , depname : this.department});
     console.log('department=====', this.getdepartment)
     this.data = this.getdepartment[0];
     console.log("data",this.data)
@@ -48,6 +59,25 @@ export class ListDepartmentComponent {
     this.setPage();
 
   }
+
+
+
+  getbusinessd;getbuss
+  async getBusiness(event ='') {
+    this.getbusinessd = await this.Business.getbusiness({like :event});
+    this.getbuss = this.getbusinessd[0];
+    console.log("get business ", this.getbuss);
+  }
+
+
+  getdep;getped
+  async getdepartmentf(event ='') {
+    this.getped = await this.departmentser.selectdepartment({like :event , busid :this.busid});
+    this.getdep = this.getped;
+    console.log("get depart ", this.getped);
+  }
+
+
   getlist(page) {
     var total = Math.ceil(this.count / this.limit);
     let result = this.pageservice.pageValidator(this.page, page, total);
@@ -62,7 +92,10 @@ export class ListDepartmentComponent {
     this.pagedItems = this.data;
   }
   
-  
+  changedbusiness(){
+
+    this.department =''
+  }
 
   adddepartment() {
     const modalRef = this.modal.open(AddDepartmentComponent, { container: 'nb-layout', backdrop: false });

@@ -1,20 +1,22 @@
-<!-- <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
-  <nb-card-header>List of Admin Role</nb-card-header>
+<nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
+  <!-- <nb-card-header>List of Role</nb-card-header> -->
 
   <nb-card-body>
- <div class="container">
-    <div class="row"> -->
-      <!-- <div class="col-sm-3">
+
+    <h5>List of Role</h5>
+ <!-- <div class="container">
+    <div class="row"> 
+      <div class="col-sm-3">
 
         <label>Name</label>
         <auto-completen addclass="form-control" optValues="fname" [(ngModel)]="fname" name="fname"
         placeholder="Select Name" optId="fname" [item]="getfullnamel">
       </auto-completen>
 
-      </div> -->
+      </div>
 
 
-      <!-- <div class="col-sm-3">
+      <div class="col-sm-3">
 
         <label>Login ID</label>
         <auto-completen addclass="form-control" optValues="loginid" [(ngModel)]="loginid" name="loginid"
@@ -22,32 +24,36 @@
       </auto-completen>
       </div>
     </div>
-    </div>
+    </div> -->
+
+<!-- 
     <button type="button" class="btn btn-md btn-success" (click)="page = 1; initiallist()"
       style="margin: auto; display: block ; text-align: center;margin-top:5px ; margin-bottom: 5px;">
       Search
-    </button>
- -->
-
-
-
-
-
-    <!-- <table class="table">
+    </button> -->
+     <table class="table">
       <tr>
         <th *ngIf="role.getroleid() > 777">Action</th>
-        <th>Name</th>
-        <th>Login Id</th>
         <th>Role Type</th>
 
       </tr>
       <tr *ngFor="let item of pagedItems">
-        <td *ngIf="role.getroleid() > 777"><a (click)='edit(item);'><i class="nb-edit"></i></a></td>
-        <td>{{item.fname}}</td>
-        <td>{{item.loginid}}</td>
+        <td *ngIf="role.getroleid() > 777" [routerLink]="['/pages/admin/edit-admin']" [queryParams]="{id:item.id}"><a><i class="nb-edit"></i></a></td>
         <td>{{item.rolename}}</td>
-
       </tr>
     </table>
+
+
+    <div class="pagination">
+      <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=1;getlist();">First</a>
+        <a [ngClass]="{disabled:pager.currentPage === 1}" (click)="page=page-1;getlist();">Previous</a>
+        <a *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+          (click)="getlist(page);">{{page}}</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}" (click)="page=page+1;getlist();">Next</a>
+        <a [ngClass]="{disabled:pager.currentPage === pager.totalPages}"
+          (click)="page=pager.totalPages;getlist();">Last</a>
+      </ul>
+    </div>
   </nb-card-body>
-</nb-card> -->
+</nb-card>

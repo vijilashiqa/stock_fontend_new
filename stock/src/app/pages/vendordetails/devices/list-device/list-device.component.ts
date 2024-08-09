@@ -4,6 +4,7 @@ import { RoleservicesService } from '../../../_services/roleservices.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddDeviceComponent } from '../add-device/add-device.component';
 import { DeviceService } from '../../../_services/device.service';
+import { BusinessService } from '../../../_services/business.service';
 
 
 @Component({
@@ -12,21 +13,33 @@ import { DeviceService } from '../../../_services/device.service';
   styleUrls: ['./list-device.component.scss']
 })
 export class ListDeviceComponent {
-  pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25;listdevice;data;count;loading=false;
+  pager: any = {}; page: number = 1; pagedItems: any = []; limit = 25;listdevice;data;count;loading=false;search;busid;devices
   constructor(
     private device: DeviceService,
     private pageservice :PagerService,
     public role: RoleservicesService,
     private modal: NgbModal,
+    private Business :BusinessService
   ) { }
 
  async ngOnInit() {
   await this.initiallist();
+  // await this.getBusiness();
+
+  
+if(this.role.getroleid() > 888){
+  await this.getBusiness()
+  }
+else{
+this.busid = this.role.getbusiness();
+console.log("after the ",this.busid);
+  await this.getdevicesf()
+}
   }
 
   async initiallist() {
     this.loading=true;
-    this.listdevice = await this.device.listdevice({index:(this.page - 1) * this.limit,limit:this.limit});
+    this.listdevice = await this.device.listdevice({index:(this.page - 1) * this.limit,limit:this.limit , bid : this.busid , deviceid :this.devices });
     console.log('invoice=====', this.listdevice)
     this.data = this.listdevice[0];
     this.count = this.listdevice[1].count;
@@ -34,7 +47,28 @@ export class ListDeviceComponent {
     this.setPage();
 
   }
-  Addvendor(){}
+
+  getbusinessd;getbuss
+  async getBusiness(event ='') {
+    this.getbusinessd = await this.Business.getbusiness({like :event});
+    this.getbuss = this.getbusinessd[0];
+    console.log("get business ", this.getbuss);
+  }
+
+
+  getdevices;getdev
+  async getdevicesf(event ='') {
+    this.getdevices = await this.device.selectdevice({like :event , bid :this.busid});
+    this.getdev = this.getdevices;
+    console.log("get device ", this.getdev);
+  }
+
+
+  changedbusiness(){
+
+    this.devices=''
+  }
+
 
   
   getlist(page) {

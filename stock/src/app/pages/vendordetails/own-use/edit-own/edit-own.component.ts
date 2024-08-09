@@ -10,11 +10,10 @@ import * as JSXLSX from "xlsx";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BusinessService } from "../../../_services/business.service";
 import { InvoiceService } from "../../../_services/invoice.service";
-import { SerialnoService } from "../../../_services/serialno.service";
 import { NbToastrService } from "@nebular/theme";
 import { ErrormessageComponent } from "../../../errormessage/errormessage.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ModelService } from "../../../_services/model.service";
+
 import { OwnuseService } from "../../../_services/ownuse.service";
 import { DepartmentService } from "../../../_services/department.service";
 import { RoleservicesService } from "../../../_services/roleservices.service";
@@ -71,12 +70,13 @@ export class EditOwnComponent {
     await this.getownusedata();
     if (this.role.getroleid() > 888) {
       await this.getBusiness()
+      await this.getdepartmentf();
     }
     else {
       this.editownuse.get('bid').setValue(this.role.getbusiness());
-      await this.getdepartmentf();
+
     }
-    // await this.getdepartmentf();
+    await this.getdepartmentf();
     await this.getitem();
     await this.editserialno();
     await this.selectmodel();

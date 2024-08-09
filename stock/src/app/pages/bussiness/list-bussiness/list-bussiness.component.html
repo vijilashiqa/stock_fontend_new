@@ -1,13 +1,60 @@
 <!-- <p>businesslist works!</p> -->
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
-    <nb-card-header>List Bussiness Details</nb-card-header>
+    <!-- <nb-card-header></nb-card-header> -->
+    <nb-card-header>List Bussiness Details <a class="right" (click)="search=!search">Advanced Search</a></nb-card-header>
+
     <nb-card-body>
+
+
+
       <button *ngIf="role.getroleid() > 888  || !role.getmenurole(3001)" status="success" nbButton  style="margin-bottom: 1%;"
-      [routerLink]="['/pages/business/add-business']">Add Bussiness</button>
+      [routerLink]="['/pages/business/add-business']">Add Bussiness</button> 
+
+     
+      
+
+<form [hidden]='!search' class="form-horizontal">
+  <div class="modal-body">
+
+  <div class="row">
+
+    <div class="col-sm-4" *ngIf="role.getroleid() > 888">
+      <label> Business Name<span style="color: red">*</span></label>
+      <auto-completen  addclass="form-control" optValues="bname"  [(ngModel)]= "busid" (keyUp)="getBusiness($event)" name="busid"
+       (changed)="getmobile();getmail();changebusiness()" placeholder="Select Business Name" Id="id" [item]="getbuss">
+      </auto-completen>
+    </div>
+  
+    <div class="col-sm-4" >
+      <label>Mobile No <span style="color: red">*</span></label>
+      <auto-completen addclass="form-control" optValues="bphoneno"  [(ngModel)]= "mobile"  name="mobile"  (keyUp)="getmobile($event)" (changed)="changemobile()"
+        placeholder="Select Mobile NO" Id="id" [item]="getmob">
+      </auto-completen>
+    </div>
+
+
+    <div class="col-sm-4" >
+      <label>Email <span style="color: red">*</span></label>
+      <auto-completen addclass="form-control" optValues="bemail"  [(ngModel)]= "email"  name="email" (keyUp)="getmail($event)"
+        placeholder="Select Mobile NO" Id="id" [item]="getmaill">
+      </auto-completen>
+    </div>
+  </div>
+ 
+
+
+<br>
+  <button type="button" class="btn btn-md btn-success" (click)='initiallist();'
+  style="margin: auto; display: block;">Search</button>
+
+</div>
+</form>
+
+
     <table class="table">
       <tr>
         <th *ngIf="role.getroleid() > 888  || !role.getmenurole(3003)">Action</th>
-        <th>Business Name</th>
+        <th *ngIf="role.getroleid() > 888">Business Name</th>
         <th>Mobile No</th>
         <th>Email Address</th>
          <th>PAN </th>
@@ -15,7 +62,7 @@
       </tr>
       <tr *ngFor="let item of pagedItems">
         <td *ngIf="role.getroleid() > 888  || !role.getmenurole(3003)" style="cursor:pointer;" [routerLink]="['/pages/business/edit-business']" [queryParams]="{id:item.id}"><i class="nb-edit"></i></td>
-        <td>{{item.bname}}</td>
+        <td *ngIf="role.getroleid() > 888">{{item.bname}}</td>
         <td>{{item.bphoneno}}</td>
         <td>{{item.bemail}}</td>
         <td>{{item.pan}}</td>
