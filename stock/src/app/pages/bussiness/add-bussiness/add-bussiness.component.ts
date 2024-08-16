@@ -174,7 +174,9 @@ export class AddBussinessComponent {
       bname: new FormControl("", Validators.required),
       pan: new FormControl("", Validators.required),
       bphoneno: new FormControl("", Validators.required),
-      bemail: new FormControl("", Validators.required),
+      bemail: new FormControl("", [
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
       tinno: new FormControl("", Validators.required),
       stateid: new FormControl("", Validators.required),
       distid: new FormControl("", Validators.required),

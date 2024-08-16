@@ -58,8 +58,8 @@ export class EditMenuroleComponent {
           name: 'User Details',
           children: [
            {id :2003 , name : "Add User"},
-          { id: 2004, name:" List User "},
-          {id :2005 , name :"edit User"},
+           { id: 2004, name:" List User "},
+           {id :2005 , name :"edit User"},
           ]
         },
 
@@ -84,9 +84,9 @@ export class EditMenuroleComponent {
     {
       name: "Department Details",
       children: [
-        { id: 4011, name: "Add Vendor" },
-        { id: 4012, name: "List Vendor " },
-        { id: 4013, name: "Edit Vendor " },
+        { id: 4011, name: "Add Department" },
+        { id: 4012, name: "List Department " },
+        { id: 4013, name: "Edit Department " },
       ],
     },
 
@@ -153,9 +153,9 @@ export class EditMenuroleComponent {
     {
       name: "HUB",
       children: [
-        { id: 6001, name: "Add HUB" },
-        { id: 6002, name: "List HUB" },
-        { id: 6003, name: "Edit HUB" },
+        { id: 8001, name: "Add HUB" },
+        { id: 8002, name: "List HUB" },
+        { id: 8003, name: "Edit HUB" },
       ],
     },
 
@@ -168,6 +168,7 @@ export class EditMenuroleComponent {
       ],
     },
   ];
+
 
 
 
@@ -234,7 +235,12 @@ export class EditMenuroleComponent {
     if (this.id) {
       val["id"] = this.id;
       // val["rolename"] = this.edit["rolename"];
-      this.editmenurole.value["menurole"] = this.selectednodes();
+     let  values =this.editmenurole.value["menurole"] = this.selectednodes();
+     if(values.length == 0){
+      
+      this.toast.warning(" ", "select the role")
+      return
+    }
       let result = await this.userservi.editurole(this.editmenurole.value);
       if (result && result[0].err_code == 0) {
         this.toast.success(" ", result[0]["msg"]);

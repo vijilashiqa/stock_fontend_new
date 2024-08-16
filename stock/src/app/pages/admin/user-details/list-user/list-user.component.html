@@ -1,11 +1,12 @@
 <nb-card [nbSpinner]="loading" nbSpinnerStatus="success">
     <!-- <nb-card-header>List of Admin Role</nb-card-header> -->
-    <nb-card-header>List of Admin Role <a class="right" (click)="search=!search">Advanced Search</a></nb-card-header>
+    <nb-card-header>List of User Details <a class="right" (click)="search=!search">Advanced Search</a></nb-card-header>
 
     <nb-card-body>
-      <button *ngIf="role.getroleid() > 888 " status="success" nbButton  style="margin-bottom: 1%;"
+      <button *ngIf="role.getroleid() > 888 || !role.getmenurole(2003)" status="success" nbButton  style="margin-bottom: 1%;"
         [routerLink]="['/pages/admin/add-user']">Add user</button> 
 
+        <h6> Total Record : {{count}}</h6> 
 <div class="modal-body" autocomplete="off" [hidden]='!search'>
    <div class="container">
       <div class="row">
@@ -23,16 +24,17 @@
       </button>
   </div>
   
+
       <table class="table">
         <tr>
-          <th *ngIf="role.getroleid() > 777  || !role.getmenurole(2003)">Action</th>
+          <th *ngIf="role.getroleid() > 888  || !role.getmenurole(2005)">Action</th>
           <th>Name</th>
           <th>Login Id</th>
           <th>Role Type</th>
   
         </tr>
         <tr *ngFor="let item of pagedItems">
-          <td *ngIf="role.getroleid() > 777  || !role.getmenurole(2003)"><a (click)='edit(item);'><i class="nb-edit"></i></a></td>
+          <td *ngIf="role.getroleid() > 888  || !role.getmenurole(2005)"><a (click)='edit(item);'><i class="nb-edit"></i></a></td>
           <td>{{item.fname}}</td>
           <td>{{item.loginid}}</td>
           <td>{{item.rolename}}</td>

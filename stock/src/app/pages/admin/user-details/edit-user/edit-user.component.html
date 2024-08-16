@@ -2,7 +2,7 @@
    <nb-card>
      <nb-card-header>Edit Profile</nb-card-header>
      <nb-card-body>
-       <form [formGroup]="AddProfileForm" class="form-horizontal" (ngSubmit)="AddProfile();">
+       <form [formGroup]="edituserrole" class="form-horizontal" (ngSubmit)="AddProfile();">
          <nb-tabset>
            <nb-tab tabTitle="Profile Details">
              <div class="modal-body">
@@ -12,13 +12,13 @@
                  <div class="col-sm-6" *ngIf="role.getroleid() > 888">
                      <label> Business Name<span style="color: red">*</span></label>
                      <auto-completen [addclass]="{
-                           error: submit && this.AddProfileForm.controls.bid.errors
+                           error: submit && this.edituserrole.controls.bid.errors
                          }" addclass="form-control" optValues="bname"  formControlName="bid" (keyUp)="getBusiness()"
                        placeholder="Select Business Name" Id="id" [item]="getbuss">
                      </auto-completen>
                      <div *ngIf="
-                           this.AddProfileForm.controls.bid.errors &&
-                           this.AddProfileForm.controls.bid.errors.required &&
+                           this.edituserrole.controls.bid.errors &&
+                           this.edituserrole.controls.bid.errors.required &&
                            submit
                          " class="error-text">
                        Business Name is required!
@@ -29,14 +29,14 @@
                    <!-- <div class="col-sm-6">
                      <label>User Type<span style="color:red">*</span></label>
                      <select name="urole" formControlName="urole" class="form-control"  style="   background-color:white !important;"
-                         [ngClass]="{ 'is-invalid': submit && AddProfileForm.controls.urole.errors }">
+                         [ngClass]="{ 'is-invalid': submit && edituserrole.controls.urole.errors }">
                          <option value=""> Select UserType</option>
                          <option value="999">Developer</option>
                          <option value="888">Admin</option>
                          <option value="777">Admin Employee</option>
                      </select>
                      <small
-                         *ngIf="AddProfileForm.controls.urole.errors &&(AddProfileForm.controls.urole.errors.required )&& submit"
+                         *ngIf="edituserrole.controls.urole.errors &&(edituserrole.controls.urole.errors.required )&& submit"
                          class="invalid-feedback">urole is required! </small>
                  </div> -->
 
@@ -44,13 +44,13 @@
                  <div class="col-sm-6">
                   <label>User Type<span style="color:red">*</span></label>
                   <auto-completen [addclass]="{
-                   error: submit && this.AddProfileForm.controls.urole.errors
+                   error: submit && this.edituserrole.controls.urole.errors
                  }" addclass="form-control" optValues="rolename"  formControlName="urole" (keyUp)="editRole()"
                placeholder="Select User Type" optId="role" [item]="editumenu">
              </auto-completen>
                       <div *ngIf="
-                      this.AddProfileForm.controls.urole.errors &&
-                      this.AddProfileForm.controls.urole.errors.required &&
+                      this.edituserrole.controls.urole.errors &&
+                      this.edituserrole.controls.urole.errors.required &&
                       submit
                     " class="error-text">
                   Business Name is required!
@@ -68,9 +68,9 @@
                      <label>Username<span style="color:red">*</span></label>
                      <input type="text" status="loginid" class="form-control" name="loginid" formControlName="loginid"
                         placeholder=" Enter Username"
-                        [ngClass]="{ 'is-invalid': submit && this.AddProfileForm.controls.loginid.errors }" />
+                        [ngClass]="{ 'is-invalid': submit && this.edituserrole.controls.loginid.errors }" />
                      <small
-                        *ngIf="this.AddProfileForm.controls.loginid.errors && (this.AddProfileForm.controls.loginid.errors.required) && submit"
+                        *ngIf="this.edituserrole.controls.loginid.errors && (this.edituserrole.controls.loginid.errors.required) && submit"
                         class="invalid-feedback">Login id is required! </small>
                   </div>
 
@@ -79,9 +79,9 @@
                    <label>Password<span style="color:red">*</span></label>
                    <input [readonly]="true"  type="password" status="pwd" class="form-control" name="pwd" formControlName="pwd"
                       placeholder=" Enter Password "
-                      [ngClass]="{ 'is-invalid': submit && this.AddProfileForm.controls.pwd.errors }" />
+                      [ngClass]="{ 'is-invalid': submit && this.edituserrole.controls.pwd.errors }" />
                    <small
-                      *ngIf="this.AddProfileForm.controls.pwd.errors && (this.AddProfileForm.controls.pwd.errors.required) && submit"
+                      *ngIf="this.edituserrole.controls.pwd.errors && (this.edituserrole.controls.pwd.errors.required) && submit"
                       class="invalid-feedback">Password required! </small>
                 </div>
 
@@ -97,18 +97,18 @@
                      <label>Full Name<span style="color:red">*</span></label>
                      <input type="text" status="fname" class="form-control" name="fname" formControlName="fname"
                         placeholder=" Enter Full Name "
-                        [ngClass]="{ 'is-invalid': submit && this.AddProfileForm.controls.fname.errors }" />
+                        [ngClass]="{ 'is-invalid': submit && this.edituserrole.controls.fname.errors }" />
                      <small
-                        *ngIf="this.AddProfileForm.controls.fname.errors && (this.AddProfileForm.controls.fname.errors.required) && submit"
+                        *ngIf="this.edituserrole.controls.fname.errors && (this.edituserrole.controls.fname.errors.required) && submit"
                         class="invalid-feedback">Full Name is required! </small>
                   </div>
                 <div class="col-sm-6">
                    <label>Email ID<span style="color:red">*</span></label>
                    <input type="text" class="form-control" formControlName="email"
                       placeholder="Enter Mail id"
-                      [ngClass]="{ 'is-invalid': submit && this.AddProfileForm.controls.email.errors }" />
+                      [ngClass]="{ 'is-invalid': submit && this.edituserrole.controls.email.errors }" />
                    <small
-                      *ngIf="this.AddProfileForm.controls.email.errors && (this.AddProfileForm.controls.email.errors.required) && submit"
+                      *ngIf="this.edituserrole.controls.email.errors && (this.edituserrole.controls.email.errors.required) && submit"
                       class="invalid-feedback">Mail id is required! </small>
                 </div>
              </div>
@@ -118,21 +118,21 @@
                      <label>Mobile NO<span style="color:red">*</span></label>
                      <input type="number" status="mobile" class="form-control" name="mobile" formControlName="mobile"
                         placeholder=" Enter Mobile No "
-                        [ngClass]="{ 'is-invalid': submit && this.AddProfileForm.controls.mobile.errors }" />
+                        [ngClass]="{ 'is-invalid': submit && this.edituserrole.controls.mobile.errors }" />
                      <small
-                        *ngIf="this.AddProfileForm.controls.mobile.errors && (this.AddProfileForm.controls.mobile.errors.required) && submit"
+                        *ngIf="this.edituserrole.controls.mobile.errors && (this.edituserrole.controls.mobile.errors.required) && submit"
                         class="invalid-feedback">Mobile is required! </small>
                   </div>
 
 
                 <div class="col-sm-6">
                    <label>Address<span style="color:red">*</span></label>
-                   <textarea type="text" class="form-control" formControlName="address"
+                   <textarea maxlength="50" type="text" class="form-control" formControlName="address"
                       placeholder="Enter Address"
-                      [ngClass]="{ 'is-invalid': submit && this.AddProfileForm.controls.address.errors }" >
+                      [ngClass]="{ 'is-invalid': submit && this.edituserrole.controls.address.errors }" >
                       </textarea>
                    <small
-                      *ngIf="this.AddProfileForm.controls.address.errors && (this.AddProfileForm.controls.address.errors.required) && submit"
+                      *ngIf="this.edituserrole.controls.address.errors && (this.edituserrole.controls.address.errors.required) && submit"
                       class="invalid-feedback">Address is required! </small>
                 </div>
              </div>

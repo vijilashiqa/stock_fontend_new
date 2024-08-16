@@ -223,7 +223,7 @@
                           <label>
                             Short Address
                             <span style="color: red">*</span></label>
-                          <textarea [ngClass]="{
+                          <textarea maxlength="50" [ngClass]="{
                               'form-control': true,
                               'form-control-danger':
                                 user['controls']['addresname'].invalid && submit
@@ -294,7 +294,7 @@
                           <label>
                             Full Address
                             <span style="color: red">*</span></label>
-                          <textarea [ngClass]="{
+                          <textarea maxlength="50" [ngClass]="{
                               'form-control': true,
                               'form-control-danger':
                                 user['controls']['address'].invalid && submit

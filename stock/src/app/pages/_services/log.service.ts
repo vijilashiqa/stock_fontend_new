@@ -29,8 +29,11 @@ export class LogService {
     return this.http.post<any>("/login/account", params);
   }
   logout() {
+    console.log("dsfdsfsdff");
+    
     this.router.navigate(['auth/login'])
     localStorage.clear();
+    localStorage.setItem('logout', Date.now().toString());
   }
  
 

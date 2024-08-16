@@ -2,7 +2,7 @@
    <nb-card>
      <nb-card-header>ADD Profile</nb-card-header>
      <nb-card-body>
-       <form [formGroup]="addmenurole" class="form-horizontal" (ngSubmit)="AddProfile();">
+       <form [formGroup]="adduserrole" class="form-horizontal" (ngSubmit)="AddProfile();">
          <nb-tabset>
            <nb-tab tabTitle="Profile Details">
              <div class="modal-body">
@@ -12,13 +12,13 @@
                  <div class="col-sm-6" *ngIf="role.getroleid() > 888">
                      <label> Business Name<span style="color: red">*</span></label>
                      <auto-completen [addclass]="{
-                           error: submit && this.addmenurole.controls.bid.errors
+                           error: submit && this.adduserrole.controls.bid.errors
                          }" addclass="form-control" optValues="bname"  formControlName="bid" (keyUp)="getBusiness($event)"
                        placeholder="Select Business Name" Id="id" [item]="getbuss">
                      </auto-completen>
                      <div *ngIf="
-                           this.addmenurole.controls.bid.errors &&
-                           this.addmenurole.controls.bid.errors.required &&
+                           this.adduserrole.controls.bid.errors &&
+                           this.adduserrole.controls.bid.errors.required &&
                            submit
                          " class="error-text">
                        Business Name is required!
@@ -29,13 +29,13 @@
                    <div class="col-sm-6">
                      <label>User Type<span style="color:red">*</span></label>
                      <auto-completen [addclass]="{
-                      error: submit && this.addmenurole.controls.urole.errors
+                      error: submit && this.adduserrole.controls.urole.errors
                     }" addclass="form-control" optValues="rolename"  formControlName="urole" (keyUp)="editRole()"
                   placeholder="Select User Type" optId="role" [item]="editumenu">
                 </auto-completen>
                          <div *ngIf="
-                         this.addmenurole.controls.urole.errors &&
-                         this.addmenurole.controls.urole.errors.required &&
+                         this.adduserrole.controls.urole.errors &&
+                         this.adduserrole.controls.urole.errors.required &&
                          submit
                        " class="error-text">
                      Business Name is required!
@@ -53,9 +53,9 @@
                      <label>Username<span style="color:red">*</span></label>
                      <input type="text" status="loginid" class="form-control" name="loginid" formControlName="loginid"
                         placeholder=" Enter Username"
-                        [ngClass]="{ 'is-invalid': submit && this.addmenurole.controls.loginid.errors }" />
+                        [ngClass]="{ 'is-invalid': submit && this.adduserrole.controls.loginid.errors }" />
                      <small
-                        *ngIf="this.addmenurole.controls.loginid.errors && (this.addmenurole.controls.loginid.errors.required) && submit"
+                        *ngIf="this.adduserrole.controls.loginid.errors && (this.adduserrole.controls.loginid.errors.required) && submit"
                         class="invalid-feedback">Login id is required! </small>
                   </div>
 
@@ -64,9 +64,9 @@
                    <label>Password<span style="color:red">*</span></label>
                    <input type="password" status="pwd" class="form-control" name="pwd" formControlName="pwd"
                       placeholder=" Enter Password "
-                      [ngClass]="{ 'is-invalid': submit && this.addmenurole.controls.pwd.errors }" />
+                      [ngClass]="{ 'is-invalid': submit && this.adduserrole.controls.pwd.errors }" />
                    <small
-                      *ngIf="this.addmenurole.controls.pwd.errors && (this.addmenurole.controls.pwd.errors.required) && submit"
+                      *ngIf="this.adduserrole.controls.pwd.errors && (this.adduserrole.controls.pwd.errors.required) && submit"
                       class="invalid-feedback">Password required! </small>
                 </div>
 
@@ -82,18 +82,18 @@
                      <label>Full Name<span style="color:red">*</span></label>
                      <input type="text" status="fname" class="form-control" name="fname" formControlName="fname"
                         placeholder=" Enter Full Name "
-                        [ngClass]="{ 'is-invalid': submit && this.addmenurole.controls.fname.errors }" />
+                        [ngClass]="{ 'is-invalid': submit && this.adduserrole.controls.fname.errors }" />
                      <small
-                        *ngIf="this.addmenurole.controls.fname.errors && (this.addmenurole.controls.fname.errors.required) && submit"
+                        *ngIf="this.adduserrole.controls.fname.errors && (this.adduserrole.controls.fname.errors.required) && submit"
                         class="invalid-feedback">Full Name is required! </small>
                   </div>
                 <div class="col-sm-6">
                    <label>Email ID<span style="color:red">*</span></label>
                    <input type="text" class="form-control" formControlName="email"
                       placeholder="Enter Mail id"
-                      [ngClass]="{ 'is-invalid': submit && this.addmenurole.controls.email.errors }" />
+                      [ngClass]="{ 'is-invalid': submit && this.adduserrole.controls.email.errors }" />
                    <small
-                      *ngIf="this.addmenurole.controls.email.errors && (this.addmenurole.controls.email.errors.required) && submit"
+                      *ngIf="this.adduserrole.controls.email.errors && (this.adduserrole.controls.email.errors.required) && submit"
                       class="invalid-feedback">Mail id is required! </small>
                 </div>
              </div>
@@ -103,22 +103,22 @@
                      <label>Mobile NO<span style="color:red">*</span></label>
                      <input type="number" status="mobile" class="form-control" name="mobile" formControlName="mobile"
                         placeholder=" Enter Mobile No "
-                        [ngClass]="{ 'is-invalid': submit && this.addmenurole.controls.mobile.errors }" />
+                        [ngClass]="{ 'is-invalid': submit && this.adduserrole.controls.mobile.errors }" />
                      <small
-                        *ngIf="this.addmenurole.controls.mobile.errors && (this.addmenurole.controls.mobile.errors.required) && submit"
+                        *ngIf="this.adduserrole.controls.mobile.errors && (this.adduserrole.controls.mobile.errors.required) && submit"
                         class="invalid-feedback">Mobile is required! </small>
                   </div>
 
 
                 <div class="col-sm-6">
                    <label>Address<span style="color:red">*</span></label>
-                   <textarea type="text" class="form-control" formControlName="address"
+                   <textarea  maxlength="50" type="text" class="form-control" formControlName="address"
                       placeholder="Enter Address"
-                      [ngClass]="{ 'is-invalid': submit && this.addmenurole.controls.address.errors }" >
+                      [ngClass]="{ 'is-invalid': submit && this.adduserrole.controls.address.errors }" >
                       </textarea>
                    <small
-                      *ngIf="this.addmenurole.controls.address.errors && (this.addmenurole.controls.address.errors.required) && submit"
-                      class="invalid-feedback">Address is required! </small>
+                      *ngIf="this.adduserrole.controls.address.errors && (this.adduserrole.controls.address.errors.required) && submit"
+                      class="invalid-feedback">Address is required!   </small>
                 </div>
              </div>
           </div>

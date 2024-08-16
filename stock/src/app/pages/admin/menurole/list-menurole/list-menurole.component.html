@@ -33,12 +33,12 @@
     </button> -->
      <table class="table">
       <tr>
-        <th *ngIf="role.getroleid() > 777">Action</th>
+        <th *ngIf="role.getroleid() > 888  || !role.getmenurole(2002)">Action</th>
         <th>Role Type</th>
 
       </tr>
       <tr *ngFor="let item of pagedItems">
-        <td *ngIf="role.getroleid() > 777" [routerLink]="['/pages/admin/edit-admin']" [queryParams]="{id:item.id}"><a><i class="nb-edit"></i></a></td>
+        <td *ngIf="role.getroleid() > 888 || !role.getmenurole(2002)" [routerLink]="['/pages/admin/edit-admin']" [queryParams]="{id:item.id}"><a><i class="nb-edit"></i></a></td>
         <td>{{item.rolename}}</td>
       </tr>
     </table>

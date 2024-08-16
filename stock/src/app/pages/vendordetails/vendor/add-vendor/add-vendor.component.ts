@@ -203,7 +203,9 @@ console.log("bank list ", this.banklist);
       vcompany: new FormControl("", Validators.required),
       vname: new FormControl("", Validators.required),
       vmobile: new FormControl("", Validators.required),
-      vmail: new FormControl("", Validators.required),
+      vmail: new FormControl("",[
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
       stockinid: new FormArray([this.createMaterial()]),
       bankdetails: new FormArray([this.createBankdetails()]),
     });

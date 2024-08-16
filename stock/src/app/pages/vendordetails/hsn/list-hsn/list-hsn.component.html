@@ -8,7 +8,7 @@
           <button *ngIf="role.getroleid() > 888 || !role.getmenurole(6010)" status="success" nbButton  (click)='Addmodel()'>Add HSN</button>
         </div>
       </div>
-      
+      <h6> Total Record : {{count}}</h6>     
       <table class="table">
         <tr>
           <th *ngIf="role.getroleid() > 888 || !role.getmenurole(6012)">Action</th>

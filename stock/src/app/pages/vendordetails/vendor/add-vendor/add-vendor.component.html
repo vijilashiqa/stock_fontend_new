@@ -168,7 +168,7 @@
 
                         <div class="form-group" class="col-sm-3">
                             <label>Short Address <span style="color: red">*</span></label>
-                            <textarea   [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['addrname'].invalid && submit}"
+                            <textarea maxlength="50"   [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['addrname'].invalid && submit}"
                             type="text" name="addresname" formControlName="addrname" placeholder="Enter Address Details"
                             class="form-control"  >
                             </textarea>
@@ -215,7 +215,7 @@
         
     <div class="form-group" class="col-sm-3">
       <label>Full Address  <span style="color: red">*</span></label>
-      <textarea [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['address'].invalid && submit}"
+      <textarea maxlength="50" [ngClass]="{'form-control' : true,'form-control-danger':user['controls']['address'].invalid && submit}"
        type="text" class="form-control" name="address" formControlName="address" placeholder="Enter Address Details">
         </textarea>
         <small *ngIf="user.hasError('required','address')&&submit" class="error-text">Full Address  is Required! </small>

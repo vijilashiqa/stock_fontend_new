@@ -7,7 +7,7 @@
       <!-- <toaster-container></toaster-container> -->
       <div class="row" style="margin-bottom: 1%;">
         <div>
-          <button *ngIf="(role.getroleid() > 777||!role.getmenurole(1004))" status="success" nbButton (click)="adddepartment()">Add Department</button> 
+          <button *ngIf="(role.getroleid() > 888 ||!role.getmenurole(4011))" status="success" nbButton (click)="adddepartment()">Add Department</button> 
         </div>
       </div>
      
@@ -49,17 +49,17 @@
       
       </div>
       </form>
-      <!-- &nbsp; -->
+      <h6> Total Record : {{count}}</h6> 
       <table class="table">
         <tr>
-          <th *ngIf="role.getroleid() > 777  || !role.getmenurole(1006)">Action</th>
-          <th *ngIf="role.getroleid() > 777">Bussiness Name</th>
+          <th *ngIf="role.getroleid() > 888  || !role.getmenurole(4013)">Action</th>
+          <th *ngIf="role.getroleid() > 888">Bussiness Name</th>
           <th>Department Name</th>
           <!-- <th>Description</th> -->
         </tr>
         <tr *ngFor="let item of pagedItems">
-          <td *ngIf="role.getroleid() > 777  || !role.getmenurole(1006)" ><a (click)="editdepartent(item.id);" title="Update"><i class="nb-edit"></i></a></td>
-         <td *ngIf="role.getroleid() > 777" >{{item.bname}}</td>
+          <td *ngIf="role.getroleid() > 888  || !role.getmenurole(4013)" ><a (click)="editdepartent(item.id);" title="Update"><i class="nb-edit"></i></a></td>
+         <td *ngIf="role.getroleid() > 888" >{{item.bname}}</td>
           <td>{{item.depname}}</td>
           <!-- <td>{{item.district_name}}</td> -->
         </tr>

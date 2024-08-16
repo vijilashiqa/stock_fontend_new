@@ -3,7 +3,7 @@
     <!-- <nb-card-header>List HUB</nb-card-header> -->
     <nb-card-header>List HUB<a class="right" (click)="search=!search">Advanced Search</a></nb-card-header>
     <nb-card-body>
-      <button *ngIf="role.getroleid() > 888  || !role.getmenurole(1007)"  status="success" nbButton  style="margin-bottom: 1%;"
+      <button *ngIf="role.getroleid() > 888  || !role.getmenurole(8001)"  status="success" nbButton  style="margin-bottom: 1%;"
         [routerLink]="['/pages/Geo-details/add-hub']">Add HUB</button>
      
         <form [hidden]='!search' class="form-horizontal">
@@ -47,12 +47,12 @@
 
 
 
-
+        <h6> Total Record : {{count}}</h6> 
 
 
       <table class="table">
         <tr>
-          <th *ngIf="role.getroleid() > 888  || !role.getmenurole(1009)">Action</th>
+          <th *ngIf="role.getroleid() > 888  || !role.getmenurole(8003)">Action</th>
         
           <th *ngIf="role.getroleid() > 888">Bussiness Name</th>
           <th>Department Name</th>
@@ -63,7 +63,7 @@
           <th>Description Name</th>
         </tr>
         <tr *ngFor="let item of pagedItems">        
-          <div class="form-group">
+          <div class="form-group"  *ngIf="role.getroleid() > 888  || !role.getmenurole(8003)">
             <div class="btn-group">
               <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-bs-toggle="dropdown">
                 Action

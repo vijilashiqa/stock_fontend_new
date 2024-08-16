@@ -16,12 +16,11 @@ import { MenuroleService } from '../../../_services/menurole.service';
 })
 export class AddUserComponent {
   @ViewChild('tree') public tree;
-  addmenurole; edit;editrolel;editumenu
+  adduserrole; edit;editrolel;editumenu
   submit: boolean;
  
  
   
-   
   nodes = [
     {
       name: "Geo-Details",
@@ -84,9 +83,9 @@ export class AddUserComponent {
     {
       name: "Department Details",
       children: [
-        { id: 4011, name: "Add Vendor" },
-        { id: 4012, name: "List Vendor " },
-        { id: 4013, name: "Edit Vendor " },
+        { id: 4011, name: "Add Department" },
+        { id: 4012, name: "List Department " },
+        { id: 4013, name: "Edit Department " },
       ],
     },
 
@@ -153,9 +152,9 @@ export class AddUserComponent {
     {
       name: "HUB",
       children: [
-        { id: 6001, name: "Add HUB" },
-        { id: 6002, name: "List HUB" },
-        { id: 6003, name: "Edit HUB" },
+        { id: 8001, name: "Add HUB" },
+        { id: 8002, name: "List HUB" },
+        { id: 8003, name: "Edit HUB" },
       ],
     },
 
@@ -168,6 +167,7 @@ export class AddUserComponent {
       ],
     },
   ];
+
 
 
 
@@ -194,7 +194,7 @@ export class AddUserComponent {
       await this.getBusiness()
       }
   else{
-    this.addmenurole.get('bid').setValue(this.role.getbusiness());
+    this.adduserrole.get('bid').setValue(this.role.getbusiness());
   }
   }
 
@@ -217,18 +217,24 @@ async  editRole() {
 
 async  AddProfile() {
   console.log('am here dfdf')
-    if (this.addmenurole.invalid) {
+    if (this.adduserrole.invalid) {
       this.submit = true;
       return;
     }
-      this.addmenurole.value['menurole'] = this.selectednodes();
-      let result = await this.user.adduser(this.addmenurole.value);
+      this.adduserrole.value['menurole'] = this.selectednodes();
+      let  values =this.adduserrole.value["menurole"] = this.selectednodes();
+      if(values.length == 0){
+      
+        this.toast.warning(" ", "select the role")
+        return
+      }
+      let result = await this.user.adduser(this.adduserrole.value);
       if (result && result[0].err_code == 0) {
         this.toast.success(" ",result[0]['msg']);
         this.router.navigate(['/pages/admin/list-user'])
       } else {
         this.toast.warning(" ",result[0]['msg'])
-        console.log('add...', this.addmenurole.value);
+        console.log('add...', this.adduserrole.value);
       // }
     }   
   }
@@ -256,15 +262,17 @@ async  AddProfile() {
   }
 
   createForm() {
-    this.addmenurole = new FormGroup({
+    this.adduserrole = new FormGroup({
       bid: new FormControl("", Validators.required),
       urole:new FormControl("", Validators.required),
       loginid: new FormControl("", Validators.required),
       pwd: new FormControl("", Validators.required),
       fname: new FormControl("", Validators.required),
       mobile : new FormControl("", Validators.required),
-      email : new FormControl("",  Validators.required),
-      address : new FormControl("", Validators.required),
+      email : new FormControl("",  [
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+      address : new FormControl("", [Validators.maxLength(50)]),
     });
   }
 

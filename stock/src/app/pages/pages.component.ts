@@ -29,7 +29,7 @@ export class PagesComponent {
     {
       title: 'Geo-Details',
       hidden: !(this.role.find(x => x == 1001) || this.role.find(x => x == 1002)|| this.role.find(x=>x == 1003)
-      ||this.role.find(x => x == 1004)|| this.role.find(x => x == 1005)|| this.role.find(x=>x == 1006)||(this.role.find(x => x == 1007) || this.role.find(x => x == 1008)|| this.role.find(x=>x == 1009))),
+      ||this.role.find(x => x == 1004)|| this.role.find(x => x == 1005)|| this.role.find(x=>x == 1006)),
 
       icon: 'globe-2-outline',
       children: [
@@ -74,12 +74,12 @@ export class PagesComponent {
 
     {
       title: 'Admin Details',
-      hidden: !(this.role.find(x => x == 2001) || this.role.find(x => x == 2002)|| this.role.find(x=>x == 2003)),
+      hidden: !(this.role.find(x => x == 2001) || this.role.find(x => x == 2002)|| this.role.find(x=>x == 2003)|| this.role.find(x => x == 2004)|| this.role.find(x=>x == 2005)),
       icon: 'person-add-outline',
       children: [
         {
           title: 'List Admin Details',
-          hidden: ! this.role.find(x=> x == 2002),
+          hidden: ! this.role.find(x=> x == 2001),
           link: '/pages/admin/list-admin',
         },
       ],
@@ -87,30 +87,14 @@ export class PagesComponent {
 
     {
       title: 'User Details',
-      hidden: !(this.role.find(x => x == 2001) || this.role.find(x => x == 2002)|| this.role.find(x=>x == 2003)),
+      hidden: !(this.role.find(x => x == 2003) || this.role.find(x => x == 2004)|| this.role.find(x=>x == 2005)),
       icon: 'shield-outline',
       children: [
-     
-        // {
-        //   title: 'Add User Details',
-        //   hidden: ! this.role.find(x=> x == 2001),
-        //   link: '/pages/admin/add-user',
-         
-        // },
-
         {
           title: 'List User Details',
-          hidden: ! this.role.find(x=> x == 2002),
+          hidden: ! this.role.find(x=> x == 2004),
           link: '/pages/admin/list-user',
         },
-
-        // {
-        //   title: 'User Details',
-        //   hidden: ! (this.role.find(x=> x == 2001)|| this.role.find(x=>x==2002) || this.role.find(x=>x==2003)),
-        //   children: [
-            
-        //   ],
-        // },
 
       ],
     },
@@ -174,14 +158,14 @@ export class PagesComponent {
       title: 'Department Details',
         icon: 'layout',
       // link: '/pages/layout/stepper',
-      // hidden: !(this.role.find(x => x == 4001) || this.role.find(x => x == 4002) || this.role.find(x => x == 4003)),
+      hidden: !(this.role.find(x => x == 4011) || this.role.find(x => x == 4012) || this.role.find(x => x == 4013)),
 
       children: [
        
 {
           title: 'List Department',
           link: '/pages/department/list-department',
-          hidden: !this.role.find(x => x == 4002),
+          hidden: !this.role.find(x => x == 4012),
 
         },
       
@@ -402,18 +386,18 @@ export class PagesComponent {
     {
       title: 'Hub',
       icon: 'shuffle-2',
-      hidden: !(this.role.find(x => x == 6001) || this.role.find(x => x == 6002)),
+      hidden: !(this.role.find(x => x == 8001) || this.role.find(x => x == 8002)),
       children: [
         {
           title: 'Add Hub',
-          hidden: !(this.role.find(x=>x == 6001)),
+          hidden: !(this.role.find(x=>x == 8001)),
           link: '/pages/Geo-details/add-hub',
          
         },
 
         {
           title: 'List Hub',
-          hidden: !(this.role.find(x=>x == 6002)),
+          hidden: !(this.role.find(x=>x == 8002)),
           link: '/pages/Geo-details/list-hub',
          
         },
@@ -423,7 +407,7 @@ export class PagesComponent {
       
       {
         title: 'Assets Mapping',
-     hidden:!  ( this.role.find(x => x == 7001)||this.role.find(x => x == 7002)||this.role.find(x => x == 7003 ||this.role.find(x => x == 7004))),
+     hidden:!  ( this.role.find(x => x == 7001)||this.role.find(x => x == 7002)||this.role.find(x => x == 7003 )),
         icon: 'pin-outline',
         children: [
 

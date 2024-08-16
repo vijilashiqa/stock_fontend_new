@@ -111,7 +111,7 @@
 
                     <div class="col-sm-6">
                         <label>HUB Address <span style="color:red">*</span></label>
-                        <textarea type="text" class="form-control" name="hubaddr" formControlName="hubaddr" placeholder="Enter HUB Address"
+                        <textarea maxlength="50" type="text" class="form-control" name="hubaddr" formControlName="hubaddr" placeholder="Enter HUB Address"
                          [ngClass]="{ 'is-invalid': submit && Addhubform.controls.hubaddr.errors }"></textarea>
                          <small *ngIf="Addhubform.controls.hubaddr.errors &&(Addhubform.controls.hubaddr.errors.required )&& submit"
                          class="invalid-feedback">HUB Address is required! </small>
@@ -124,7 +124,7 @@
                      
                             <div class="col-md-6">
                                 <label>Description</label>
-                                <textarea type="text" class="form-control" name="desc" formControlName="desc" placeholder="Enter Description"
+                                <textarea maxlength="50" type="text" class="form-control" name="desc" formControlName="desc" placeholder="Enter Description"
                                 [ngClass]="{ 'is-invalid': submit && Addhubform.controls.desc.errors }">
                                 </textarea>
                                 <small *ngIf="Addhubform.controls.desc.errors &&(Addhubform.controls.desc.errors.required )&& submit"

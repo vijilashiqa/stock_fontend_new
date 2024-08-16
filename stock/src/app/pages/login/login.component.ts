@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // localStorage.removeItem('token');
+    localStorage.removeItem('token');
     localStorage.removeItem("userinfo");
     this.createForm();
   }

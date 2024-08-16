@@ -65,7 +65,7 @@
             
             <div class="col-sm-6">
                 <label>Location Address<span style="color: red">*</span></label>
-                <textarea type="text" class="form-control" name="locaddress" formControlName="locaddress" placeholder="Enter Location Address"
+                <textarea maxlength="0" type="text" class="form-control" name="locaddress" formControlName="locaddress" placeholder="Enter Location Address"
                 [ngClass]="{ 'is-invalid': submit && addLocationForm.controls.locaddress.errors }">
                 </textarea>
                 <div *ngIf="

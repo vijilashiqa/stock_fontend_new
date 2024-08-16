@@ -319,7 +319,9 @@ console.log("bank list ", this.banklist);
         this.varb?.["vmobile"] || "",
         Validators.required
       ),
-      vmail: new FormControl(this.varb?.["vmail"] || "", Validators.required),
+      vmail: new FormControl(this.varb?.["vmail"] || "", [
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
       stockinid: new FormArray([]),
       bankdetails: new FormArray([]),
     });

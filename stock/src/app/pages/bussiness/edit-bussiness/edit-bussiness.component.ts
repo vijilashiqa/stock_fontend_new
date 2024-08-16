@@ -325,7 +325,9 @@ export class EditBussinessComponent {
         this.varb?.["bphoneno"] || "",
         Validators.required
       ),
-      bemail: new FormControl(this.varb?.["bemail"] || "", Validators.required),
+      bemail: new FormControl(this.varb?.["bemail"] || "",[
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
       tinno: new FormControl(this.varb?.["tinno"] || "", Validators.required),
       stateid: new FormControl(
         this.varb?.["stateid"] || "",

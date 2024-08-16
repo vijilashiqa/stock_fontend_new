@@ -17,7 +17,7 @@ import { RoleservicesService } from "../../../_services/roleservices.service";
 })
 export class EditUserComponent {
   @ViewChild("tree") public tree;
-  AddProfileForm;
+  edituserrole;
   edit;
   editrolel;
   editdata;
@@ -86,9 +86,9 @@ export class EditUserComponent {
     {
       name: "Department Details",
       children: [
-        { id: 4011, name: "Add Vendor" },
-        { id: 4012, name: "List Vendor " },
-        { id: 4013, name: "Edit Vendor " },
+        { id: 4011, name: "Add Department" },
+        { id: 4012, name: "List Department " },
+        { id: 4013, name: "Edit Department " },
       ],
     },
 
@@ -155,9 +155,9 @@ export class EditUserComponent {
     {
       name: "HUB",
       children: [
-        { id: 6001, name: "Add HUB" },
-        { id: 6002, name: "List HUB" },
-        { id: 6003, name: "Edit HUB" },
+        { id: 8001, name: "Add HUB" },
+        { id: 8002, name: "List HUB" },
+        { id: 8003, name: "Edit HUB" },
       ],
     },
 
@@ -197,7 +197,7 @@ export class EditUserComponent {
     if (this.role.getroleid() > 888) {
       await this.getBusiness();
     } else {
-      this.AddProfileForm.get("bid").setValue(this.role.getbusiness());
+      this.edituserrole.get("bid").setValue(this.role.getbusiness());
     }
 
     await this.editRole();
@@ -239,22 +239,28 @@ export class EditUserComponent {
 
   async AddProfile() {
     console.log("am here dfdf");
-    if (this.AddProfileForm.invalid) {
+    if (this.edituserrole.invalid) {
       this.submit = true;
       return;
     }
-    var val = this.AddProfileForm.value;
+    var val = this.edituserrole.value;
     if (this.edit) {
       val["id"] = this.edit["id"];
       // val["rolename"] = this.edit["rolename"];
-      this.AddProfileForm.value["menurole"] = this.selectednodes();
-      let result = await this.userservi.edituser(this.AddProfileForm.value);
+      this.edituserrole.value["menurole"] = this.selectednodes();
+      let  values =this.edituserrole.value["menurole"] = this.selectednodes();
+      if(values.length == 0){
+      
+        this.toast.warning(" ", "select the role")
+        return
+      }
+      let result = await this.userservi.edituser(this.edituserrole.value);
       if (result && result[0].err_code == 0) {
         this.toast.success(" ", result[0]["msg"]);
         this.router.navigate(["/pages/admin/list-user"]);
       } else {
         this.toast.warning(" ", result[0]["msg"]);
-        console.log("add...", this.AddProfileForm.value);
+        console.log("add...", this.edituserrole.value);
       }
     }
   }
@@ -283,7 +289,7 @@ export class EditUserComponent {
   }
 
   createForm() {
-    this.AddProfileForm = new FormGroup({
+    this.edituserrole = new FormGroup({
       bid: new FormControl(this.editdata?.["bid"] || "", Validators.required),
       urole: new FormControl(
         this.editdata?.["urole"] || "",
@@ -304,7 +310,9 @@ export class EditUserComponent {
       ),
       email: new FormControl(
         this.editdata?.["email"] || "",
-        Validators.required
+        [
+          Validators.required,
+          Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]
       ),
       address: new FormControl(
         this.editdata?.["address"] || "",
